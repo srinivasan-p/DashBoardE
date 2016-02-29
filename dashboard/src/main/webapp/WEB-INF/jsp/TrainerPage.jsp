@@ -8,5 +8,6 @@
 </head>
 <body>
 trainer
+<a href="Logout.html">Click Here to logout</a>
 </body>
 </html>
