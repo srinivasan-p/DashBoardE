@@ -8,5 +8,6 @@
 </head>
 <body>
 student
+<a href="Logout.html">Click Here to logout</a>
 </body>
 </html>

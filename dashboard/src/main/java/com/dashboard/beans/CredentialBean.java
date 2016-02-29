@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="db_credential")
 public class CredentialBean {
-//Testing Git
+
   @Id
 	private String pId;
 	private String password;

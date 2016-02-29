@@ -37,7 +37,8 @@ public class MainController {
 	@RequestMapping(value = "/LoginForm", method = RequestMethod.POST)
 	public String addValues(HttpSession httpSession, @ModelAttribute("index") CredentialBean CredentialBean,
 			Model model, HttpServletRequest request) {
-
+		
+		httpSession.setAttribute("cb", CredentialBean);
 		String u = CredentialBean.getpId();
 		String validate = authentication1.authenticate(CredentialBean);
 
@@ -45,21 +46,20 @@ public class MainController {
 
 			CredentialBean.setType(authentication1.authorize(u));
 
-			if (authentication1.authorize(u).equalsIgnoreCase("a")){
+			if (authentication1.authorize(u).equalsIgnoreCase("a")) {
 				authentication1.changeLoginStatus(CredentialBean, 1);
-					System.out.println("admin");
-					return "AdminPage";
-			
+				System.out.println("admin");
+				return "AdminPage";
 
 			} else if (authentication1.authorize(u).equalsIgnoreCase("t")) {
-//				sessionFactory.getCurrentSession().save(CredentialBean);
+				// sessionFactory.getCurrentSession().save(CredentialBean);
 				System.out.println("patient");
 				authentication1.changeLoginStatus(CredentialBean, 1);
 				return "TrainerPage";
 
 			} else if (authentication1.authorize(u).equals("s")) {
 				CredentialBean.setStatus(1);
-//				sessionFactory.getCurrentSession().save(CredentialBean);
+				// sessionFactory.getCurrentSession().save(CredentialBean);
 				authentication1.changeLoginStatus(CredentialBean, 1);
 				return "StudentPage";
 
@@ -68,15 +68,12 @@ public class MainController {
 		return "LoginForm";
 	}
 
-	// @RequestMapping(value = "/Logout", method = RequestMethod.GET)
-	// public String getLogout(HttpSession httpSession, Model model) {
-	// System.out.println("in logout");
-	// httpSession.setAttribute("loginstatus", "f");
-	// CredentialBean CredentialBean = (CredentialBean)
-	// httpSession.getAttribute("cb");
-	// System.out.println(CredentialBean.toString());
-	// authentication1.changeLoginStatus(CredentialBean, 0);
-	// return "Logout";
-	// }
+	@RequestMapping(value = "/Logout", method = RequestMethod.GET)
+	public String getLogout(HttpSession httpSession, Model model) {
+		
+		CredentialBean CredentialBean = (CredentialBean) httpSession.getAttribute("cb");
+		authentication1.changeLoginStatus(CredentialBean, 0);
+		return "Logout";
+	}
 
 }
