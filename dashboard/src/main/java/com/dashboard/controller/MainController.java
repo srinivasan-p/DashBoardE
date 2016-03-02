@@ -44,14 +44,18 @@ public class MainController {
 	public String addValues(HttpSession httpSession, @ModelAttribute("index") CredentialBean CredentialBean,
 			Model model, HttpServletRequest request) {
 
-		httpSession.setAttribute("cb", CredentialBean);
+		
 		String u = CredentialBean.getpId();
 		String validate = authentication1.authenticate(CredentialBean);
+		
 
 		if (validate.equalsIgnoreCase("true")) {
 
 			CredentialBean.setType(authentication1.authorize(u));
-
+			
+			httpSession.setAttribute("cb", CredentialBean);
+			httpSession.setAttribute("pId", u);
+			
 			if (authentication1.authorize(u).equalsIgnoreCase("a")) {
 				authentication1.changeLoginStatus(CredentialBean, 1);
 				System.out.println("admin");

@@ -1,7 +1,13 @@
 package com.dashboard.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dashboard.service.Student;
 
@@ -11,35 +17,25 @@ public class StudentController {
 	@Autowired
 	Student studentService;
 
-//	@RequestMapping(value = "/AddAilmentDetails", method = RequestMethod.GET)
-//	public String setValues(Model model) {
-//		PatientBean patientBean = new PatientBean();
-//		model.addAttribute("AddAilmentDetailsModel", patientBean);
-//		return "AddAilmentDetails";
-//	}
-//
-//	@RequestMapping(value = "/AddAilmentDetails", method = RequestMethod.POST)
-//	public String addValues(
-//			HttpSession httpSession,
-//			@ModelAttribute("AddAilmentDetailsModel") @Valid PatientBean patientBean,
-//			BindingResult bindingResult) {
-//
-//		if (bindingResult.hasErrors()) {
-//
-//			FieldError error = bindingResult.getFieldError();
-//			System.out.println(error.getField());
-//			System.out.println("HAs Errors");
-//			return "AddAilmentDetails";
-//		}
-//		patientBean.setUserID((String) httpSession.getAttribute("u"));
-//		String stat = studentService.addAilmentDetails(patientBean);
-//		httpSession.setAttribute("patientID", patientBean.getPatientID());
-//		if (stat.equalsIgnoreCase("success")) {
-//			return "addailmentsuccess";
-//		} else {
-//			return "failure";
-//		}
-//	}
+	@RequestMapping(value = "/SkillSelect", method = RequestMethod.GET)
+	public String setSkill(Model model) {
+		return "SkillSelect";
+	}
+
+	@RequestMapping(value = "/SkillSelect", method = RequestMethod.POST)
+	public String addSkill(HttpSession httpSession, HttpServletRequest httpServletRequest) {
+
+		String skillarray=httpServletRequest.getParameter("skillarray");
+		String pId = (String) httpSession.getAttribute("pId");
+		pId = pId.trim();
+		System.out.println(skillarray.toString() + "   " + pId);
+		String result = studentService.addStudentSkill(pId, skillarray);
+		if(result.equalsIgnoreCase("Success")){
+			return "Success";
+		}else {
+			return "Failure";
+		}
+	}
 //
 //	@Autowired
 //	SessionFactory sessionFactory;
