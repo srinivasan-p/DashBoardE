@@ -25,8 +25,8 @@ public class StudentImp implements Student {
 	}
 
 	public ArrayList<StudentSkillBean> viewStudentSkill(String pId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return studentDAO.viewStudentSkill(pId);
 	}
 
 	// @Override

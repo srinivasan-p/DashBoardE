@@ -2,8 +2,9 @@ package com.dashboard.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,7 @@ public class StudentDAOImpl implements StudentDAO {
 	public String addStudentSkill(String pId, String skillarray) {
 
 		try {
-			String [] skilla = skillarray.trim().split(",");
-			System.out.println(skilla.toString()+"          is the selected id ofskill ********************");
+			String[] skilla = skillarray.trim().split(",");
 			for (int i = 0; i < skilla.length; i++) {
 				StudentSkillBean ssb = new StudentSkillBean();
 				Session session = sessionFactory.getCurrentSession();
@@ -36,13 +36,21 @@ public class StudentDAOImpl implements StudentDAO {
 		} catch (Exception e) {
 			System.out.println(e);
 			return "Failure";
-		} 
+		}
 		return "Success";
-		
+
 	}
 
 	public ArrayList<StudentSkillBean> viewStudentSkill(String pId) {
-		// TODO Auto-generated method stub
+		// WHERE ss.pId=?
+		Session session = sessionFactory.getCurrentSession();
+		@SuppressWarnings("unused")
+		CredentialBean cd = (CredentialBean) session.get(CredentialBean.class, pId);
+		Query query = session
+				.createQuery("select s.skillName from StudentSkillBean as ss INNER JOIN ss.SkillBean as s where ss.pId=?");
+		query.setParameter(0, cd);
+		List<String> list = query.list();
+		System.out.println(list.toString() + "Hi ");
 		return null;
 	}
 

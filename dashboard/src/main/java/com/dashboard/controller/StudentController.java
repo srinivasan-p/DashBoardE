@@ -28,7 +28,6 @@ public class StudentController {
 		String skillarray=httpServletRequest.getParameter("skillarray");
 		String pId = (String) httpSession.getAttribute("pId");
 		pId = pId.trim();
-		System.out.println(skillarray.toString() + "   " + pId);
 		String result = studentService.addStudentSkill(pId, skillarray);
 		if(result.equalsIgnoreCase("Success")){
 			return "Success";
@@ -36,6 +35,15 @@ public class StudentController {
 			return "Failure";
 		}
 	}
+	
+	@RequestMapping(value = "/ViewSkill", method = RequestMethod.GET)
+	public String viewSkill(HttpSession httpSession, Model model) {
+		String pId = (String) httpSession.getAttribute("pId");
+		studentService.viewStudentSkill(pId);
+		return "ViewSkill";
+	}
+	
+	
 //
 //	@Autowired
 //	SessionFactory sessionFactory;

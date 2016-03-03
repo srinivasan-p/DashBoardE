@@ -12,6 +12,7 @@ public class TrainerBean {
 	@Id
 	private String courseId;
 	private String trainerId;
+	private String title;
 	private int skillId;
 	private Date startDate;
 	private Date endDate;
@@ -61,6 +62,13 @@ public class TrainerBean {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
 	
 
 }
