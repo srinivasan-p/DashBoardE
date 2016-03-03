@@ -22,7 +22,9 @@ public class StudentSkillBean {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pId")
 	private CredentialBean pId;
-	private int skillId;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "skillId")
+	private SkillBean skillId;
 	private Date updatedOn;
 	private String updatedBy;
 
@@ -42,11 +44,11 @@ public class StudentSkillBean {
 		this.pId = pId;
 	}
 
-	public int getSkillId() {
+	public SkillBean getSkillId() {
 		return skillId;
 	}
 
-	public void setSkillId(int skillId) {
+	public void setSkillId(SkillBean skillId) {
 		this.skillId = skillId;
 	}
 

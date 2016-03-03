@@ -2,7 +2,6 @@ package com.dashboard.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dashboard.beans.CredentialBean;
+import com.dashboard.beans.SkillBean;
 import com.dashboard.beans.StudentSkillBean;
 
 @Repository("studentDAO")
@@ -28,7 +28,9 @@ public class StudentDAOImpl implements StudentDAO {
 				Session session = sessionFactory.getCurrentSession();
 				CredentialBean cd = (CredentialBean) session.get(CredentialBean.class, pId);
 				ssb.setpId(cd);
-				ssb.setSkillId(Integer.parseInt(skilla[i].trim()));
+				int skillId = Integer.parseInt(skilla[i].trim());
+				SkillBean sb = (SkillBean) session.get(SkillBean.class, skillId);
+				ssb.setSkillId(sb);
 				ssb.setUpdatedBy(pId);
 				ssb.setUpdatedOn(new Date());
 				session.save(ssb);
@@ -41,17 +43,15 @@ public class StudentDAOImpl implements StudentDAO {
 
 	}
 
-	public ArrayList<StudentSkillBean> viewStudentSkill(String pId) {
-		// WHERE ss.pId=?
+	public ArrayList<String> viewStudentSkill(String pId) {
 		Session session = sessionFactory.getCurrentSession();
-		@SuppressWarnings("unused")
 		CredentialBean cd = (CredentialBean) session.get(CredentialBean.class, pId);
-		Query query = session
-				.createQuery("select s.skillName from StudentSkillBean as ss INNER JOIN ss.SkillBean as s where ss.pId=?");
+		Query query = session.createQuery(
+				"select s.skillName from StudentSkillBean as ss INNER JOIN ss.skillId as s where ss.pId=?");
 		query.setParameter(0, cd);
-		List<String> list = query.list();
-		System.out.println(list.toString() + "Hi ");
-		return null;
+		@SuppressWarnings("unchecked")
+		ArrayList<String> list = (ArrayList<String>) query.list();
+		return list;
 	}
 
 	// @Override

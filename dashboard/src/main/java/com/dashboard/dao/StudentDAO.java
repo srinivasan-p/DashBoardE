@@ -13,5 +13,5 @@ public interface StudentDAO {
 //	public Map<AppointmentBean, PatientBean> viewAppointmentDetails(String patientID, Date date);
 	
 	String addStudentSkill(String pId, String skillarray);
-	ArrayList<StudentSkillBean> viewStudentSkill(String pId);
+	ArrayList<String> viewStudentSkill(String pId);
 }

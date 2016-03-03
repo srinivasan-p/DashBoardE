@@ -1,5 +1,7 @@
 package com.dashboard.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -39,7 +41,8 @@ public class StudentController {
 	@RequestMapping(value = "/ViewSkill", method = RequestMethod.GET)
 	public String viewSkill(HttpSession httpSession, Model model) {
 		String pId = (String) httpSession.getAttribute("pId");
-		studentService.viewStudentSkill(pId);
+		ArrayList<String> list = studentService.viewStudentSkill(pId);
+		model.addAttribute("skillList", list);
 		return "ViewSkill";
 	}
 	

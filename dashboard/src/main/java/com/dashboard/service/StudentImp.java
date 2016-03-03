@@ -24,7 +24,7 @@ public class StudentImp implements Student {
 
 	}
 
-	public ArrayList<StudentSkillBean> viewStudentSkill(String pId) {
+	public ArrayList<String> viewStudentSkill(String pId) {
 		
 		return studentDAO.viewStudentSkill(pId);
 	}
