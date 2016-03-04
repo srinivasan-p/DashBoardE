@@ -41,6 +41,15 @@ try {
 			if (type.get(0).equals(user.getPassword())) 
 			{
 				System.out.println("authenticated");
+				sql = "SELECT status FROM newdb.db_credential where pId=:use";
+				query = session.createSQLQuery(sql);
+				query.setParameter("use", u);
+				@SuppressWarnings("unchecked")
+				ArrayList<Integer> s = (ArrayList<Integer>) query.list();
+				if (s.get(0)==9999) 
+				{
+					return "NotApproved";
+				}
 				return "true";
 			} 
 			else 
@@ -53,6 +62,7 @@ try {
 		catch (Exception e) 
 		{
 			System.out.println("in authentication error page");
+			System.out.println(e);
 			return "register";
 		}
 	}

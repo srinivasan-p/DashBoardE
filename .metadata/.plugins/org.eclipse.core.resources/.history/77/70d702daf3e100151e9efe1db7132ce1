@@ -1,0 +1,12 @@
+package com.dashboard.dao;
+
+import java.util.ArrayList;
+
+import com.dashboard.beans.StudentSkillBean;
+
+public interface StudentDAO 
+{
+	
+	String addStudentSkill(String pId, String skillarray);
+	ArrayList<String> viewStudentSkill(String pId);
+}

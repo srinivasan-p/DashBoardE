@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dashboard.beans.CredentialBean;
-import com.dashboard.beans.ProfileBean;
 import com.dashboard.util.Authentication;
 
 @Controller
@@ -64,6 +63,9 @@ public class MainController {
 				return "StudentPage";
 
 			}
+		}
+		else if(validate.equalsIgnoreCase("NotApproved")){
+			return "NotApproved";
 		}
 		return "LoginForm";
 	}
