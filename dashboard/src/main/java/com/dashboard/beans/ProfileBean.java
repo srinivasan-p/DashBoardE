@@ -37,6 +37,7 @@ public class ProfileBean {
 	private String location;
 	@NotEmpty
 	private String phoneNo;
+	private int skillPoints;
 	private Date updatedOn;
 	private String updatedBy;
 
@@ -120,11 +121,21 @@ public class ProfileBean {
 		this.updatedBy = updatedBy;
 	}
 
+	public int getSkillPoints() {
+		return skillPoints;
+	}
+
+	public void setSkillPoints(int skillPoints) {
+		this.skillPoints = skillPoints;
+	}
+
 	@Override
 	public String toString() {
 		return "ProfileBean [autogen=" + autogen + ", pId=" + pId + ", name=" + name + ", managerId=" + managerId
 				+ ", vertical=" + vertical + ", emailId=" + emailId + ", location=" + location + ", phoneNo=" + phoneNo
-				+ ", updatedOn=" + updatedOn + ", updatedBy=" + updatedBy + "]";
+				+ ", skillPoints=" + skillPoints + ", updatedOn=" + updatedOn + ", updatedBy=" + updatedBy + "]";
 	}
+	
+	
 
 }

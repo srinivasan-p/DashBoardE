@@ -14,5 +14,7 @@ public interface Student {
 	
 	String addStudentSkill(String pId,String skillarray);
 	ArrayList<String> viewStudentSkill(String pId);
+	boolean calculateSkill(String pId);
+	
 	
 }

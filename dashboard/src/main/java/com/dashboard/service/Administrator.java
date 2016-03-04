@@ -1,5 +1,6 @@
 package com.dashboard.service;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import com.dashboard.beans.ProfileBean;
@@ -13,5 +14,5 @@ public interface Administrator {
 //	ArrayList<DoctorBean> suggestDoctors(String patientId, Date date);
 //	Map <PatientBean, AppointmentBean> viewPatientsByDate(Date appointmentDate);
 	
-	Map<ProfileBean, StudentSkillBean> viewAllStudents();
+	Map<ProfileBean, ArrayList<StudentSkillBean>> viewAllStudents();
 }

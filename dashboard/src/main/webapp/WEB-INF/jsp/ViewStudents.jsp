@@ -31,21 +31,21 @@
 						<tr>
 							<th>Name</th>
 							<th>Employee ID</th>
-							<th>Name</th>
-							<th>Employee ID</th>
 							<th>Email Id</th>
 							<th>Skills</th>
+							<th>Skill Points</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach items="${result}" var="entry">
 							<tr>
-								<td>${entry.key}</td>
-								<td>${entry.value}</td>
 								<td>${entry.key.name}</td>
 								<td>${entry.key.pId.pId}</td>
 								<td>${entry.key.emailId}</td>
-								<td>${entry.value.skillId.skillName}</td>
+								<td><c:forEach items="${entry.value}" var="e2">
+									${e2.skillId.skillName},
+								</c:forEach></td>
+								<td>${entry.key.skillPoints}</td>
 							</tr>
 						</c:forEach>
 					</tbody>

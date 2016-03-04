@@ -27,7 +27,7 @@ public class AdminDAOImpl implements AdminDAO
 	@Autowired
 	Trainer  trainerService;
 
-	public Map<ProfileBean, StudentSkillBean> viewAllStudents() {
+	public Map<ProfileBean, ArrayList<StudentSkillBean>> viewAllStudents() {
 		
 		Session session= sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from CredentialBean where type='s'");
@@ -42,7 +42,7 @@ public class AdminDAOImpl implements AdminDAO
 			System.out.println(pb.toString());
 			pblist.add(pb);
 		}
-		Map<ProfileBean, StudentSkillBean> mapPBandSB = new HashMap<ProfileBean, StudentSkillBean>();
+		Map<ProfileBean, ArrayList<StudentSkillBean>> mapPBandSB = new HashMap<ProfileBean, ArrayList<StudentSkillBean>>();
 		
 		for (ProfileBean profileBean : pblist) {
 			ArrayList<StudentSkillBean> sbList= new ArrayList<StudentSkillBean>(); 
@@ -50,11 +50,9 @@ public class AdminDAOImpl implements AdminDAO
 			query.setParameter(0, profileBean.getpId());
 			sbList = (ArrayList<StudentSkillBean>) query.list();
 			System.out.println(sbList.size()  + "   " + sbList.toString() );
-			for (StudentSkillBean studentSkillBean : sbList) {
-				mapPBandSB.put(profileBean, studentSkillBean);
-				System.out.println(studentSkillBean.toString() );
-				System.out.println("*************** from map loop");
-			}
+			
+				mapPBandSB.put(profileBean, sbList);
+			
 		}
 		System.out.println();
 		System.out.println();

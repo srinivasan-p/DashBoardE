@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dashboard.beans.CredentialBean;
+import com.dashboard.beans.ProfileBean;
 import com.dashboard.beans.SkillBean;
 import com.dashboard.beans.StudentSkillBean;
 
@@ -52,6 +53,38 @@ public class StudentDAOImpl implements StudentDAO {
 		@SuppressWarnings("unchecked")
 		ArrayList<String> list = (ArrayList<String>) query.list();
 		return list;
+	}
+
+	public boolean calculateSkill(String pId) {
+
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			CredentialBean cb = (CredentialBean) session.get(CredentialBean.class, pId);
+			Query query = session.createQuery("from StudentSkillBean where pId=?");
+			query.setParameter(0, cb);
+			ArrayList<StudentSkillBean> ssblist = (ArrayList<StudentSkillBean>) query.list();
+			int points = ssblist.size() * 10;
+			
+			
+			CredentialBean cb1 = (CredentialBean) session.get(CredentialBean.class, pId);
+			query = session.createQuery("from ProfileBean where pId=?");
+			query.setParameter(0, cb1);
+			ArrayList<ProfileBean> pblist = (ArrayList<ProfileBean>) query.list();
+			if(!pblist.isEmpty()){
+				ProfileBean pb1 = (ProfileBean) pblist.get(0);
+				pb1.setSkillPoints(points);
+				Session sessin = sessionFactory.getCurrentSession();
+
+				sessin.update(pb1);
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+
 	}
 
 	// @Override

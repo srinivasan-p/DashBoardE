@@ -1,5 +1,6 @@
 package com.dashboard.service;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.hibernate.SessionFactory;
@@ -22,7 +23,7 @@ public class AdministratorImp implements Administrator {
 	@Autowired
 	Trainer trainerService;
 
-	public Map<ProfileBean, StudentSkillBean> viewAllStudents() {
+	public Map<ProfileBean, ArrayList<StudentSkillBean>> viewAllStudents() {
 
 		return adminDAO.viewAllStudents();
 

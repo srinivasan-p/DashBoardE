@@ -1,7 +1,9 @@
 package com.dashboard.util;
 
+import java.util.ArrayList;
 import java.util.Date;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dashboard.beans.CredentialBean;
 import com.dashboard.beans.ProfileBean;
+import com.dashboard.beans.StudentSkillBean;
 
 @Service("user")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -50,11 +53,39 @@ public class UserImpl implements User {
 			session.save(profileBean.getpId());
 			profileBean.setUpdatedBy("Registered by "+ profileBean.getpId().getpId());
 			profileBean.setUpdatedOn(new Date());
+			profileBean.setSkillPoints(0);
 			session.save(profileBean);
 			return "Success";
 		} catch (Exception e) {
 			return "Fail";
 		}
 	}
+//	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+//	public boolean calculateSkill(String pId) {
+//		
+//		try {
+//			Session session = sessionFactory.getCurrentSession();
+//			CredentialBean cb =  (CredentialBean) session.get(CredentialBean.class, pId);
+//			Query query =  session.createQuery("from StudentSkillBean where pId=?");
+//			query.setParameter(0, cb);
+//			ArrayList<StudentSkillBean> ssblist=(ArrayList<StudentSkillBean>) query.list();
+//			int points = ssblist.size()*10;
+//			System.out.println("The pOINT IS  ************************** points" + points);
+//			query = session.createQuery("from ProfileBean where pId=?");
+//			query.setParameter(0, cb);
+//			ArrayList<ProfileBean> pblist=(ArrayList<ProfileBean>) query.list();
+//			ProfileBean pb =(ProfileBean)pblist.get(0);
+//			pb.setSkillPoints(points);
+//			System.out.println(pb.toString());
+//			session.update(pb);
+////			System.out.println("Points Updated*****************"+  a);
+//			
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
+//		return true;
+//	}
 
 }

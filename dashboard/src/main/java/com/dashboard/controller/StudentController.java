@@ -46,7 +46,12 @@ public class StudentController {
 		return "ViewSkill";
 	}
 	
-	
+	@RequestMapping(value = "/CalculateSkill", method = RequestMethod.GET)
+	public String calSkill(HttpSession httpSession, Model model) {
+		String pId = (String) httpSession.getAttribute("pId");
+		studentService.calculateSkill(pId);
+		return "Success";
+	}
 //
 //	@Autowired
 //	SessionFactory sessionFactory;

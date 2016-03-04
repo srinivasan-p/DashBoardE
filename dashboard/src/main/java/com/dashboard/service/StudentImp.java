@@ -28,6 +28,12 @@ public class StudentImp implements Student {
 		
 		return studentDAO.viewStudentSkill(pId);
 	}
+	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public boolean calculateSkill(String pId) {
+		// TODO Auto-generated method stub
+		return studentDAO.calculateSkill(pId);
+	}
 
 	// @Override
 	// @Transactional(propagation = Propagation.REQUIRED, readOnly = false)

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dashboard.beans.CredentialBean;
 import com.dashboard.beans.ProfileBean;
+import com.dashboard.service.Student;
 import com.dashboard.util.Authentication;
 import com.dashboard.util.User;
 
@@ -38,24 +39,24 @@ public class MainController {
 	Authentication authentication1;
 	@Autowired
 	SessionFactory sessionFactory;
+	@Autowired
+	Student studentService;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	@RequestMapping(value = "/LoginForm", method = RequestMethod.POST)
 	public String addValues(HttpSession httpSession, @ModelAttribute("index") CredentialBean CredentialBean,
 			Model model, HttpServletRequest request) {
 
-		
 		String u = CredentialBean.getpId();
 		String validate = authentication1.authenticate(CredentialBean);
-		
 
 		if (validate.equalsIgnoreCase("true")) {
-
+			studentService.calculateSkill(u);
 			CredentialBean.setType(authentication1.authorize(u));
-			
+
 			httpSession.setAttribute("cb", CredentialBean);
 			httpSession.setAttribute("pId", u);
-			
+
 			if (authentication1.authorize(u).equalsIgnoreCase("a")) {
 				authentication1.changeLoginStatus(CredentialBean, 1);
 				System.out.println("admin");
@@ -71,6 +72,7 @@ public class MainController {
 				CredentialBean.setStatus(1);
 				// sessionFactory.getCurrentSession().save(CredentialBean);
 				authentication1.changeLoginStatus(CredentialBean, 1);
+
 				return "StudentPage";
 
 			}
