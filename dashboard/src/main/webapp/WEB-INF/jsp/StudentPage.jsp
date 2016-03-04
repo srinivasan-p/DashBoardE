@@ -10,6 +10,12 @@
 student
 <a href="SkillSelect.html">Skill Select</a>
 <a href="ViewSkill.html">View Skill</a>
+
+
+	<a href="calendar.html">Calendar</a>
+
+
+
 <a href="Logout.html">Click Here to logout</a>
 </body>
 </html>
