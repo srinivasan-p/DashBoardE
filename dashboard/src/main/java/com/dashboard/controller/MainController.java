@@ -53,7 +53,6 @@ public class MainController {
 
 			CredentialBean.setType(authentication1.authorize(u));
 			
-			httpSession.setAttribute("cb", CredentialBean);
 			httpSession.setAttribute("pId", u);
 			
 			if (authentication1.authorize(u).equalsIgnoreCase("a")) {

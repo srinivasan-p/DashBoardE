@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dashboard.beans.TrainerBean;
 import com.dashboard.dao.TrainerDAO;
 
 @Service("trainerService")
@@ -13,6 +14,12 @@ public class TrainerImp implements Trainer {
 	
 	@Autowired
 	TrainerDAO  trainerDAO;
+
+	public String addEvent(String pId, TrainerBean tb) {
+		return trainerDAO.addEvent(pId,tb);
+	}
+
+
 
 //	@Override
 //	public ArrayList<DoctorBean> viewAllAvailableDoctors(Date date) {

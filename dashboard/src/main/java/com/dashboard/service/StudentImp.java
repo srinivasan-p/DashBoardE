@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dashboard.beans.ScheduleBean;
 import com.dashboard.beans.StudentSkillBean;
 import com.dashboard.dao.StudentDAO;
 
@@ -27,6 +28,11 @@ public class StudentImp implements Student {
 	public ArrayList<String> viewStudentSkill(String pId) {
 		
 		return studentDAO.viewStudentSkill(pId);
+	}
+	
+	
+	public String addEvent(String studentId,ScheduleBean sb) {
+		return studentDAO.addSchedule(studentId,sb);
 	}
 
 	// @Override

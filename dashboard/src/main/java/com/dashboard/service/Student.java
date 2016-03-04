@@ -2,6 +2,7 @@ package com.dashboard.service;
 
 import java.util.ArrayList;
 
+import com.dashboard.beans.ScheduleBean;
 import com.dashboard.beans.StudentSkillBean;;
 
 public interface Student {
@@ -14,5 +15,7 @@ public interface Student {
 	
 	String addStudentSkill(String pId,String skillarray);
 	ArrayList<String> viewStudentSkill(String pId);
+	public String addEvent(String studentId, ScheduleBean sb);
+
 	
 }
