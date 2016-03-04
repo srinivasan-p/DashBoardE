@@ -1,8 +1,17 @@
 package com.dashboard.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.dashboard.beans.ProfileBean;
+import com.dashboard.beans.SkillBean;
+import com.dashboard.beans.StudentSkillBean;
+import com.dashboard.service.Administrator;
 import com.dashboard.util.User;
 
 @Controller
@@ -11,14 +20,17 @@ public class AdminController
 
 	@Autowired
 	User user;
+	
+	@Autowired
+	Administrator adminService;
 
-//	@RequestMapping(value = "/RegistrationForm", method = RequestMethod.GET)
-//	public String setValues(Model model) 
-//	{
-//		ProfileBean registrationBean = new ProfileBean();
-//		model.addAttribute("RegistrationFormmodel", registrationBean);
-//		return "RegistrationForm";
-//	}
+	@RequestMapping(value = "/ViewStudents", method = RequestMethod.GET)
+	public String setValues(Model model) 
+	{
+		Map<ProfileBean, StudentSkillBean> result = adminService.viewAllStudents();
+		model.addAttribute("result",result);
+		return "ViewStudents";
+	}
 //
 //	@RequestMapping(value = "/RegistrationForm", method = RequestMethod.POST)
 //	public String addValues(@ModelAttribute("RegistrationFormmodel") @Valid ProfileBean pb,

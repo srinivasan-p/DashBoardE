@@ -71,4 +71,10 @@ public class CredentialBean {
 		this.updatedBy = updatedBy;
 	}
 
+	@Override
+	public String toString() {
+		return "CredentialBean [pId=" + pId + ", password=" + password + ", status=" + status + ", type=" + type
+				+ ", updatedOn=" + updatedOn + ", updatedBy=" + updatedBy + "]";
+	}
+
 }

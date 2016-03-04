@@ -8,6 +8,7 @@
 </head>
 <body>
 Admin
+<a href="ViewStudents.html">View Students</a>
 <a href="Logout.html">Click Here to logout</a>
 </body>
 </html>

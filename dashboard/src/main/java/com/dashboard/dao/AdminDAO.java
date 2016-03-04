@@ -1,5 +1,10 @@
 package com.dashboard.dao;
 
+import java.util.Map;
+
+import com.dashboard.beans.ProfileBean;
+import com.dashboard.beans.StudentSkillBean;
+
 public interface AdminDAO 
 {
 //	public String addDoctor(DoctorBean doctoerBean);
@@ -9,4 +14,7 @@ public interface AdminDAO
 //	public ArrayList<DoctorBean> suggestDoctors(String patientId, Date date);
 //	public Map <PatientBean, AppointmentBean> viewPatientsByDate(Date appointmentDate);
 
+	Map <ProfileBean, StudentSkillBean> viewAllStudents();
+
+	
 }

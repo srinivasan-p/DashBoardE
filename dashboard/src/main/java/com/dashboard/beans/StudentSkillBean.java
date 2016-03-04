@@ -68,4 +68,10 @@ public class StudentSkillBean {
 		this.updatedBy = updatedBy;
 	}
 
+	@Override
+	public String toString() {
+		return "StudentSkillBean [skillAutoId=" + skillAutoId + ", pId=" + pId + ", skillId=" + skillId + ", updatedOn="
+				+ updatedOn + ", updatedBy=" + updatedBy + "]";
+	}
+
 }

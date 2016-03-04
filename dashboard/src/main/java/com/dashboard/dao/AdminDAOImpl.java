@@ -1,9 +1,21 @@
 package com.dashboard.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.dashboard.beans.CredentialBean;
+import com.dashboard.beans.ProfileBean;
+import com.dashboard.beans.SkillBean;
+import com.dashboard.beans.StudentSkillBean;
 import com.dashboard.service.Trainer;
 
 @Repository("adminDAO")
@@ -14,6 +26,41 @@ public class AdminDAOImpl implements AdminDAO
 	
 	@Autowired
 	Trainer  trainerService;
+
+	public Map<ProfileBean, StudentSkillBean> viewAllStudents() {
+		
+		Session session= sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from CredentialBean where type='s'");
+		ArrayList<CredentialBean> cblist = (ArrayList<CredentialBean>) query.list();
+		System.out.println(cblist.size() + "   " + cblist.toString() );
+		ArrayList<ProfileBean> pblist = new ArrayList<ProfileBean>() ;
+		for (CredentialBean credentialBean : cblist) {
+			query = session.createQuery("from ProfileBean where pId=?");
+			query.setParameter(0, credentialBean);
+			ProfileBean pb = new ProfileBean();
+			pb = (ProfileBean) query.list().get(0);
+			System.out.println(pb.toString());
+			pblist.add(pb);
+		}
+		Map<ProfileBean, StudentSkillBean> mapPBandSB = new HashMap<ProfileBean, StudentSkillBean>();
+		
+		for (ProfileBean profileBean : pblist) {
+			ArrayList<StudentSkillBean> sbList= new ArrayList<StudentSkillBean>(); 
+			query = session.createQuery("from StudentSkillBean where pId=?");
+			query.setParameter(0, profileBean.getpId());
+			sbList = (ArrayList<StudentSkillBean>) query.list();
+			System.out.println(sbList.size()  + "   " + sbList.toString() );
+			for (StudentSkillBean studentSkillBean : sbList) {
+				mapPBandSB.put(profileBean, studentSkillBean);
+				System.out.println(studentSkillBean.toString() );
+				System.out.println("*************** from map loop");
+			}
+		}
+		System.out.println();
+		System.out.println();
+		System.out.println(mapPBandSB.size()  + "   " + mapPBandSB.toString() );
+		return mapPBandSB;
+	}
 
 //	@Override
 //	public String addDoctor(DoctorBean doctoerBean) 

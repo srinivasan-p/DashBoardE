@@ -120,4 +120,11 @@ public class ProfileBean {
 		this.updatedBy = updatedBy;
 	}
 
+	@Override
+	public String toString() {
+		return "ProfileBean [autogen=" + autogen + ", pId=" + pId + ", name=" + name + ", managerId=" + managerId
+				+ ", vertical=" + vertical + ", emailId=" + emailId + ", location=" + location + ", phoneNo=" + phoneNo
+				+ ", updatedOn=" + updatedOn + ", updatedBy=" + updatedBy + "]";
+	}
+
 }
