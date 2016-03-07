@@ -100,6 +100,10 @@ public class controller1
 		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
 		String stdt=request.getParameter("startDate");
 		String edt=request.getParameter("endDate");
+		String event=(String) request.getParameter("eventName");
+		String pId = (String) session.getAttribute("pId");
+
+
 		try {
 			stdt1=sdf.parse(stdt);
 			edt1=sdf.parse(edt);
@@ -109,13 +113,16 @@ public class controller1
 		}
 		tb.setStartDate(new java.sql.Date(stdt1.getTime()));
 		tb.setEndDate(new java.sql.Date(edt1.getTime()));
+		String courseId;
+		courseId=(event+pId+stdt+edt).replaceAll("/", "");
+		tb.setCourseId(courseId);
 		tb.setSkillId(201);
-		String pId = (String) session.getAttribute("pId");
 		
-		String event=(String) request.getParameter("eventName");
 		System.out.println(event);
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!"+courseId);
 		tb.setTitle(event);
 		System.out.println("aftersubmission");
+		
 		
 		if(trainer.addEvent(pId,tb).equalsIgnoreCase("success")){
 		
@@ -129,11 +136,10 @@ public class controller1
 	
 	
 	@RequestMapping(value="/fixschedule1",method=RequestMethod.POST)
-	public @ResponseBody String fixschedule1(HttpServletRequest request) throws Exception
+	public @ResponseBody String fixschedule1(HttpServletRequest request,HttpSession session) throws Exception
 	{
 		ScheduleBean sb = new ScheduleBean();
-		String StudentId = "200";//*************student id from session tot be added*************
-		int scheduleid = 100;
+		String StudentId = (String) session.getAttribute("pId");
 		Date stdt1=new Date();
 		Date edt1=new Date();
 		String event=(String) request.getParameter("eventName");
@@ -155,7 +161,7 @@ public class controller1
 		System.out.println(sqledt1Date);
 		System.out.println(event);
 
-		PreparedStatement pre = Conn.prepareStatement("select courseId from dd.db_Trainer where startDate=? and endDate=? and title=?");
+		PreparedStatement pre = Conn.prepareStatement("select courseId from newdb.db_Trainer where startDate=? and endDate=? and title=?");
 		pre.setDate(1,sqlstdt1Date);
 		pre.setDate(2,sqledt1Date);
 		pre.setString(3, event);
@@ -167,9 +173,11 @@ public class controller1
 			courseId = rs.getString(1);
 		}
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+courseId);
+		String scheduleid = StudentId+courseId;
 		sb.setScheduleId(scheduleid);
 		sb.setCompletionStatus(0);
 		sb.setCourseId(courseId);
+		//return null;
 		
 		
 		if(student.addEvent(StudentId,sb).equalsIgnoreCase("success"))
@@ -231,7 +239,7 @@ public class controller1
         result = result  + "events: [";
 		Connection Conn = DBUtill.getDBConnection();
 		PreparedStatement pre = Conn
-				.prepareStatement("SELECT * FROM dd.db_trainer");
+				.prepareStatement("SELECT * FROM newdb.db_Trainer");
 		ResultSet res = pre.executeQuery();
 		while (res.next()) {
 			
@@ -248,12 +256,22 @@ public class controller1
 
 	     result = result  + "events: [";
 			PreparedStatement pre1 = Conn
-					.prepareStatement("SELECT * FROM dd.db_trainer");
-			ResultSet res1 = pre.executeQuery();
-			while (res1.next()) {
+					.prepareStatement("SELECT courseId FROM newdb.db_schedule");
+			ResultSet res1 = pre1.executeQuery();
+			while(res1.next())
+			{
+				System.out.println(res1.getString(1));
+				PreparedStatement pre2 = Conn.prepareStatement("SELECT * FROM newdb.db_Trainer where courseId = ?");
+				pre2.setString(1, res1.getString(1));
+				ResultSet res2 = pre2.executeQuery();
+				while (res2.next()) {
 				
-				result = result  + "{id:'tag',title:'"+res1.getString("title")+"',start:'"+res1.getDate("startDate")+"',end:'"+res1.getDate("endDate")+"T12:00:00',backgroundColor:'#B51C04'},";
+				result = result  + "{id:'tag',title:'"+res2.getString("title")+"',start:'"+res2.getDate("startDate")+"',end:'"+res2.getDate("endDate")+"T12:00:00',backgroundColor:'#B51C04'},";
 			}
+				
+			}
+			
+
 			 result = result  + "],";
 			 
 		     result = result  + "}";
@@ -336,7 +354,7 @@ public class controller1
         result = result  + "events: [";
 		Connection Conn = DBUtill.getDBConnection();
 		PreparedStatement pre = Conn
-				.prepareStatement("SELECT * FROM dd.db_trainer");
+				.prepareStatement("SELECT * FROM newdb.db_Trainer");
 		ResultSet res = pre.executeQuery();
 		while (res.next()) {
 			System.out.println(res.getDate("startDate"));
@@ -361,9 +379,9 @@ public class controller1
 	
 	
 	@RequestMapping(value="/doAjaxPostforcancel",method=RequestMethod.POST)
-	public @ResponseBody String doAjaxPostforcancel(HttpServletRequest request,HttpServletResponse response) throws Exception
+	public @ResponseBody String doAjaxPostforcancel(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws Exception
 	{
-		String StudentId = "200";//*************student id from session tot be added*************
+		String StudentId = (String) session.getAttribute("pId");
 		Date stdt1=new Date();
 		Date edt1=new Date();
 		String event=(String) request.getParameter("eventName");
@@ -384,7 +402,7 @@ public class controller1
 		System.out.println(sqlstdt1Date);
 		System.out.println(sqledt1Date);
 		System.out.println(event);
-		PreparedStatement pre = Conn.prepareStatement("select courseId from dd.db_Trainer where startDate=? and endDate=? and title=?");
+		PreparedStatement pre = Conn.prepareStatement("select courseId from newdb.db_Trainer where startDate=? and endDate=? and title=?");
 		pre.setDate(1,sqlstdt1Date);
 		pre.setDate(2,sqledt1Date);
 		pre.setString(3, event);
@@ -397,7 +415,7 @@ public class controller1
 		}
 		
 		
-		PreparedStatement pre1 = Conn.prepareStatement("DELETE FROM dd.db_schedule WHERE courseId =? and pId=? ;");
+		PreparedStatement pre1 = Conn.prepareStatement("DELETE FROM newdb.db_schedule WHERE courseId =? and pId=? ;");
 		pre1.setString(1,courseId);
 		pre1.setString(2,StudentId);
 		int flg = pre1.executeUpdate();

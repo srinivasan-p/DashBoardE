@@ -16,7 +16,6 @@ import javax.persistence.Table;
 public class TrainerBean {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String courseId;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "trainerId")

@@ -54,6 +54,7 @@ public class MainController {
 			CredentialBean.setType(authentication1.authorize(u));
 			
 			httpSession.setAttribute("pId", u);
+			httpSession.setAttribute("cb", CredentialBean);
 			
 			if (authentication1.authorize(u).equalsIgnoreCase("a")) {
 				authentication1.changeLoginStatus(CredentialBean, 1);

@@ -4,11 +4,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <meta charset='utf-8' />
-<link href="../Dashboard/fullcalendar.css" rel='stylesheet' />
-<link href="../Dashboard/fullcalendar.print.css" rel='stylesheet' media='print' />
-<script src="../Dashboard/libs/moment.min.js"></script>
- <script src="../Dashboard/libs/jquery.min.js"></script>
-<script src="../Dashboard/fullcalendar.min.js"></script>
+<link href="../dashboard/fullcalendar.css" rel='stylesheet' />
+<link href="../dashboard/fullcalendar.print.css" rel='stylesheet' media='print' />
+<script src="../dashboard/libs/moment.min.js"></script>
+ <script src="../dashboard/libs/jquery.min.js"></script>
+<script src="../dashboard/fullcalendar.min.js"></script>
 
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
@@ -151,7 +151,7 @@ function doAjaxPost(eventName,startDate,endDate){
 
 <div id="event">
 </div>
-<div id='calendar'></div>
+<div id="calendar"></div>
 <div id="createEventModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
     
     <div class="modal-header">
