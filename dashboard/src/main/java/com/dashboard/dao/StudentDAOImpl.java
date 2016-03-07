@@ -44,9 +44,9 @@ public class StudentDAOImpl implements StudentDAO {
 			System.out.println(cb.getStatus());
 			System.out.println(cb.getType());
 			sb.setStudentId(cb);
-			int scheduleId=(Integer) session.save(sb);
+			String scheduleId=(String) session.save(sb);
 
-			if(scheduleId==0){
+			if(scheduleId == null){
 				return "failure";
 			}
 			else{
