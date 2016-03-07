@@ -1,8 +1,13 @@
 package com.dashboard.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +38,44 @@ public class AdminController
 		Map<ProfileBean, ArrayList<StudentSkillBean>> result = adminService.viewAllStudents();
 		model.addAttribute("result",result);
 		return "ViewStudents";
+	}
+	
+	@RequestMapping(value = "/ScheduleInterview", method = RequestMethod.POST)
+	public String scheduleInterview(HttpServletRequest httpServletRequest,HttpSession httpSession, Model model) 
+	{
+		String[] stinlist =  (String[] )httpServletRequest.getParameterValues("stinlist");
+		httpSession.setAttribute("stinlist", stinlist);
+		System.out.println(Arrays.toString(stinlist));
+		return "DoScheduleWithInterviewer";
+	}
+	@RequestMapping(value = "/DoScheduleWithInterviewer", method = RequestMethod.POST)
+	public String doScheduleWithInterviewer(HttpServletRequest httpServletRequest,HttpSession httpSession, Model model) 
+	{
+		String[] stinlist =  (String[] )httpSession.getAttribute("stinlist");
+		System.out.println(Arrays.toString(stinlist));
+		String intDate =httpServletRequest.getParameter("intDate");
+		String intTime=httpServletRequest.getParameter("intTime");
+		String intPanel=httpServletRequest.getParameter("intPanel");
+		System.out.println(intDate + "   " + intTime + "   " + intPanel );
+		intDate = intDate + " " + intTime;
+		SimpleDateFormat sim = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date d = null;
+		try {
+			d = sim.parse(intDate);
+			System.out.println(d);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Parse ERROR **************");
+		}
+		String[] intPanelArray  =intPanel.split(",");
+		System.out.println(Arrays.toString(intPanelArray));
+		String result = adminService.iSchedule(intPanelArray, stinlist, d);
+		if(result.equalsIgnoreCase("Success")){
+			return "Success";
+		}else{
+			return "Failure";
+		}
 	}
 //
 //	@RequestMapping(value = "/RegistrationForm", method = RequestMethod.POST)

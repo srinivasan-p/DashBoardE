@@ -1,6 +1,7 @@
 package com.dashboard.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import org.hibernate.SessionFactory;
@@ -27,6 +28,12 @@ public class AdministratorImp implements Administrator {
 
 		return adminDAO.viewAllStudents();
 
+	}
+	
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+	public String iSchedule(String[] interviewer, String[] interviwee, Date iDate) {
+		
+		return adminDAO.iSchedule(interviewer, interviwee, iDate);
 	}
 
 	// @Override

@@ -1,6 +1,7 @@
 package com.dashboard.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import com.dashboard.beans.ProfileBean;
@@ -16,6 +17,7 @@ public interface AdminDAO
 //	public Map <PatientBean, AppointmentBean> viewPatientsByDate(Date appointmentDate);
 
 	Map <ProfileBean, ArrayList<StudentSkillBean>> viewAllStudents();
+	String iSchedule(String[] interviewer, String[] interviwee, Date iDate);
 
 	
 }

@@ -25,31 +25,35 @@
 			<div class="box clearfix">
 				<h3>Bootstrap Data Table</h3>
 				<p>Easily turn your tables into datatables.</p>
-
-				<table class="table table-hover" id="bootstrap-table">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Employee ID</th>
-							<th>Email Id</th>
-							<th>Skills</th>
-							<th>Skill Points</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${result}" var="entry">
+				<form action="ScheduleInterview.html" method="post">
+					<table class="table table-hover" id="bootstrap-table">
+						<thead>
 							<tr>
-								<td>${entry.key.name}</td>
-								<td>${entry.key.pId.pId}</td>
-								<td>${entry.key.emailId}</td>
-								<td><c:forEach items="${entry.value}" var="e2">
+								<th>Name</th>
+								<th>Employee ID</th>
+								<th>Email Id</th>
+								<th>Skills</th>
+								<th>Skill Points</th>
+								<th>schedule Interview</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${result}" var="entry">
+								<tr>
+									<td>${entry.key.name}</td>
+									<td>${entry.key.pId.pId}</td>
+									<td>${entry.key.emailId}</td>
+									<td><c:forEach items="${entry.value}" var="e2">
 									${e2.skillId.skillName},
 								</c:forEach></td>
-								<td>${entry.key.skillPoints}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+									<td>${entry.key.skillPoints}</td>
+									<td><input type="checkbox" name="stinlist" value="${entry.key.pId.pId}"></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<input type="submit">
+				</form>
 			</div>
 		</div>
 	</div>
