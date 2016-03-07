@@ -1,6 +1,9 @@
 package com.dashboard.controller;
 
+import java.util.ArrayList;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,9 +28,9 @@ public class AdminController
 	Administrator adminService;
 
 	@RequestMapping(value = "/ViewStudents", method = RequestMethod.GET)
-	public String setValues(Model model) 
+	public String setValues(HttpSession httpSession,Model model) 
 	{
-		Map<ProfileBean, StudentSkillBean> result = adminService.viewAllStudents();
+		Map<ProfileBean, ArrayList<StudentSkillBean>> result = adminService.viewAllStudents();
 		model.addAttribute("result",result);
 		return "ViewStudents";
 	}

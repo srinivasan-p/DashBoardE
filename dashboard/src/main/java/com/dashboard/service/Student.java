@@ -5,17 +5,15 @@ import java.util.ArrayList;
 import com.dashboard.beans.ScheduleBean;
 import com.dashboard.beans.StudentSkillBean;;
 
-public interface Student {
-//	String addAilmentDetails(PatientBean patientBean);
-//	boolean modifyAilmentDetails(PatientBean patientBean);
-//	ArrayList<PatientBean> viewAilmentDetails(String patientID);
-//	ArrayList<DoctorBean> viewListOfDoctors(String type, Date date);
-//	String requestforAppointment(String doctorID, Date appointmentDate,String userID,String specialization);
-//	Map<AppointmentBean, PatientBean> viewAppointmentDetails(String patientID, Date date);
-	
+public interface Student {	
 	String addStudentSkill(String pId,String skillarray);
 	ArrayList<String> viewStudentSkill(String pId);
+//<<<<<<< HEAD
 	public String addEvent(String studentId, ScheduleBean sb);
 
+//=======
+	boolean calculateSkill(String pId);
+	
+//>>>>>>> branch 'master' of https://github.com/srinivasan-p/DashBoardE.git
 	
 }

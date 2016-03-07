@@ -13,7 +13,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dashboard.beans.CredentialBean;
+//<<<<<<< HEAD
 import com.dashboard.beans.ScheduleBean;
+//=======
+import com.dashboard.beans.ProfileBean;
+//>>>>>>> branch 'master' of https://github.com/srinivasan-p/DashBoardE.git
 import com.dashboard.beans.SkillBean;
 import com.dashboard.beans.StudentSkillBean;
 import com.dashboard.util.DBUtill;
@@ -99,6 +103,42 @@ public class StudentDAOImpl implements StudentDAO {
 		return list;
 	}
 
+//<<<<<<< HEAD
 	
+//=======
+	public boolean calculateSkill(String pId) {
+
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			CredentialBean cb = (CredentialBean) session.get(CredentialBean.class, pId);
+			Query query = session.createQuery("from StudentSkillBean where pId=?");
+			query.setParameter(0, cb);
+			ArrayList<StudentSkillBean> ssblist = (ArrayList<StudentSkillBean>) query.list();
+			int points = ssblist.size() * 10;
+			
+			
+			CredentialBean cb1 = (CredentialBean) session.get(CredentialBean.class, pId);
+			query = session.createQuery("from ProfileBean where pId=?");
+			query.setParameter(0, cb1);
+			ArrayList<ProfileBean> pblist = (ArrayList<ProfileBean>) query.list();
+			if(!pblist.isEmpty()){
+				ProfileBean pb1 = (ProfileBean) pblist.get(0);
+				pb1.setSkillPoints(points);
+				Session sessin = sessionFactory.getCurrentSession();
+
+				sessin.update(pb1);
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+
+	}
+
+	
+//>>>>>>> branch 'master' of https://github.com/srinivasan-p/DashBoardE.git
 
 }
