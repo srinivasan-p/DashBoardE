@@ -8,6 +8,12 @@
 </head>
 <body>
 trainer
+
+<a href="addEvent.html">AddEvent</a>
+
+<a href="completionStatus.html">Update-CompletionStatus</a>
+
+
 <a href="Logout.html">Click Here to logout</a>
 </body>
 </html>

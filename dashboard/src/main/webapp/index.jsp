@@ -24,7 +24,7 @@
 	<a href="RegistrationForm.html" class="btn btn-danger">Registration</a>
 	
 	<a href="LoginForm.html" class="btn btn-warning">Login</a>
-	
+
 
 </div>
 </body>
