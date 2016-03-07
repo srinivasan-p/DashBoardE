@@ -4,75 +4,67 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "db_schedule")
+@Table(name="db_schedule")
 public class ScheduleBean {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String scheduleId;
-	private int courseId;
+	private String courseId;
 	private Date updatedOn;
 	private String updatedBy;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pId")
+	private CredentialBean studentId;
+	
 	private int completionStatus;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "pId")
-	private CredentialBean studentId;
-
+	
+	
 	public String getScheduleId() {
 		return scheduleId;
 	}
-
 	public void setScheduleId(String scheduleId) {
 		this.scheduleId = scheduleId;
 	}
-
-	public int getCourseId() {
+	public String getCourseId() {
 		return courseId;
 	}
-
-	public void setCourseId(int courseId) {
+	public void setCourseId(String courseId) {
 		this.courseId = courseId;
 	}
-
 	public CredentialBean getStudentId() {
 		return studentId;
 	}
-
 	public void setStudentId(CredentialBean studentId) {
 		this.studentId = studentId;
 	}
-
 	public int getCompletionStatus() {
 		return completionStatus;
 	}
-
 	public void setCompletionStatus(int completionStatus) {
 		this.completionStatus = completionStatus;
 	}
-
 	public Date getUpdatedOn() {
 		return updatedOn;
 	}
-
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
 	}
-
 	public String getUpdatedBy() {
 		return updatedBy;
 	}
-
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
+	
+	
+	
+	
 }

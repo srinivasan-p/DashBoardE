@@ -1,14 +1,40 @@
 package com.dashboard.dao;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.dashboard.beans.CredentialBean;
+import com.dashboard.beans.TrainerBean;
 
 @Repository("trainerDAO")
 public class TrainerDAOImpl implements TrainerDAO{
 
 	@Autowired
 	SessionFactory sessionFactory;
+
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
+	public String addEvent(String pId,TrainerBean tb) 
+	{
+	Session s=sessionFactory.getCurrentSession();
+	
+	
+	
+	CredentialBean cb = (CredentialBean) s.get(CredentialBean.class, pId);
+	tb.setTrainerId(cb);
+
+	String courseId=(String) s.save(tb);
+	if(courseId==null){
+		return "failure";
+	}
+	else{
+	return "Success";
+	}
+	
+	}
 
 //	public ArrayList<DoctorBean> availableDoctorsDetails(java.sql.Date sqldate) {
 //		Session session= sessionFactory.getCurrentSession();

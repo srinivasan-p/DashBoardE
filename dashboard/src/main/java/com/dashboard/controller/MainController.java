@@ -53,10 +53,19 @@ public class MainController {
 		if (validate.equalsIgnoreCase("true")) {
 			studentService.calculateSkill(u);
 			CredentialBean.setType(authentication1.authorize(u));
+//<<<<<<< HEAD
+			
+//=======
 
 			httpSession.setAttribute("cb", CredentialBean);
+//>>>>>>> branch 'master' of https://github.com/srinivasan-p/DashBoardE.git
 			httpSession.setAttribute("pId", u);
+//<<<<<<< HEAD
+			httpSession.setAttribute("cb", CredentialBean);
+			
+//=======
 
+//>>>>>>> branch 'master' of https://github.com/srinivasan-p/DashBoardE.git
 			if (authentication1.authorize(u).equalsIgnoreCase("a")) {
 				authentication1.changeLoginStatus(CredentialBean, 1);
 				System.out.println("admin");
