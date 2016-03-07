@@ -114,7 +114,7 @@ public class controller1
 		tb.setStartDate(new java.sql.Date(stdt1.getTime()));
 		tb.setEndDate(new java.sql.Date(edt1.getTime()));
 		String courseId;
-		courseId=(event+pId+stdt+edt).replaceAll("/", "");
+		courseId=(pId+event+stdt+edt).replaceAll("/", "");
 		tb.setCourseId(courseId);
 		tb.setSkillId(201);
 		
