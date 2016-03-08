@@ -84,6 +84,19 @@ public class AdminController {
 			return"Failure";
 		}
 	}
+	
+	@RequestMapping(value = "/ScheduleInterviewDeletion", method = RequestMethod.POST)
+	public String scheduleInterviewDeletion(HttpServletRequest httpServletRequest, HttpSession httpSession, Model model) {
+		String[] interviewIDstoDelete = (String[]) httpServletRequest.getParameterValues("interviewIDstoDelete");
+		String result = adminService.DeleteInterview(interviewIDstoDelete);
+		if (result.equalsIgnoreCase("Success")) {
+			return "Success";
+		} else {
+			return "Failure";
+		}
+	}
+	
+	
 	//
 	// @RequestMapping(value = "/RegistrationForm", method = RequestMethod.POST)
 	// public String addValues(@ModelAttribute("RegistrationFormmodel") @Valid

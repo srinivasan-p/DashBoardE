@@ -43,6 +43,10 @@ public class AdministratorImp implements Administrator {
 		return adminDAO.ViewAllScheduledInterview();
 	}
 
+	public String DeleteInterview(String[] interviewIDstoDelete) {
+		return adminDAO.DeleteInterview(interviewIDstoDelete);
+	}
+
 	// @Override
 	// public String addDoctor(DoctorBean doctoerBean)
 	// {

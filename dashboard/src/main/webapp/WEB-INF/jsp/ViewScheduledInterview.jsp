@@ -26,7 +26,7 @@
 			<div class="box clearfix">
 				<h3>Bootstrap Data Table</h3>
 				<p>Easily turn your tables into datatables.</p>
-				<form action="ScheduleInterview.html" method="post">
+				<form action="ScheduleInterviewDeletion.html" method="post">
 					<table class="table table-hover table-striped" id="bootstrap-table">
 						<thead>
 							<tr>
@@ -56,13 +56,13 @@
 								</c:forEach></ul></td>
 									</c:forEach>
 
-									<td><input type="checkbox" name="stinlist"
+									<td><input type="checkbox" name="interviewIDstoDelete"
 										value="${entry.key.interviewId}"></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
-					<input type="submit">
+					<input type="submit" value="Delete">
 				</form>
 			</div>
 		</div>
