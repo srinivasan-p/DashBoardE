@@ -212,8 +212,10 @@ public class controller1
 	
 	
 	@RequestMapping(value="/topopulate",method=RequestMethod.POST)
-	public @ResponseBody String topopulate(HttpServletRequest request,HttpServletResponse response) throws Exception{
+	public @ResponseBody String topopulate(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws Exception{
 		System.out.println("in ajax");
+		String pId = (String) session.getAttribute("pId");
+
         String result = "";
         result = result  + "<script>";
         result = result  + "$(document).ready(function() {";
@@ -245,18 +247,14 @@ public class controller1
 			
 			result = result  + "{title:'"+res.getString("title")+"',start:'"+res.getDate("startDate")+"',end:'"+res.getDate("endDate")+"T12:00:00'},";
 		}
-		 result = result  + "],";
-		 
-	     result = result  + "},";
-	     
-	     
-	     
-	     
+		 result = result  + "],";		 
+	    result = result  + "},";
 	    result = result  + "{";
 
 	     result = result  + "events: [";
 			PreparedStatement pre1 = Conn
-					.prepareStatement("SELECT courseId FROM newdb.db_schedule");
+					.prepareStatement("SELECT courseId FROM newdb.db_schedule where pId =?");
+			pre1.setString(1, pId);
 			ResultSet res1 = pre1.executeQuery();
 			while(res1.next())
 			{
