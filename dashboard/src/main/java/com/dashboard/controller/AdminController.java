@@ -39,6 +39,13 @@ public class AdminController {
 		model.addAttribute("result", result);
 		return "ViewStudents";
 	}
+	
+	@RequestMapping(value = "/ViewTrainers", method = RequestMethod.GET)
+	public String viewTrainers(HttpSession httpSession, Model model) {
+		Map<ProfileBean, ArrayList<StudentSkillBean>> result = adminService.viewAllTrainers();
+		model.addAttribute("result", result);
+		return "ViewTrainers";
+	}
 
 	@RequestMapping(value = "/ScheduleInterview", method = RequestMethod.POST)
 	public String scheduleInterview(HttpServletRequest httpServletRequest, HttpSession httpSession, Model model) {

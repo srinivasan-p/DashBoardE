@@ -21,9 +21,6 @@ import com.dashboard.beans.ProfileBean;
 import com.dashboard.beans.StudentSkillBean;
 import com.dashboard.service.Trainer;
 
-import oracle.net.aso.q;
-import oracle.net.aso.s;
-
 @Repository("adminDAO")
 public class AdminDAOImpl implements AdminDAO {
 	@Autowired
@@ -59,6 +56,32 @@ public class AdminDAOImpl implements AdminDAO {
 		return mapPBandSB;
 	}
 
+	@SuppressWarnings("unchecked")
+	public Map<ProfileBean, ArrayList<StudentSkillBean>> viewAllTrainers() {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from CredentialBean where type='t'");
+		ArrayList<CredentialBean> cblist = (ArrayList<CredentialBean>) query.list();
+
+		ArrayList<ProfileBean> pblist = new ArrayList<ProfileBean>();
+		for (CredentialBean credentialBean : cblist) {
+			query = session.createQuery("from ProfileBean where pId=?");
+			query.setParameter(0, credentialBean);
+			ProfileBean pb = new ProfileBean();
+			pb = (ProfileBean) query.list().get(0);
+			pblist.add(pb);
+		}
+		Map<ProfileBean, ArrayList<StudentSkillBean>> mapPBandSB = new HashMap<ProfileBean, ArrayList<StudentSkillBean>>();
+
+		for (ProfileBean profileBean : pblist) {
+			ArrayList<StudentSkillBean> sbList = new ArrayList<StudentSkillBean>();
+			query = session.createQuery("from StudentSkillBean where pId=?");
+			query.setParameter(0, profileBean.getpId());
+			sbList = (ArrayList<StudentSkillBean>) query.list();
+			mapPBandSB.put(profileBean, sbList);
+		}
+		return mapPBandSB;
+	}
+	
 	public String iSchedule(String[] interviewer, String[] interviewee, Date iDate) {
 
 		try {
@@ -167,5 +190,7 @@ public class AdminDAOImpl implements AdminDAO {
 
 		return "Success";
 	}
+
+	
 
 }

@@ -47,6 +47,10 @@ public class AdministratorImp implements Administrator {
 		return adminDAO.DeleteInterview(interviewIDstoDelete);
 	}
 
+	public Map<ProfileBean, ArrayList<StudentSkillBean>> viewAllTrainers() {
+		return adminDAO.viewAllTrainers();
+	}
+
 	// @Override
 	// public String addDoctor(DoctorBean doctoerBean)
 	// {
