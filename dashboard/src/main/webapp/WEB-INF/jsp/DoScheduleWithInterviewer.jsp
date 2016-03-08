@@ -1034,7 +1034,7 @@
 			min="<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>"
 			required> <input type="time" name="intTime" value="10:00:00"
 			required />
-		<p class="message success">Select the Interviewer</p>
+		<p class="message success" style="width: 400px">Select the Interviewer</p>
 		<h3>Interview With</h3>
 		<select name="example-list" multiple="multiple" style="width: 400px">
 			<%
@@ -1053,8 +1053,8 @@
 
 
 
-		</select> <input type="text" id="intPanel" name="intPanel"> <input
-			type="submit" onclick="return val()">
+		</select> <input type="hidden" id="intPanel" name="intPanel"><br> <input
+			type="submit"  onclick="return val()">
 
 
 	</form>

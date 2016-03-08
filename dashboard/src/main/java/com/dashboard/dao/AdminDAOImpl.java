@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -88,6 +89,37 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		
 		return "Success";
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<InterviewBean, Map<ArrayList<InterviewerBean>, ArrayList<IntervieweeBean>>> ViewAllScheduledInterview() {
+		
+		Map<InterviewBean, Map<ArrayList<InterviewerBean>, ArrayList<IntervieweeBean>>> interviewMap;
+		try {
+			interviewMap = new HashMap<InterviewBean, Map<ArrayList<InterviewerBean>,ArrayList<IntervieweeBean>>>();
+			
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("from InterviewBean");
+			ArrayList<InterviewBean> interviewBeanList = (ArrayList<InterviewBean>) query.list();
+			for (InterviewBean interviewBean : interviewBeanList) {
+				query = session.createQuery("from InterviewerBean where interviewId=?");
+				query.setParameter(0, interviewBean);
+				ArrayList<InterviewerBean> interviewerBeanList = (ArrayList<InterviewerBean>) query.list();
+				
+				query = session.createQuery("from IntervieweeBean where interviewId=?");
+				query.setParameter(0, interviewBean);
+				ArrayList<IntervieweeBean> intervieweeBeanList = (ArrayList<IntervieweeBean>) query.list();
+				
+				Map<ArrayList<InterviewerBean>, ArrayList<IntervieweeBean>> interviewMapNested = new HashMap<ArrayList<InterviewerBean>, ArrayList<IntervieweeBean>>();
+				interviewMapNested.put(interviewerBeanList, intervieweeBeanList);
+				interviewMap.put(interviewBean, interviewMapNested);
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}
+		System.out.println(interviewMap.toString());
+		return interviewMap;
 	}
 
 
