@@ -56,6 +56,32 @@ public class AdminDAOImpl implements AdminDAO {
 		return mapPBandSB;
 	}
 
+	@SuppressWarnings("unchecked")
+	public Map<ProfileBean, ArrayList<StudentSkillBean>> viewAllTrainers() {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from CredentialBean where type='t'");
+		ArrayList<CredentialBean> cblist = (ArrayList<CredentialBean>) query.list();
+
+		ArrayList<ProfileBean> pblist = new ArrayList<ProfileBean>();
+		for (CredentialBean credentialBean : cblist) {
+			query = session.createQuery("from ProfileBean where pId=?");
+			query.setParameter(0, credentialBean);
+			ProfileBean pb = new ProfileBean();
+			pb = (ProfileBean) query.list().get(0);
+			pblist.add(pb);
+		}
+		Map<ProfileBean, ArrayList<StudentSkillBean>> mapPBandSB = new HashMap<ProfileBean, ArrayList<StudentSkillBean>>();
+
+		for (ProfileBean profileBean : pblist) {
+			ArrayList<StudentSkillBean> sbList = new ArrayList<StudentSkillBean>();
+			query = session.createQuery("from StudentSkillBean where pId=?");
+			query.setParameter(0, profileBean.getpId());
+			sbList = (ArrayList<StudentSkillBean>) query.list();
+			mapPBandSB.put(profileBean, sbList);
+		}
+		return mapPBandSB;
+	}
+	
 	public String iSchedule(String[] interviewer, String[] interviewee, Date iDate) {
 
 		try {
@@ -65,19 +91,19 @@ public class AdminDAOImpl implements AdminDAO {
 			ib.setInterviewId(sim.format(iDate));
 			ib.setiDate(iDate);
 			session.save(ib);
-			
+
 			for (int i = 0; i < interviewer.length; i++) {
 				InterviewerBean interviewerBean = new InterviewerBean();
-				interviewerBean.setInterviewerId(sim.format(iDate) + ":-:" +interviewer[i]);
+				interviewerBean.setInterviewerId(sim.format(iDate) + ":-:" + interviewer[i]);
 				interviewerBean.setInterviewId(ib);
 				CredentialBean cd = (CredentialBean) session.get(CredentialBean.class, interviewer[i]);
 				interviewerBean.setpId(cd);
 				session.save(interviewerBean);
 			}
-			
+
 			for (int i = 0; i < interviewee.length; i++) {
 				IntervieweeBean intervieweeBean = new IntervieweeBean();
-				intervieweeBean.setIntervieweeId(sim.format(iDate) + ":-:" +interviewee[i]);
+				intervieweeBean.setIntervieweeId(sim.format(iDate) + ":-:" + interviewee[i]);
 				intervieweeBean.setInterviewId(ib);
 				CredentialBean cd = (CredentialBean) session.get(CredentialBean.class, interviewee[i]);
 				intervieweeBean.setpId(cd);
@@ -87,17 +113,17 @@ public class AdminDAOImpl implements AdminDAO {
 			e.printStackTrace();
 			return "Failure";
 		}
-		
+
 		return "Success";
 	}
 
 	@SuppressWarnings("unchecked")
-	public Map<InterviewBean, Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>> ViewAllScheduledInterview() {
-		
-		Map<InterviewBean, Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>> interviewMap;
+	public Map<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>> ViewAllScheduledInterview() {
+
+		Map<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>> interviewMap;
 		try {
-			interviewMap = new HashMap<InterviewBean, Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>>();
-			
+			interviewMap = new HashMap<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>>();
+
 			Session session = sessionFactory.getCurrentSession();
 			Query query = session.createQuery("from InterviewBean");
 			ArrayList<InterviewBean> interviewBeanList = (ArrayList<InterviewBean>) query.list();
@@ -105,8 +131,8 @@ public class AdminDAOImpl implements AdminDAO {
 				query = session.createQuery("from InterviewerBean where interviewId=?");
 				query.setParameter(0, interviewBean);
 				ArrayList<InterviewerBean> interviewerBeanList = (ArrayList<InterviewerBean>) query.list();
-				
-				Map<ProfileBean,InterviewerBean> pbInterviewerMap = new HashMap<ProfileBean, InterviewerBean>();
+
+				Map<ProfileBean, InterviewerBean> pbInterviewerMap = new HashMap<ProfileBean, InterviewerBean>();
 				for (InterviewerBean interviewerBean : interviewerBeanList) {
 					query = session.createQuery("from ProfileBean where pId=?");
 					query.setParameter(0, interviewerBean.getpId());
@@ -114,12 +140,12 @@ public class AdminDAOImpl implements AdminDAO {
 					pb = (ProfileBean) query.list().get(0);
 					pbInterviewerMap.put(pb, interviewerBean);
 				}
-				
+
 				query = session.createQuery("from IntervieweeBean where interviewId=?");
 				query.setParameter(0, interviewBean);
 				ArrayList<IntervieweeBean> intervieweeBeanList = (ArrayList<IntervieweeBean>) query.list();
-				
-				Map<ProfileBean,IntervieweeBean> pbIntervieweeMap = new HashMap<ProfileBean, IntervieweeBean>();
+
+				Map<ProfileBean, IntervieweeBean> pbIntervieweeMap = new HashMap<ProfileBean, IntervieweeBean>();
 				for (IntervieweeBean intervieweeBean : intervieweeBeanList) {
 					query = session.createQuery("from ProfileBean where pId=?");
 					query.setParameter(0, intervieweeBean.getpId());
@@ -127,8 +153,8 @@ public class AdminDAOImpl implements AdminDAO {
 					pb = (ProfileBean) query.list().get(0);
 					pbIntervieweeMap.put(pb, intervieweeBean);
 				}
-				
-				Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>> interviewMapNested = new HashMap<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>();
+
+				Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>> interviewMapNested = new HashMap<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>();
 				interviewMapNested.put(pbInterviewerMap, pbIntervieweeMap);
 				interviewMap.put(interviewBean, interviewMapNested);
 			}
@@ -140,6 +166,31 @@ public class AdminDAOImpl implements AdminDAO {
 		return interviewMap;
 	}
 
+	public String DeleteInterview(String[] interviewIDstoDelete) {
 
+		try {
+			for (String interviewID : interviewIDstoDelete) {
+				Session session = sessionFactory.getCurrentSession();
+				
+				InterviewBean ib = (InterviewBean) session.get(InterviewBean.class, interviewID);
+				Query query = session.createQuery("delete from InterviewerBean where interviewId=?");
+				query.setParameter(0,ib);
+				query.executeUpdate();
+				query = session.createQuery("delete from IntervieweeBean where interviewId=?");
+				query.setParameter(0, ib);
+				query.executeUpdate();
+				query = session.createQuery("delete from InterviewBean where interviewId=?");
+				query.setParameter(0,interviewID);
+				query.executeUpdate();
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return "Failure";
+		}
+
+		return "Success";
+	}
+
+	
 
 }

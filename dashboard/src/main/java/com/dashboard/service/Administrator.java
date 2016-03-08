@@ -19,7 +19,8 @@ public interface Administrator {
 //	Map <PatientBean, AppointmentBean> viewPatientsByDate(Date appointmentDate);
 	
 	Map<ProfileBean, ArrayList<StudentSkillBean>> viewAllStudents();
+	Map<ProfileBean, ArrayList<StudentSkillBean>> viewAllTrainers();
 	String iSchedule(String[] interviewer, String[] interviwee, Date iDate);
 	Map<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>> ViewAllScheduledInterview();
-
+	String DeleteInterview(String[] interviewIDstoDelete);
 }

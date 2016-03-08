@@ -39,6 +39,13 @@ public class AdminController {
 		model.addAttribute("result", result);
 		return "ViewStudents";
 	}
+	
+	@RequestMapping(value = "/ViewTrainers", method = RequestMethod.GET)
+	public String viewTrainers(HttpSession httpSession, Model model) {
+		Map<ProfileBean, ArrayList<StudentSkillBean>> result = adminService.viewAllTrainers();
+		model.addAttribute("result", result);
+		return "ViewTrainers";
+	}
 
 	@RequestMapping(value = "/ScheduleInterview", method = RequestMethod.POST)
 	public String scheduleInterview(HttpServletRequest httpServletRequest, HttpSession httpSession, Model model) {
@@ -84,6 +91,19 @@ public class AdminController {
 			return"Failure";
 		}
 	}
+	
+	@RequestMapping(value = "/ScheduleInterviewDeletion", method = RequestMethod.POST)
+	public String scheduleInterviewDeletion(HttpServletRequest httpServletRequest, HttpSession httpSession, Model model) {
+		String[] interviewIDstoDelete = (String[]) httpServletRequest.getParameterValues("interviewIDstoDelete");
+		String result = adminService.DeleteInterview(interviewIDstoDelete);
+		if (result.equalsIgnoreCase("Success")) {
+			return "Success";
+		} else {
+			return "Failure";
+		}
+	}
+	
+	
 	//
 	// @RequestMapping(value = "/RegistrationForm", method = RequestMethod.POST)
 	// public String addValues(@ModelAttribute("RegistrationFormmodel") @Valid

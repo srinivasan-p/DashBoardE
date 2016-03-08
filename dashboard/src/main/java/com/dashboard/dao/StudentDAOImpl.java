@@ -1,6 +1,5 @@
 package com.dashboard.dao;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,58 +12,41 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dashboard.beans.CredentialBean;
-//<<<<<<< HEAD
-import com.dashboard.beans.ScheduleBean;
-//=======
 import com.dashboard.beans.ProfileBean;
-//>>>>>>> branch 'master' of https://github.com/srinivasan-p/DashBoardE.git
+import com.dashboard.beans.ScheduleBean;
 import com.dashboard.beans.SkillBean;
 import com.dashboard.beans.StudentSkillBean;
-import com.dashboard.util.DBUtill;
+import com.dashboard.service.Student;
 
 @Repository("studentDAO")
 public class StudentDAOImpl implements StudentDAO {
 
 	@Autowired
 	SessionFactory sessionFactory;
-	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
 
-	public String addSchedule(String studentId,ScheduleBean sb) {
-		
-		Connection Conn;
-		try 
-		{
-			Conn = DBUtill.getDBConnection();
+	@Autowired
+	Student studentService;
+
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+
+	public String addSchedule(String studentId, ScheduleBean sb) {
+
+		try {
 			String pId = studentId;
-			System.out.println("before insertaion into the db........");
-			System.out.println(sb.getCompletionStatus());
-			System.out.println(sb.getCourseId());
-			System.out.println(sb.getScheduleId());
-			System.out.println(pId);
 			Session session = sessionFactory.getCurrentSession();
 			CredentialBean cb = (CredentialBean) session.get(CredentialBean.class, pId);
-			System.out.println(cb.getPassword());
-			System.out.println(cb.getpId());
-			System.out.println(cb.getStatus());
-			System.out.println(cb.getType());
 			sb.setStudentId(cb);
-			String scheduleId=(String) session.save(sb);
+			String scheduleId = (String) session.save(sb);
 
-			if(scheduleId == null){
+			if (scheduleId == null) {
 				return "failure";
+			} else {
+				return "Success";
 			}
-			else{
-			return "Success";
-			}
-		} 
-		catch (Exception e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "failure";
-
-		
-		
 
 	}
 
@@ -83,6 +65,7 @@ public class StudentDAOImpl implements StudentDAO {
 				ssb.setUpdatedBy(pId);
 				ssb.setUpdatedOn(new Date());
 				session.save(ssb);
+				studentService.calculateSkill(pId);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -103,9 +86,7 @@ public class StudentDAOImpl implements StudentDAO {
 		return list;
 	}
 
-//<<<<<<< HEAD
-	
-//=======
+	@SuppressWarnings("unchecked")
 	public boolean calculateSkill(String pId) {
 
 		try {
@@ -115,13 +96,12 @@ public class StudentDAOImpl implements StudentDAO {
 			query.setParameter(0, cb);
 			ArrayList<StudentSkillBean> ssblist = (ArrayList<StudentSkillBean>) query.list();
 			int points = ssblist.size() * 10;
-			
-			
+
 			CredentialBean cb1 = (CredentialBean) session.get(CredentialBean.class, pId);
 			query = session.createQuery("from ProfileBean where pId=?");
 			query.setParameter(0, cb1);
 			ArrayList<ProfileBean> pblist = (ArrayList<ProfileBean>) query.list();
-			if(!pblist.isEmpty()){
+			if (!pblist.isEmpty()) {
 				ProfileBean pb1 = (ProfileBean) pblist.get(0);
 				pb1.setSkillPoints(points);
 				Session sessin = sessionFactory.getCurrentSession();
@@ -130,15 +110,11 @@ public class StudentDAOImpl implements StudentDAO {
 			}
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 		return true;
 
 	}
-
-	
-//>>>>>>> branch 'master' of https://github.com/srinivasan-p/DashBoardE.git
 
 }

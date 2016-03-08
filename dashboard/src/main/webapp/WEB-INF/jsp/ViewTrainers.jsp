@@ -18,7 +18,6 @@
 	rel="stylesheet">
 <link href="../dashboard/assets/css/style.css" type="text/css"
 	rel="stylesheet">
-	
 </head>
 <body>
 	<div class="container">
@@ -26,48 +25,39 @@
 			<div class="box clearfix">
 				<h3>Bootstrap Data Table</h3>
 				<p>Easily turn your tables into datatables.</p>
-				<form action="ScheduleInterviewDeletion.html" method="post">
-					<table class="table table-hover table-striped" id="bootstrap-table">
+				<form action="" method="post">
+					<table class="table table-hover" id="bootstrap-table">
 						<thead>
 							<tr>
-								<th>Interview ID</th>
-								<th>Date and Time</th>
-								<th>Interviewers</th>
-								<th>Interviewees</th>
-								<th>CheckBox</th>
+								<th>Name</th>
+								<th>Employee ID</th>
+								<th>Email Id</th>
+								<th>Skills</th>
+								<th>Skill Points</th>
+								<th>schedule Interview</th>
 							</tr>
 						</thead>
 						<tbody>
-							<!-- Map<InterviewBean, Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>> interviewMap; -->
 							<c:forEach items="${result}" var="entry">
 								<tr>
-									<td>${entry.key.interviewId}</td>
-									<td>${entry.key.iDate}</td>
-									<c:forEach items="${entry.value}" var="e2">
-										<td><ul class="list-group"><c:forEach items="${e2.key}" var="e3">
-												<li class="list-group-item"><span class="badge">${e3.key.pId.pId}</span> ${e3.key.name}</li>
-												
-								
-								</c:forEach></ul></td>
-										<td><ul class="list-group"><c:forEach items="${e2.value}" var="e3">
-												
-												<li class="list-group-item"><span class="badge">${e3.key.pId.pId}</span> ${e3.key.name}</li>
-								
-								</c:forEach></ul></td>
-									</c:forEach>
-
-									<td><input type="checkbox" name="interviewIDstoDelete"
-										value="${entry.key.interviewId}"></td>
+									<td>${entry.key.name}</td>
+									<td>${entry.key.pId.pId}</td>
+									<td>${entry.key.emailId}</td>
+									<td><c:forEach items="${entry.value}" var="e2">
+									${e2.skillId.skillName},
+								</c:forEach></td>
+									<td>${entry.key.skillPoints}</td>
+									<td><input type="checkbox" name="stinlist" value="${entry.key.pId.pId}"></td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
-					<input type="submit" value="Delete">
+					<input type="submit">
 				</form>
 			</div>
 		</div>
 	</div>
-
+	</div>
 
 	<script src="http://code.jquery.com/jquery-2.1.1.min.js"
 		type="text/javascript"></script>
