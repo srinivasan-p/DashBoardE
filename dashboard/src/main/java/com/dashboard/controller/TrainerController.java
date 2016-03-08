@@ -111,7 +111,7 @@ public class TrainerController {
         java.sql.Date sqlstdate = new java.sql.Date(startdate.getTime());
 		Date enddate = format.parse(endate);
         java.sql.Date sqlendate = new java.sql.Date(enddate.getTime());
-        String response = "";
+        String response = "<table class="+"table table-striped"+">";
 		String courseid = (pId+skill+new SimpleDateFormat("MM/dd/yyyy").format(startdate)+new SimpleDateFormat("MM/dd/yyyy").format(enddate)).replace("/", "");
 		
 		Connection conn = DBUtill.getDBConnection();
@@ -133,8 +133,12 @@ public class TrainerController {
 			ResultSet rs1 = pre1.executeQuery();
 			while(rs1.next())
 			{
+				response +="</tr>";
+
 				System.out.println("inside secondloop"+rs1.getString(1));
-				response +="<input type=checkbox name=pId value="+rs.getString(1)+">"+rs1.getString(1)+"<br>";
+				response +="<td><input type=checkbox name=pId value="+rs.getString(1)+"></td><td>"+rs1.getString(1)+"</td>";
+				response +="</tr>";
+
 			}
 			}
 			else
@@ -146,7 +150,7 @@ public class TrainerController {
 				response += "<input type="+"submit"+" value="+"Submit"+">";
 			}
 		}
-
+		response +="</table>";
 		return response;
 	}
 	
