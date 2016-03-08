@@ -1,3 +1,8 @@
+<%@page import="java.sql.*"%>
+<%@page import="com.dashboard.util.DBUtill"%>
+<%@page import="java.sql.ResultSet"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,6 +72,7 @@ function fu()
 
 </script>
 
+ 
 </head>
 <body onload="aj();">
 
@@ -128,6 +134,7 @@ function doAjaxPost(eventName,startDate,endDate){
 	      true); */
 	      
 	 }
+	
 </script>
 
 
@@ -149,7 +156,23 @@ function doAjaxPost(eventName,startDate,endDate){
     
          <div class="control-group">
            <label class="control-label" for="title">Event:</label>
-              <form:input type="text" path="title" id="eventName"></form:input>
+           <form:select path="title" id="eventName">
+           <form:option value="NONE" label="--- Select ---"/>
+           
+           <%
+           Connection conn = DBUtill.getDBConnection();
+   		String pId = (String) session.getAttribute("pId");
+           PreparedStatement pre = conn.prepareStatement("select skillName from newdb.db_skill where skillId in (select skillId from newdb.db_studskill where pId = ?)");
+           pre.setString(1, pId);
+           ResultSet rs=pre.executeQuery();
+           while(rs.next())
+           {
+           %>
+           <form:option value="<%=rs.getString(1)%>"><%=rs.getString(1)%></form:option>
+           <%} %>
+           </form:select>
+           
+             <%--  <form:input type="text" path="title" id="eventName"></form:input> --%>
         </div>
         	<div class="control-group">
           	 	 <label class="control-label" for="startDate">Start date:</label>

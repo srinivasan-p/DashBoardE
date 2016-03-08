@@ -8,7 +8,7 @@ public class DBUtill {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager
-					.getConnection("jdbc:mysql://localhost:3307/test","root","");
+					.getConnection("jdbc:mysql://localhost:3307/newdb","root","");
 			return conn;
 		} catch (Exception e) {
 			return null;
