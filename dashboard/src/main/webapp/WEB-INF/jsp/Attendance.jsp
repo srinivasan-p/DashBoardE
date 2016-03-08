@@ -111,7 +111,10 @@ $.ajax({
 </script>
 </head>
 <body>
+
 <form action="fixcompletedstatus.html" method="post">
+<div style="border: solid;margin-right: 85%" id="div1">
+
 <h4>Skill:</h4>
 <select id="skill" name="skill" onchange="fun(this.value);">
 <option value="select">select</option>
@@ -131,16 +134,19 @@ while(rs.next())
 <option value = <%=rs.getString(1)%>><%=rs.getString(1)%></option>
 <%}%>
 </select>
-<div id="startDate">
+</div>
+<div style="border: solid;margin-right: 70%;margin-left: 15%;margin-top: -6.25%" id="startDate">
 
 </div>
 
-<div id="endDate">
+<div style="border: solid;margin-right: 55%;margin-left: 30%;margin-top: -6.25%" id="endDate">
 
 </div>
-<input id="button" type="hidden" onclick="fun4();" value="Fetch List"></input>
 
-<div style="border: solid;margin-left: 150px;margin-top: -150px" id="lis">
+<div style="border: solid;margin-left:45%;margin-right: 45%;margin-top: -4%">
+<input id="button" class="btn btn-danger" type="hidden" onclick="fun4();" value="Fetch List"></input>
+</div>
+<div style="border: solid ;margin-left: 0;margin-top: 5" id="lis">
 
 </div>
 </form>
