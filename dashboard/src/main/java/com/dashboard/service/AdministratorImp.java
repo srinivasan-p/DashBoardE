@@ -39,7 +39,7 @@ public class AdministratorImp implements Administrator {
 		return adminDAO.iSchedule(interviewer, interviwee, iDate);
 	}
 
-	public Map<InterviewBean, Map<ArrayList<InterviewerBean>, ArrayList<IntervieweeBean>>> ViewAllScheduledInterview() {
+	public Map<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>> ViewAllScheduledInterview() {
 		return adminDAO.ViewAllScheduledInterview();
 	}
 

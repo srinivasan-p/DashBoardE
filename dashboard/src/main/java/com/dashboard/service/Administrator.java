@@ -20,6 +20,6 @@ public interface Administrator {
 	
 	Map<ProfileBean, ArrayList<StudentSkillBean>> viewAllStudents();
 	String iSchedule(String[] interviewer, String[] interviwee, Date iDate);
-	Map<InterviewBean, Map<ArrayList<InterviewerBean>, ArrayList<IntervieweeBean>>> ViewAllScheduledInterview();
+	Map<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>> ViewAllScheduledInterview();
 
 }

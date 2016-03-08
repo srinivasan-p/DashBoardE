@@ -75,7 +75,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/ViewScheduledInterview", method = RequestMethod.GET)
 	public String viewScheduledInterview(HttpSession httpSession, Model model) {
-		Map<InterviewBean, Map<ArrayList<InterviewerBean>, ArrayList<IntervieweeBean>>> interviewMap = adminService.ViewAllScheduledInterview();
+		Map<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>> interviewMap = adminService.ViewAllScheduledInterview();
 		httpSession.setAttribute("interviewMap", interviewMap);
 		model.addAttribute("result", interviewMap);
 		if(interviewMap!=null){

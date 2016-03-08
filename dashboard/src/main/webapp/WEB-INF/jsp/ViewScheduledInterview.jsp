@@ -18,6 +18,7 @@
 	rel="stylesheet">
 <link href="../dashboard/assets/css/style.css" type="text/css"
 	rel="stylesheet">
+	
 </head>
 <body>
 	<div class="container">
@@ -26,7 +27,7 @@
 				<h3>Bootstrap Data Table</h3>
 				<p>Easily turn your tables into datatables.</p>
 				<form action="ScheduleInterview.html" method="post">
-					<table class="table table-hover" id="bootstrap-table">
+					<table class="table table-hover table-striped" id="bootstrap-table">
 						<thead>
 							<tr>
 								<th>Interview ID</th>
@@ -37,18 +38,23 @@
 							</tr>
 						</thead>
 						<tbody>
+							<!-- Map<InterviewBean, Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>> interviewMap; -->
 							<c:forEach items="${result}" var="entry">
 								<tr>
 									<td>${entry.key.interviewId}</td>
 									<td>${entry.key.iDate}</td>
 									<c:forEach items="${entry.value}" var="e2">
-											<td><c:forEach items="${e2.key}" var="e3">
-									${e3.pId.pId}
-								</c:forEach></td>
-											<td><c:forEach items="${e2.value}" var="e4">
-									${e4.pId.pId}
-								</c:forEach>
-										</td></c:forEach>
+										<td><ul class="list-group"><c:forEach items="${e2.key}" var="e3">
+												<li class="list-group-item"><span class="badge">${e3.key.pId.pId}</span> ${e3.key.name}</li>
+												
+								
+								</c:forEach></ul></td>
+										<td><ul class="list-group"><c:forEach items="${e2.value}" var="e3">
+												
+												<li class="list-group-item"><span class="badge">${e3.key.pId.pId}</span> ${e3.key.name}</li>
+								
+								</c:forEach></ul></td>
+									</c:forEach>
 
 									<td><input type="checkbox" name="stinlist"
 										value="${entry.key.interviewId}"></td>
