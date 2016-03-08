@@ -16,6 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.dashboard.beans.InterviewBean;
+import com.dashboard.beans.IntervieweeBean;
+import com.dashboard.beans.InterviewerBean;
 import com.dashboard.beans.ProfileBean;
 import com.dashboard.beans.StudentSkillBean;
 import com.dashboard.service.Administrator;
@@ -66,6 +69,19 @@ public class AdminController {
 			return "Success";
 		} else {
 			return "Failure";
+		}
+	}
+	
+	
+	@RequestMapping(value = "/ViewScheduledInterview", method = RequestMethod.GET)
+	public String viewScheduledInterview(HttpSession httpSession, Model model) {
+		Map<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>> interviewMap = adminService.ViewAllScheduledInterview();
+		httpSession.setAttribute("interviewMap", interviewMap);
+		model.addAttribute("result", interviewMap);
+		if(interviewMap!=null){
+		return "ViewScheduledInterview";
+		}else{
+			return"Failure";
 		}
 	}
 	//

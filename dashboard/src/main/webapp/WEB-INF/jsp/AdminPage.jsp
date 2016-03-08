@@ -9,6 +9,7 @@
 <body>
 Admin
 <a href="ViewStudents.html">View Students</a>
+<a href="ViewScheduledInterview.html">View Scheduled Interview</a>
 <a href="Logout.html">Click Here to logout</a>
 </body>
 </html>

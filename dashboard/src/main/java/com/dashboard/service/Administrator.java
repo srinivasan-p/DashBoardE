@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+import com.dashboard.beans.InterviewBean;
+import com.dashboard.beans.IntervieweeBean;
+import com.dashboard.beans.InterviewerBean;
 import com.dashboard.beans.ProfileBean;
 import com.dashboard.beans.StudentSkillBean;
 
@@ -17,4 +20,6 @@ public interface Administrator {
 	
 	Map<ProfileBean, ArrayList<StudentSkillBean>> viewAllStudents();
 	String iSchedule(String[] interviewer, String[] interviwee, Date iDate);
+	Map<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>> ViewAllScheduledInterview();
+
 }

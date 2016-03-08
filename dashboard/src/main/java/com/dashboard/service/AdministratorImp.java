@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dashboard.beans.InterviewBean;
+import com.dashboard.beans.IntervieweeBean;
+import com.dashboard.beans.InterviewerBean;
 import com.dashboard.beans.ProfileBean;
 import com.dashboard.beans.StudentSkillBean;
 import com.dashboard.dao.AdminDAO;
@@ -34,6 +37,10 @@ public class AdministratorImp implements Administrator {
 	public String iSchedule(String[] interviewer, String[] interviwee, Date iDate) {
 		
 		return adminDAO.iSchedule(interviewer, interviwee, iDate);
+	}
+
+	public Map<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>> ViewAllScheduledInterview() {
+		return adminDAO.ViewAllScheduledInterview();
 	}
 
 	// @Override

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -88,6 +89,55 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		
 		return "Success";
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<InterviewBean, Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>> ViewAllScheduledInterview() {
+		
+		Map<InterviewBean, Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>> interviewMap;
+		try {
+			interviewMap = new HashMap<InterviewBean, Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>>();
+			
+			Session session = sessionFactory.getCurrentSession();
+			Query query = session.createQuery("from InterviewBean");
+			ArrayList<InterviewBean> interviewBeanList = (ArrayList<InterviewBean>) query.list();
+			for (InterviewBean interviewBean : interviewBeanList) {
+				query = session.createQuery("from InterviewerBean where interviewId=?");
+				query.setParameter(0, interviewBean);
+				ArrayList<InterviewerBean> interviewerBeanList = (ArrayList<InterviewerBean>) query.list();
+				
+				Map<ProfileBean,InterviewerBean> pbInterviewerMap = new HashMap<ProfileBean, InterviewerBean>();
+				for (InterviewerBean interviewerBean : interviewerBeanList) {
+					query = session.createQuery("from ProfileBean where pId=?");
+					query.setParameter(0, interviewerBean.getpId());
+					ProfileBean pb = new ProfileBean();
+					pb = (ProfileBean) query.list().get(0);
+					pbInterviewerMap.put(pb, interviewerBean);
+				}
+				
+				query = session.createQuery("from IntervieweeBean where interviewId=?");
+				query.setParameter(0, interviewBean);
+				ArrayList<IntervieweeBean> intervieweeBeanList = (ArrayList<IntervieweeBean>) query.list();
+				
+				Map<ProfileBean,IntervieweeBean> pbIntervieweeMap = new HashMap<ProfileBean, IntervieweeBean>();
+				for (IntervieweeBean intervieweeBean : intervieweeBeanList) {
+					query = session.createQuery("from ProfileBean where pId=?");
+					query.setParameter(0, intervieweeBean.getpId());
+					ProfileBean pb = new ProfileBean();
+					pb = (ProfileBean) query.list().get(0);
+					pbIntervieweeMap.put(pb, intervieweeBean);
+				}
+				
+				Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>> interviewMapNested = new HashMap<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>();
+				interviewMapNested.put(pbInterviewerMap, pbIntervieweeMap);
+				interviewMap.put(interviewBean, interviewMapNested);
+			}
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}
+		System.out.println(interviewMap.toString());
+		return interviewMap;
 	}
 
 

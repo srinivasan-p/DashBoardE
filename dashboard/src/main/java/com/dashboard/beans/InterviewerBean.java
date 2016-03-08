@@ -46,4 +46,10 @@ public class InterviewerBean {
 		this.pId = pId;
 	}
 
+	@Override
+	public String toString() {
+		return "InterviewerBean [interviewerId=" + interviewerId + ", interviewId=" + interviewId + ", pId=" + pId
+				+ "]";
+	}
+
 }
