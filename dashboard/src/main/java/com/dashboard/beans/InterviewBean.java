@@ -30,4 +30,9 @@ public class InterviewBean {
 		this.iDate = iDate;
 	}
 
+	@Override
+	public String toString() {
+		return "InterviewBean [interviewId=" + interviewId + ", iDate=" + iDate + "]";
+	}
+
 }
