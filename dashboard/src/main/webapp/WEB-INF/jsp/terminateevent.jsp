@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
-<title>CompletionStatus</title>
+<title>Terminate Event</title>
 <script type="text/javascript">
 function fun(skill)
 {
@@ -29,7 +29,7 @@ function fun(skill)
 			
 	        type: "Post",
 	
-	        url: "tofetchstartdate.html",
+	        url: "tofetchstartdateT.html",
 			
 			data:"&skill="+skill,
 
@@ -55,7 +55,7 @@ function fun2(stdate)
 		
         type: "Post",
 
-        url: "tofetchenddate.html",
+        url: "tofetchenddateT.html",
 		
 		data:"&skill="+skill+"&startDate="+stdate,
 
@@ -86,13 +86,11 @@ function fun4()
 	var endate = document.getElementById("endate").value;
 	
 
-
-
 $.ajax({
 		
         type: "Post",
 
-        url: "fetchlist.html",
+        url: "CancelEvent.html",
 		
 		data:"&skill="+skill+"&stdate="+stdate+"&endate="+endate,
 
@@ -122,7 +120,7 @@ $.ajax({
 String pId =(String)session.getAttribute("pId");
 String pIdsql = pId+"%";
 Connection Conn = DBUtill.getDBConnection();
-PreparedStatement pre = Conn.prepareStatement("SELECT distinct title from newdb.db_Trainer where courseId like ? and skillId in (Select skillId from newdb.db_studskill where pId = ?) and startDate < CURDATE()");
+PreparedStatement pre = Conn.prepareStatement("SELECT distinct title from newdb.db_Trainer where courseId like ? and skillId in (Select skillId from newdb.db_studskill where pId = ?) and startDate > CURDATE()");
 
 pre.setString(1, pIdsql);
 pre.setString(2, pId);
@@ -144,9 +142,11 @@ while(rs.next())
 </div>
 
 <div style="border: solid transparent;padding-left: 21%">
-<input id="button" class="btn btn-danger" type="hidden" onclick="fun4();" value="Fetch List"></input>
+<input id="button" class="btn btn-danger" type="hidden" onclick="fun4();" value="CancelEvent"></input>
 </div>
-<div style="border: solid transparent;margin-left: 0;margin-top: 5" id="lis">
+<h4 id="lis">
+hello
+</h4>
 
 </div>
 </form>

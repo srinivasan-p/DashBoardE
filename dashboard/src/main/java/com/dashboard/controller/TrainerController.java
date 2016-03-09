@@ -28,6 +28,12 @@ public class TrainerController {
 	Trainer trainer;
 	
 	
+	@RequestMapping(value="/terminateevent",method=RequestMethod.GET)
+	public String terminateevent(Model model,HttpServletRequest request,HttpSession session)
+	{	
+		
+		return "terminateevent";
+	}
 	
 	@RequestMapping(value="/completionStatus",method=RequestMethod.GET)
 	public String addEvent(Model model,HttpServletRequest request,HttpSession session)
@@ -48,7 +54,7 @@ public class TrainerController {
 		 response+="<select name="+"stdate"+" id="+"stdate"+" onchange="+"fun2(this.value);"+">";
 		 response+="<option value="+"select"+">select</option>";
 		 Connection Conn = DBUtill.getDBConnection();
-		 PreparedStatement pre = Conn.prepareStatement("SELECT startDate FROM newdb.db_Trainer where trainerId = ? and title=?");
+		 PreparedStatement pre = Conn.prepareStatement("SELECT startDate FROM newdb.db_Trainer where trainerId = ? and title=? and startDate < CURDATE()");
 		 pre.setString(1, pId);
 		 pre.setString(2, skill);
 		 ResultSet rs = pre.executeQuery();
@@ -100,7 +106,6 @@ public class TrainerController {
 	@RequestMapping(value="/fetchlist",method=RequestMethod.POST)
 	public @ResponseBody String fetchlist(Model model,HttpServletRequest request,HttpSession session) throws Exception
 	{	
-		//System.out.println("in LIST DA");
 		String pId=(String) session.getAttribute("pId");
 		String skill=(String) request.getParameter("skill");
 		String stdate = request.getParameter("stdate");
@@ -112,6 +117,7 @@ public class TrainerController {
 		Date enddate = format.parse(endate);
         java.sql.Date sqlendate = new java.sql.Date(enddate.getTime());
         String response = "";
+        response += "<table class="+"table table-striped"+">";
 		String courseid = (pId+skill+new SimpleDateFormat("MM/dd/yyyy").format(startdate)+new SimpleDateFormat("MM/dd/yyyy").format(enddate)).replace("/", "");
 		
 		Connection conn = DBUtill.getDBConnection();
@@ -133,20 +139,29 @@ public class TrainerController {
 			ResultSet rs1 = pre1.executeQuery();
 			while(rs1.next())
 			{
-				System.out.println("inside secondloop"+rs1.getString(1));
-				response +="<input type=checkbox name=pId value="+rs.getString(1)+">"+rs1.getString(1)+"<br>";
+				response += "<tr>";
+				response +="<td><input type=checkbox name=pId value="+rs.getString(1)+"></td><td>"+rs1.getString(1)+"</td>";
+				response += "</tr>";
 			}
 			}
 			else
 			{
+				if(rs.isLast())
+				{
+					response += "<tr><td></td>";
+					response += "<td><input class="+"btn"+" type="+"submit"+" value="+"UpdateCompletionStatus"+"></td>";
+					response += "</tr>";
+				}
 				continue;
 			}
 			if(rs.isLast())
 			{
-				response += "<input type="+"submit"+" value="+"Submit"+">";
+				response += "<tr><td></td>";
+				response += "<td><input class="+"btn"+" type="+"submit"+" value="+"UpdateCompletionStatus"+"></td>";
+				response += "</tr>";
 			}
 		}
-
+		response += "</table>";
 		return response;
 	}
 	
@@ -185,5 +200,93 @@ public class TrainerController {
 		
 		return "Attendance";
 	}
+	
+	@RequestMapping(value="/tofetchstartdateT",method=RequestMethod.POST)
+	public @ResponseBody String tofetchstartdateT(Model model,HttpServletRequest request,HttpSession session) throws Exception
+	{	
+		String skill=(String) request.getParameter("skill");
+		//System.out.println(skill+"To Be Removed soon....");
+		String pId=(String) session.getAttribute("pId");
+		String response="";
+		  response+="<h4>StartDate:</h4>";
+		 response+="<select name="+"stdate"+" id="+"stdate"+" onchange="+"fun2(this.value);"+">";
+		 response+="<option value="+"select"+">select</option>";
+		 Connection Conn = DBUtill.getDBConnection();
+		 PreparedStatement pre = Conn.prepareStatement("SELECT startDate FROM newdb.db_Trainer where trainerId = ? and title=? and startDate > CURDATE()");
+		 pre.setString(1, pId);
+		 pre.setString(2, skill);
+		 ResultSet rs = pre.executeQuery();
+		 while(rs.next())
+		 {
+			 System.out.println(rs.getDate(1));
+		 response+="<option value ="+rs.getDate(1)+">"+rs.getDate(1)+"</option>";
+		 }
+		 response+="</select>";
+		
+
+		
+		return response;
+	}
+	
+	
+	@RequestMapping(value="/tofetchenddateT",method=RequestMethod.POST)
+	public @ResponseBody String tofetchenddateT(Model model,HttpServletRequest request,HttpSession session) throws Exception
+	{	
+		String skill=(String) request.getParameter("skill");
+		String stdate=(String) request.getParameter("startDate");
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date startdate = format.parse(stdate);
+        java.sql.Date sql = new java.sql.Date(startdate.getTime());
+
+		String pId=(String) session.getAttribute("pId");
+		String response="";
+		  response+="<h4>EndDate:</h4>";
+		 response+="<select name="+"endate"+" id="+"endate"+" onchange="+"fun3();"+">";
+		 response+="<option value="+"select"+">select</option>";
+		 Connection Conn = DBUtill.getDBConnection();
+		 PreparedStatement pre = Conn.prepareStatement("SELECT endDate FROM newdb.db_Trainer where trainerId = ? and title=? and startDate=?");
+		 pre.setString(1, pId);
+		 pre.setString(2, skill);
+		 pre.setDate(3,sql);
+		 
+		 ResultSet rs = pre.executeQuery();
+		 while(rs.next())
+		 {
+			 System.out.println(rs.getDate(1));
+		 response+="<option value ="+rs.getDate(1)+">"+rs.getDate(1)+"</option>";
+		 }
+		 response+="</select>";
+		return response;
+	}
+	
+	
+	@RequestMapping(value="/CancelEvent",method=RequestMethod.POST)
+	public @ResponseBody String CancelEvent(Model model,HttpServletRequest request,HttpSession session)
+	{	
+		String pId=(String) session.getAttribute("pId");
+		String skill=(String) request.getParameter("skill");
+		String stdate = request.getParameter("stdate");
+		String endate = request.getParameter("endate");
+		try
+		{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date startdate = format.parse(stdate);
+        java.sql.Date sqlstdate = new java.sql.Date(startdate.getTime());
+		Date enddate = format.parse(endate);
+        java.sql.Date sqlendate = new java.sql.Date(enddate.getTime());
+		String courseid = (pId+skill+new SimpleDateFormat("MM/dd/yyyy").format(startdate)+new SimpleDateFormat("MM/dd/yyyy").format(enddate)).replace("/", "");
+		Connection conn = DBUtill.getDBConnection();
+		PreparedStatement pre = conn.prepareStatement("delete from newdb.db_Trainer where courseId = ?");
+		pre.setString(1, courseid);
+		pre.execute();
+		return "Event Canceled Successfully...!!!";
+		}
+		catch (Exception e)
+		{
+			return "Event Cannot Be Cancelled...!!!";
+		}
+	}
+	
 
 }

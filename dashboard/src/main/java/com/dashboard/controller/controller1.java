@@ -93,7 +93,7 @@ public class controller1
 	
 	
 	@RequestMapping(value="/addEvent1",method=RequestMethod.POST)
-	public @ResponseBody String addEvent1(@ModelAttribute TrainerBean tb,HttpServletRequest request,HttpSession session)
+	public @ResponseBody String addEvent1(@ModelAttribute TrainerBean tb,HttpServletRequest request,HttpSession session) throws Exception
 	{
 		Date stdt1=new Date();
 		Date edt1=new Date();
@@ -116,7 +116,12 @@ public class controller1
 		String courseId;
 		courseId=(pId+event+stdt+edt).replaceAll("/", "");
 		tb.setCourseId(courseId);
-		tb.setSkillId(201);
+		Connection conn = DBUtill.getDBConnection();
+		PreparedStatement pre = conn.prepareStatement("select skillId from newdb.db_skill where skillName=?");
+		pre.setString(1, event);
+		ResultSet rs = pre.executeQuery();
+		rs.next();
+		tb.setSkillId(rs.getInt(1));
 		
 		System.out.println(event);
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!"+courseId);
