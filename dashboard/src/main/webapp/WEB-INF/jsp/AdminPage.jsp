@@ -7,10 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-Admin
-<a href="ViewStudents.html">View Students</a>
-<a href="ViewTrainers.html">View Trainers</a>
-<a href="ViewScheduledInterview.html">View Scheduled Interview</a>
+Admin<br><br>
+<a href="ViewStudents.html">View Students</a><br>
+<a href="ViewTrainers.html">View Trainers</a><br>
+<a href="ViewScheduledInterview.html">View Scheduled Interview</a><br><br>
 <a href="Logout.html">Click Here to logout</a>
 </body>
 </html>

@@ -7,13 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-trainer
+trainer<br><br>
+<a href="SkillSelect.html">Skill Select</a><br>
+	<a href="ViewSkill.html">View Skill</a><br>
+<a href="addEvent.html">AddEvent</a><br>
 
-<a href="addEvent.html">AddEvent</a>
+<a href="completionStatus.html">Update-CompletionStatus</a><br>
 
-<a href="completionStatus.html">Update-CompletionStatus</a>
-
-
+<br><br>
 <a href="Logout.html">Click Here to logout</a>
 </body>
 </html>

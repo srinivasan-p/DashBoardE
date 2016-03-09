@@ -8,14 +8,14 @@
 </head>
 <body>
 	student
-
-	<a href="SkillSelect.html">Skill Select</a>
-	<a href="ViewSkill.html">View Skill</a>
-
-
-	<a href="calendar.html">Calendar</a>
+<br><br>
+	<a href="SkillSelect.html">Skill Select</a><br>
+	<a href="ViewSkill.html">View Skill</a><br>
 
 
+	<a href="calendar.html">Calendar</a><br>
+
+<br><br>
 
 	<a href="Logout.html">Click Here to logout</a>
 </body>
