@@ -13,6 +13,8 @@ trainer
 
 <a href="completionStatus.html">Update-CompletionStatus</a>
 
+<a href="terminateevent.html">Cancel An Event</a>
+
 
 <a href="Logout.html">Click Here to logout</a>
 </body>

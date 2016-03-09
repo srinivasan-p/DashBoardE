@@ -2,21 +2,24 @@
 <%@page import="com.dashboard.util.DBUtill"%>
 <%@page import="java.sql.ResultSet"%>
 
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <meta charset='utf-8' />
 <link href="../dashboard/fullcalendar.css" rel='stylesheet' />
 <link href="../dashboard/fullcalendar.print.css" rel='stylesheet' media='print' />
 <script src="../dashboard/libs/moment.min.js"></script>
- <script src="../dashboard/libs/jquery.min.js"></script>
+ <script src="../dashboard/libs/jquery.min.js"></script> 
+  <script src="../dashboard/libs/jquery-ui.custom.min.js"></script> 
 <script src="../dashboard/fullcalendar.min.js"></script>
+ <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+  
+  
 
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
 <style>
 	body {
 		margin: 40px 10px;
@@ -31,16 +34,9 @@
 	}
 
 </style>
-
-
-
 <script type="text/javascript">
 function aj() {
-	 
-    
-    
     $.ajax({
-	
 		        type: "POST",
 		
 		        url: "topopulateaddevent.html",
@@ -50,18 +46,10 @@ function aj() {
 		
 		        // we have the response
 		
-		        $('#event').html(response);
-		
-		       
+		        $('#event').html(response);     
 		 }
-	
 	     });
-
-       }
-       
-       
-       
-       
+       } 
 function fu()
 {
 	var eventName=document.getElementById("eventName").value;
@@ -69,38 +57,19 @@ function fu()
 	var endDate=document.getElementById("endDate").value;
 	doAjaxPost(eventName,startDate,endDate);
 	}
-
 </script>
-
- 
 </head>
+
+
+
+
 <body onload="aj();">
-
-
-
 <input type="hidden" id="status" value="Fix Schedule"readonly="readonly">
-
-
-
 <div id="event" >
-
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
+
+
 function doAjaxPost(eventName,startDate,endDate){
 	$.ajax({
 		type:"Post",
@@ -134,7 +103,6 @@ function doAjaxPost(eventName,startDate,endDate){
 	      true); */
 	      
 	 }
-	
 </script>
 
 
@@ -176,11 +144,12 @@ function doAjaxPost(eventName,startDate,endDate){
         </div>
         	<div class="control-group">
           	 	 <label class="control-label" for="startDate">Start date:</label>
-          	 	<form:input type="text" path="startDate" id="startDate"></form:input>
+          	 	<form:input type="text" path="startDate" id="startDate" readonly="true"></form:input>
        		 </div>
        		 <div class="control-group">
            		 <label class="control-label" for="endDate">End date:</label>
-              <form:input type="text" path="endDate" id="endDate"></form:input>         
+              <form:input type="text" path="endDate" id="endDate"></form:input>   
+    
         </div>     
     </form:form>
     </div>
@@ -188,6 +157,8 @@ function doAjaxPost(eventName,startDate,endDate){
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
         <button type="submit" class="btn btn-primary" id="submitButton" onclick="fu();">Save</button>
     </div>
+    
 </div> 
+
 </body>
 </html>
