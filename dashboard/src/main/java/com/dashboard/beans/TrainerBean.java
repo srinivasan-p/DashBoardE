@@ -91,4 +91,12 @@ public class TrainerBean {
 		this.title = title;
 	}
 
+	@Override
+	public String toString() {
+		return "TrainerBean [courseId=" + courseId + ", trainerId=" + trainerId + ", title=" + title + ", skillId="
+				+ skillId + ", startDate=" + startDate + ", endDate=" + endDate + ", updatedOn=" + updatedOn
+				+ ", updatedBy=" + updatedBy + "]";
+	}
+	
+
 }

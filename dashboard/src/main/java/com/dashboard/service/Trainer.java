@@ -6,4 +6,6 @@ public interface Trainer {
 //	ArrayList<DoctorBean> viewAllAvailableDoctors(Date date);
 //	ArrayList<DoctorBean> intimateAdmin(Date date, String status);
 	public String addEvent(String pId,TrainerBean tb);
+
+	public String deleteevent(String courseid);
 }

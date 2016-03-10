@@ -1,5 +1,8 @@
 package com.dashboard.controller;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dashboard.service.Student;
+import com.dashboard.util.DBUtill;
 
 @Controller
 public class StudentController {
@@ -51,6 +56,19 @@ public class StudentController {
 		String pId = (String) httpSession.getAttribute("pId");
 		studentService.calculateSkill(pId);
 		return "Success";
+	}
+	
+	
+	@RequestMapping(value = "/tocancelnotification", method = RequestMethod.POST)
+	public @ResponseBody String tocancelnotification(HttpSession httpSession, Model model,HttpServletRequest request) throws Exception 
+	{
+		String pId = (String) httpSession.getAttribute("pId");
+		String id=request.getParameter("id");
+		Connection conn = DBUtill.getDBConnection();
+		PreparedStatement pre=conn.prepareStatement("delete from newdb.db_Conflict where Sno=?");
+		pre.setString(1, id);
+		pre.execute();
+		return "";
 	}
 
 }

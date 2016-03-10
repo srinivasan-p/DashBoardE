@@ -59,6 +59,7 @@
 				<value>com.dashboard.beans.InterviewBean</value>
 				<value>com.dashboard.beans.InterviewerBean</value>
 				<value>com.dashboard.beans.IntervieweeBean</value>
+				<value>com.dashboard.beans.ConflictBean</value>
 			</list>
 		</property>
 

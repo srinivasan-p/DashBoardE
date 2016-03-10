@@ -1,14 +1,29 @@
 package com.dashboard.dao;
 
+
 import org.hibernate.Session;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dashboard.beans.ConflictBean;
 import com.dashboard.beans.CredentialBean;
+import com.dashboard.beans.ScheduleBean;
 import com.dashboard.beans.TrainerBean;
+import com.dashboard.util.DBUtill;
 
 @Repository("trainerDAO")
 public class TrainerDAOImpl implements TrainerDAO{
@@ -16,7 +31,6 @@ public class TrainerDAOImpl implements TrainerDAO{
 	@Autowired
 	SessionFactory sessionFactory;
 
-	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
 	public String addEvent(String pId,TrainerBean tb) 
 	{
 	Session s=sessionFactory.getCurrentSession();
@@ -36,54 +50,72 @@ public class TrainerDAOImpl implements TrainerDAO{
 	
 	}
 
-//	public ArrayList<DoctorBean> availableDoctorsDetails(java.sql.Date sqldate) {
-//		Session session= sessionFactory.getCurrentSession();
-//		System.out.println(sqldate+"in reporter dao 1 ");
-//
-//		
-//		//SQLQuery sqlQuery = session.createSQLQuery("select * from OCS_TBL_Doctor where OCS_TBL_Doctor.DOCTORID IN (select OCS_TBL_Leave.DOCTORID from OCS_TBL_Leave where LEAVEFROM<12-jun-1993 AND LEAVETO>12-jun-1993");
-//		SQLQuery sqlQuery = session.createSQLQuery("select * from OCS_TBL_Doctor where OCS_TBL_Doctor.DOCTORID NOT IN (select OCS_TBL_Leave.DOCTORID from OCS_TBL_Leave where LEAVEFROM<= :dateGiven AND LEAVETO>= :dateGiven1)");
-//		//sqlQuery.setParameter("docId", "va3341");
-//		sqlQuery.setParameter("dateGiven", sqldate);
-//		sqlQuery.setParameter("dateGiven1", sqldate);
-//		
-//		
-////	 select count(OCS_TBL_APPOINTMENTS.APPOINTMENTID) from OCS_TBL_APPOINTMENTS where OCS_TBL_APPOINTMENTS.APPOINTMENTDATE= '14-DEC-98' and OCS_TBL_APPOINTMENTS.DOCTORID='DF1010'
-//
-//		sqlQuery.addEntity(DoctorBean.class);
-//		
-//		ArrayList<DoctorBean> availableDoctors = new ArrayList<>();
-//
-//		@SuppressWarnings("unchecked")
-//		ArrayList<DoctorBean> doctors= (ArrayList<DoctorBean>) sqlQuery.list();
-//		if(doctors!=null){
-//		for(int i =0;i<doctors.size();i++){
-//			SQLQuery sqlQuery2 = session.createSQLQuery("select count(OCS_TBL_APPOINTMENTS.APPOINTMENTID) from OCS_TBL_APPOINTMENTS where OCS_TBL_APPOINTMENTS.APPOINTMENTDATE= :sqldat and OCS_TBL_APPOINTMENTS.DOCTORID=:doctId");
-//			sqlQuery2.setParameter("sqldat", sqldate);
-//			sqlQuery2.setParameter("doctId", doctors.get(i).doctorID);
-//			
-//			int count = ((BigDecimal)sqlQuery2.uniqueResult()).intValue();
-//			if(count>=0 && count<8){
-//				availableDoctors.add(doctors.get(i));
-//			}
-//			
-//		}
-//		}
-//		//System.out.println(doctors.get(0).city);
-//		return availableDoctors;
-//	}
-//
-//	@Override
-//	public ArrayList<DoctorBean> listOfDoctors(java.sql.Date sqldate, String status) {
-//		Session session= sessionFactory.getCurrentSession();
-//		SQLQuery sqlQuery = session.createSQLQuery("select * from OCS_TBL_Doctor where OCS_TBL_Doctor.DOCTORID IN (select OCS_TBL_Leave.DOCTORID from OCS_TBL_Leave where LEAVEFROM<= :dateGiven AND LEAVETO>= :dateGiven1 AND STATUS=:sta)");		sqlQuery.setParameter("dateGiven", sqldate);
-//		sqlQuery.setParameter("dateGiven1", sqldate);
-//		sqlQuery.setParameter("sta", status);
-//		sqlQuery.addEntity(DoctorBean.class);
-//		@SuppressWarnings("unchecked")
-//		ArrayList<DoctorBean> doctors= (ArrayList<DoctorBean>) sqlQuery.list();
-//		//System.out.println(doctors.get(0).city);
-//		return doctors;
-//	}
+	public String deleteevent(String courseid) 
+	{
+		try
+		{
+			Connection conn = DBUtill.getDBConnection();
+
+		Session session = sessionFactory.getCurrentSession();
+		/*Query query2 = session.createQuery("from TrainerBean where courseId=?");
+		query2.setParameter(0, courseid);
+		TrainerBean tb=(TrainerBean) query2.list().get(0);*/
+		TrainerBean tb=(TrainerBean) session.get(TrainerBean.class, courseid);
+		Query query =session.createQuery("from ScheduleBean where courseId=?");
+		query.setParameter(0, courseid);
+		@SuppressWarnings("unchecked")
+		ArrayList<ScheduleBean>sb = (ArrayList<ScheduleBean>) query.list();
+		for (ScheduleBean scheduleBean : sb) 
+		{
+			String sno;
+			CredentialBean Scb = scheduleBean.getStudentId();
+			String event = tb.getTitle();
+			String Courseid = scheduleBean.getCourseId();
+			Date stdate = tb.getStartDate();
+			/*
+			ConflictBean cb = new ConflictBean();
+			cb.setpId(Scb);
+			cb.setEvent(event);
+			cb.setCourseId(Courseid);
+			cb.setStdate(stdate);
+			session.save(cb);*/
+			
+			sno = Courseid+Scb.getpId();
+	        java.sql.Date sqlstdate = new java.sql.Date(stdate.getTime());
+	        
+	        
+			PreparedStatement pre = conn.prepareStatement("INSERT INTO newdb.db_Conflict (Sno,courseId,event,stdate,pId) VALUES (?,?,?,?,?)");
+			pre.setString(1, sno);
+			pre.setString(2, Courseid);
+			pre.setString(3, event);
+			pre.setDate(4,sqlstdate);
+			pre.setString(5, Scb.getpId());
+			pre.execute();
+		}
+		
+			PreparedStatement pre = conn.prepareStatement("delete from newdb.db_schedule where courseId = ?");
+			pre.setString(1, courseid);
+			pre.execute();
+			
+			PreparedStatement pre1 = conn.prepareStatement("delete from newdb.db_Trainer where courseId = ?");
+			pre1.setString(1, courseid);
+			pre1.execute();
+
+		return "success";
+		}
+		catch (HibernateException e)
+		{
+		e.printStackTrace();
+			return "fail";
+		}
+		catch (Exception e)
+		{
+		e.printStackTrace();
+			return "fail";
+		}
+		
+	}
+
+
 	
 }

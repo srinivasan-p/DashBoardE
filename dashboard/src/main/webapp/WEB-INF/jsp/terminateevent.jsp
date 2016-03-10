@@ -111,9 +111,23 @@ $.ajax({
 <body>
 
 <form action="fixcompletedstatus.html" method="post">
-<div style="border: solid transparent;margin-right: 90%" id="div1">
 
-<h4>Skill:</h4>
+
+
+
+
+
+
+<div class="container">
+<div class="row">
+<div class="col-md-12 text-center">
+<h3>Cancel Events</h3>
+</div>
+
+</div>
+<div class="row">
+	<div class="col-md-3 col-sm-6" id="div1">
+	<h4>Skill:</h4>
 <select id="skill" name="skill" onchange="fun(this.value);">
 <option value="select">select</option>
 <%
@@ -132,21 +146,22 @@ while(rs.next())
 <option value = <%=rs.getString(1)%>><%=rs.getString(1)%></option>
 <%}%>
 </select>
+	</div>
+	<div class="col-md-3 col-sm-6" id="startDate"></div>
+	<div class="col-md-3 col-sm-6" id="endDate"></div>
+		<div class="col-md-3 col-sm-6" id="endDate"><input id="button" class="btn btn-danger btn-lg btn-block" type="hidden" onclick="fun4();" value="CancelEvent" style="margin-top: 20px;"></input>
+		</div>
+
+	
 </div>
-<div style="border: solid transparent;margin-right: 79%;margin-left: 10%;margin-top: -6.25%" id="startDate">
+<div class="row">
+	<div class="col-md-4 col-sm-6" id="startDate"></div>
+	<div class="col-md-4 col-sm-6" id="startDate"><h4 id="lis">
+</h4></div>
+	<div class="col-md-4 col-sm-6" id="startDate"></div>
+
 
 </div>
-
-<div style="border: solid transparent;margin-right: 68%;margin-left: 21%;margin-top: -6.25%" id="endDate">
-
-</div>
-
-<div style="border: solid transparent;padding-left: 21%">
-<input id="button" class="btn btn-danger" type="hidden" onclick="fun4();" value="CancelEvent"></input>
-</div>
-<h4 id="lis">
-hello
-</h4>
 
 </div>
 </form>

@@ -4,7 +4,7 @@
 <%@page import="com.dashboard.util.DBUtill"%>
 <%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,143 +12,142 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <meta charset='utf-8' />
 <link href="../dashboard/fullcalendar.css" rel='stylesheet' />
-<link href="../dashboard/fullcalendar.print.css" rel='stylesheet' media='print' />
+<link href="../dashboard/fullcalendar.print.css" rel='stylesheet'
+	media='print' />
 <script src="../dashboard/libs/moment.min.js"></script>
- <script src="../dashboard/libs/jquery.min.js"></script>
+<script src="../dashboard/libs/jquery.min.js"></script>
 <script src="../dashboard/fullcalendar.min.js"></script>
 
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <title>CompletionStatus</title>
 <script type="text/javascript">
-function fun(skill)
-{
-	//alert(skill);
-	 $.ajax({
-			
-	        type: "Post",
-	
-	        url: "tofetchstartdate.html",
-			
-			data:"&skill="+skill,
+	function fun(skill) {
+		//alert(skill);
+		$.ajax({
 
-	        success:
-	        	function(response){
-	
-	        // we have the response
-	
-	        $('#startDate').html(response);
-	
-	       
-	 }
+			type : "Post",
 
-  });
-	
-}
-function fun2(stdate) 
-{
-	//alert(stdate);
-	var skill = document.getElementById("skill").value;
-	//alert(skill);
-	$.ajax({
-		
-        type: "Post",
+			url : "tofetchstartdate.html",
 
-        url: "tofetchenddate.html",
-		
-		data:"&skill="+skill+"&startDate="+stdate,
+			data : "&skill=" + skill,
 
-        success:
-        	function(response){
+			success : function(response) {
 
-        // we have the response
+				// we have the response
 
-        $('#endDate').html(response);
+				$('#startDate').html(response);
 
-       
- }
+			}
 
-});
-	
-	
-}
+		});
 
-function fun3()
-{
-	document.getElementById("button").type="button";
-	
-}
-function fun4()
-{
-	var skill = document.getElementById("skill").value;
-	var stdate = document.getElementById("stdate").value;
-	var endate = document.getElementById("endate").value;
-	
+	}
+	function fun2(stdate) {
+		//alert(stdate);
+		var skill = document.getElementById("skill").value;
+		//alert(skill);
+		$.ajax({
 
+			type : "Post",
 
+			url : "tofetchenddate.html",
 
-$.ajax({
-		
-        type: "Post",
+			data : "&skill=" + skill + "&startDate=" + stdate,
 
-        url: "fetchlist.html",
-		
-		data:"&skill="+skill+"&stdate="+stdate+"&endate="+endate,
+			success : function(response) {
 
-        success:
-        	function(response){
+				// we have the response
 
-        // we have the response
+				$('#endDate').html(response);
 
-        $('#lis').html(response);
+			}
 
-       
- }
+		});
 
-});
-}
+	}
+
+	function fun3() {
+		document.getElementById("button").type = "button";
+
+	}
+	function fun4() {
+		var skill = document.getElementById("skill").value;
+		var stdate = document.getElementById("stdate").value;
+		var endate = document.getElementById("endate").value;
+
+		$.ajax({
+
+			type : "Post",
+
+			url : "fetchlist.html",
+
+			data : "&skill=" + skill + "&stdate=" + stdate + "&endate="
+					+ endate,
+
+			success : function(response) {
+
+				// we have the response
+
+				$('#lis').html(response);
+
+			}
+
+		});
+	}
 </script>
 </head>
 <body>
 
-<form action="fixcompletedstatus.html" method="post">
-<div style="border: solid transparent;margin-right: 90%" id="div1">
+	<form action="fixcompletedstatus.html" method="post">
 
-<h4>Skill:</h4>
-<select id="skill" name="skill" onchange="fun(this.value);">
-<option value="select">select</option>
-<%
-String pId =(String)session.getAttribute("pId");
-String pIdsql = pId+"%";
-Connection Conn = DBUtill.getDBConnection();
-PreparedStatement pre = Conn.prepareStatement("SELECT distinct title from newdb.db_Trainer where courseId like ? and skillId in (Select skillId from newdb.db_studskill where pId = ?) and startDate < CURDATE()");
+		<div class="container">
+			<div class="row">
+            <div class="col-md-12 text-center">
+             <h3>Update Completion Status</h3>
+              </div>
 
-pre.setString(1, pIdsql);
-pre.setString(2, pId);
-ResultSet rs=pre.executeQuery();
-while(rs.next())
-{
+            </div>
+			<div class="row">
 
-%>
-<option value = <%=rs.getString(1)%>><%=rs.getString(1)%></option>
-<%}%>
-</select>
-</div>
-<div style="border: solid transparent;margin-right: 79%;margin-left: 10%;margin-top: -6.25%" id="startDate">
+				<div class="col-md-3 col-sm-6" id="div1">
+					<h4>Skill:</h4>
+					<select id="skill" name="skill" onchange="fun(this.value);">
+						<option value="select">select</option>
+						<%
+							String pId = (String) session.getAttribute("pId");
+							String pIdsql = pId + "%";
+							Connection Conn = DBUtill.getDBConnection();
+							PreparedStatement pre = Conn.prepareStatement(
+									"SELECT distinct title from newdb.db_Trainer where courseId like ? and skillId in (Select skillId from newdb.db_studskill where pId = ?) and startDate < CURDATE()");
 
-</div>
+							pre.setString(1, pIdsql);
+							pre.setString(2, pId);
+							ResultSet rs = pre.executeQuery();
+							while (rs.next()) {
+						%>
+						<option value=<%=rs.getString(1)%>><%=rs.getString(1)%></option>
+						<%
+							}
+						%>
+					</select>
+				</div>
+				<div class="col-md-3 col-sm-6" id="startDate"></div>
+				<div class="col-md-3 col-sm-6" id="endDate"></div>
+				<div class="col-md-3 col-sm-6">
+					<input id="button" class="btn btn-danger btn-block btn-lg" type="hidden"
+						onclick="fun4();" value="Fetch List" style="margin-top: 20px;"></input>
+				</div>
 
-<div style="border: solid transparent;margin-right: 68%;margin-left: 21%;margin-top: -6.25%" id="endDate">
+			</div>
+			<div class="row" id="lis" style="margin-top: 20px;"></div>
 
-</div>
+		</div>
 
-<div style="border: solid transparent;padding-left: 21%">
-<input id="button" class="btn btn-danger" type="hidden" onclick="fun4();" value="Fetch List"></input>
-</div>
-<div style="border: solid transparent;margin-left: 0;margin-top: 5" id="lis">
 
-</div>
-</form>
+	</form>
 </body>
 </html>

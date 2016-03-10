@@ -7,6 +7,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -276,14 +280,27 @@ public class TrainerController {
 		Date enddate = format.parse(endate);
         java.sql.Date sqlendate = new java.sql.Date(enddate.getTime());
 		String courseid = (pId+skill+new SimpleDateFormat("MM/dd/yyyy").format(startdate)+new SimpleDateFormat("MM/dd/yyyy").format(enddate)).replace("/", "");
+		String result = trainer.deleteevent(courseid);
+		if(result.equalsIgnoreCase("success"))
+		{
+			return "Event Cancelled Successfully...!!!";
+		}
+		else
+		{
+			return "Event Cancel Failed...!!!";
+		}
+		
+		
+		/*
 		Connection conn = DBUtill.getDBConnection();
 		PreparedStatement pre = conn.prepareStatement("delete from newdb.db_Trainer where courseId = ?");
 		pre.setString(1, courseid);
 		pre.execute();
-		return "Event Canceled Successfully...!!!";
+		return "Event Canceled Successfully...!!!";*/
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			return "Event Cannot Be Cancelled...!!!";
 		}
 	}
