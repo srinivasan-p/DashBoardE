@@ -52,11 +52,23 @@ function fun(id,divid)
 </head>
 <body>
 	student
+<!-- <<<<<<< HEAD -->
 
 	<a href="SkillSelect.html">Skill Select</a>
 	<a href="ViewSkill.html">View Skill</a>
 	<a href="calendar.html">Calendar</a>
-	<a href="Logout.html">Click Here to logout</a>
+<!-- ======= -->
+<br><br>
+	<a href="SkillSelect.html">Skill Select</a><br>
+	<a href="ViewSkill.html">View Skill</a><br>
+
+
+	<a href="calendar.html">Calendar</a><br>
+
+<br><br>
+
+<!-- >>>>>>> branch 'master' of https://github.com/srinivasan-p/DashBoardE.git
+ -->	<a href="Logout.html">Click Here to logout</a>
 	<%
 	Connection conn = DBUtill.getDBConnection();
 	String pId=(String)session.getAttribute("pId");
