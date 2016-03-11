@@ -4,13 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Admin</title>
 </head>
 <body>
 Admin<br><br>
 <a href="ViewStudents.html">View Students</a><br>
 <a href="ViewTrainers.html">View Trainers</a><br>
-<a href="ViewScheduledInterview.html">View Scheduled Interview</a><br><br>
+<a href="ViewScheduledInterview.html">View Scheduled Interview</a><br>
+<a href="authorizeaccess.html">Authorize Access</a><br>
 <a href="Logout.html">Click Here to logout</a>
 </body>
 </html>

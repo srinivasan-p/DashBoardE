@@ -24,4 +24,5 @@ public interface AdminDAO
 	String iSchedule(String[] interviewer, String[] interviwee, Date iDate);
 	Map<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>> ViewAllScheduledInterview();
 	String DeleteInterview(String[] interviewIDstoDelete);
+	String aa(String id);
 }

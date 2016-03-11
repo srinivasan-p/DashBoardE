@@ -191,6 +191,35 @@ public class AdminDAOImpl implements AdminDAO {
 		return "Success";
 	}
 
+	public String aa(String id) 
+	{
+		try
+		{
+		Session session = sessionFactory.getCurrentSession();
+		CredentialBean cb = (CredentialBean) session.get(CredentialBean.class, id);
+		if(cb.getStatus()==9999)
+		{
+			cb.setStatus(0);
+		}
+		else if(cb.getStatus()==1 || cb.getStatus()==0)
+		{
+			cb.setStatus(9999);
+		}
+		session.save(cb);
+		return "success";
+		}
+		catch(HibernateException e)
+		{
+			e.printStackTrace();
+			return "fail";
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			return "fail";
+		}
+	}
+
 	
 
 }

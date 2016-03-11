@@ -51,6 +51,13 @@ public class AdministratorImp implements Administrator {
 		return adminDAO.viewAllTrainers();
 	}
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
+	public String aa(String id) 
+	{
+		String result=adminDAO.aa(id);
+		return result;
+	}
+
 	// @Override
 	// public String addDoctor(DoctorBean doctoerBean)
 	// {
