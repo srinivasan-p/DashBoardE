@@ -28,7 +28,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/test/Downloads/com.mysql.jdbc_5.1.5.jar">
+	<classpathentry kind="lib" path="/Users/gouttham/Documents/eclipsesupport/com.mysql.jdbc_5.1.5.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
