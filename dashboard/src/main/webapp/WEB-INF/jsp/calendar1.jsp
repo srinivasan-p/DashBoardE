@@ -148,7 +148,7 @@ function doAjaxPost(eventName,startDate,endDate){
        		 </div>
        		 <div class="control-group">
            		 <label class="control-label" for="endDate">End date:</label>
-              <form:input type="text" path="endDate" id="endDate"></form:input>   
+              <form:input type="text" path="endDate" id="endDate" readonly="true"></form:input>   
     
         </div>     
     </form:form>

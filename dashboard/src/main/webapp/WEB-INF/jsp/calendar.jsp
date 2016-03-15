@@ -163,15 +163,15 @@ function doAjaxPost(eventName,startDate,endDate){
     
          <div class="control-group">
            <label class="control-label" for="event">Event:</label>
-              <input type="text" id="eventName"></input>
+              <input type="text" id="eventName" readonly="true"></input>
         </div>
         	<div class="control-group">
           	 	 <label class="control-label" for="startDate">Start date:</label>
-          	 	<input type="text" id="startDate"></input>
+          	 	<input type="text" id="startDate" readonly="true"></input>
        		 </div>
        		 <div class="control-group">
            		 <label class="control-label" for="endDate">End date:</label>
-              <input type="text" id="endDate"></input>         
+              <input type="text" id="endDate" readonly="true"></input>         
         </div>     
     </form:form>
     </div>
@@ -194,15 +194,15 @@ function doAjaxPost(eventName,startDate,endDate){
     
          <div class="control-group">
            <label class="control-label" for="event">Event:</label>
-              <input class="hh1" type="text" id="eventName"></input>
+              <input class="hh1" type="text" id="eventName" readonly="true"></input>
         </div>
         	<div class="control-group">
           	 	 <label class="control-label" for="startDate">Start date:</label>
-          	 	<input class="hh2" type="text" id="startDate"></input>
+          	 	<input class="hh2" type="text" id="startDate" readonly="true"></input>
        		 </div>
        		 <div class="control-group">
            		 <label class="control-label" for="endDate">End date:</label>
-              <input class="hh3" type="text" id="endDate"></input>         
+              <input class="hh3" type="text" id="endDate" readonly="true"></input>         
         </div>     
     </form:form>
     </div>

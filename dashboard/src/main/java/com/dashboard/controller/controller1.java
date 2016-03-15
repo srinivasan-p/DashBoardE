@@ -230,7 +230,7 @@ public class controller1
         result = result  + "center: 'title',";
         result = result  + "right: 'month,basicWeek,basicDay'";
         result = result  + "},";
-        result = result  + "defaultDate: '2016-01-12',";
+        result = result  + "";
         result = result  + "editable: false,";
         result = result  + "eventLimit: true,";
         result = result  + "selectable: true,";
@@ -331,8 +331,9 @@ public class controller1
 	
 	
 	@RequestMapping(value="/topopulateaddevent",method=RequestMethod.POST)
-	public @ResponseBody String topopulateaddevent(HttpServletRequest request,HttpServletResponse response) throws Exception
+	public @ResponseBody String topopulateaddevent(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws Exception
 	{
+		String pId = (String) session.getAttribute("pId");
 		System.out.println("in ajax topopulateaddevent");
        String result = "";
         result = result  + "<script>";
@@ -345,14 +346,28 @@ public class controller1
         result = result  + "center: 'title',";
         result = result  + "right: 'month,basicWeek,basicDay'";
         result = result  + "},";
-        result = result  + "defaultDate: '2016-01-12',";
+        result = result  + "";
         result = result  + "editable: false,";
         result = result  + "eventLimit: true,";
         result = result  + "selectable: true,";       
-        result = result  + "select: function(start) {";
+        result = result  + "select: function(start,end) {";
+        
+        
+       
+        
+        result = result  + "end.subtract(1, 'days');";
         result = result  + "starttime =moment(start).format('MM/DD/YYYY');";
+        result = result  + "endtime =moment(end).format('MM/DD/YYYY');";
+        
+        result = result  + "var today=new Date();";
+        result = result  + "if(moment(start)>today){";
         result = result  + "$('#createEventModal #startDate').val(starttime);";
+        result = result  + "$('#createEventModal #endDate').val(endtime);";
         result = result  + "$('#createEventModal').modal('show');";
+        result = result  + "}else{alert('Event Cannot be scheduled for the Past...!!!');}";
+        
+        
+        
         result = result  + "},";
         result = result  + "events: [";
 		Connection Conn = DBUtill.getDBConnection();
@@ -362,9 +377,18 @@ public class controller1
 		while (res.next()) {
 			System.out.println(res.getDate("startDate"));
 			System.out.println(res.getDate("endDate"));
-
+			System.out.println(pId);
+			System.out.println(res.getString("trainerId"));
+			if(res.getString("trainerId").equalsIgnoreCase(pId))
+			{
+			result = result  + "{title:'"+res.getString("title")+"',start:'"+res.getDate("startDate")+"',end:'"+res.getDate("endDate")+"T12:30:00Z',backgroundColor:'#B51C04'},";
+			}
+			else
+			{
 			result = result  + "{title:'"+res.getString("title")+"',start:'"+res.getDate("startDate")+"',end:'"+res.getDate("endDate")+"T12:30:00Z'},";
-		}
+			}
+			}
+			
 		 result = result  + "],";
 		 result = result  + "});";
 	     result = result  + "});";
