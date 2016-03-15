@@ -56,13 +56,30 @@
 	}); 
 	}
 	</script>
+	
+	<link href="../dashboard/assets/css/vendor/bootstrap.min.css"
+	type="text/css" rel="stylesheet">
+<link href="../dashboard/assets/css/vendor/font-awesome.min.css"
+	type="text/css" rel="stylesheet">
+<link
+	href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600'
+	rel='stylesheet' type='text/css'>
+<link href="../dashboard/assets/css/jquery.bdt.css" type="text/css"
+	rel="stylesheet">
+<link href="../dashboard/assets/css/style.css" type="text/css"
+	rel="stylesheet">
 </head>
 <body>
-
-<table class="table table-stripped">
+<div class="container">
+<div class="row">
+			<div class="box clearfix">
+			<h3>Authorize Access</h3>
+<table class="table table-stripped table-hover" id="bootstrap-table">
+<thead>
 <tr>
 <th><h4>Name</h4></th><th><h4>Id</h4></th><th><h4>Type</h4></th><th><h4>Authorized/Not-Authorized</h4></th><th><h4>Status</h4></th>
 </tr>
+</thead>
 <%
 Connection conn = DBUtill.getDBConnection();
 PreparedStatement pre = conn.prepareStatement("select * from newdb.db_credential where type !='a'");
@@ -77,6 +94,7 @@ while(rs.next())
 	if(rs.getInt("status")==9999)
 	{
 %>
+<tbody>
 <tr>
 <td><h5><%=rs2.getString("name")%></h5></td><td><h5><%=rs2.getString("pId")%></h5></td><td><h5><%if(rs.getString("type").equalsIgnoreCase("t")){%>Trainer<%}else{%>Student<%} %></h5></td><td><input id="<%=rs.getString("pId")%>" type="checkbox" data-toggle="toggle" data-on="Authorized" data-off="Not Authorized" data-onstyle="success" data-offstyle="danger" onchange="func(this.id)"></td>
 <td id="<%=rs.getString("pId")%>div"></td>
@@ -91,7 +109,7 @@ while(rs.next())
 <td id="<%=rs.getString("pId")%>div"></td>
 </tr>
 <%}} %>		
-	
+	</tbody>
 	</table>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="js/bootstrap-toggle.js"></script>
@@ -109,5 +127,22 @@ while(rs.next())
         $("#wrapper").toggleClass("toggled");
     });
     </script>
+    </div>
+    </div>
+ </div>
+ 
+ <script src="http://code.jquery.com/jquery-2.1.1.min.js"
+		type="text/javascript"></script>
+	<script src="../dashboard/assets/js/vendor/bootstrap.min.js"
+		type="text/javascript"></script>
+	<script src="../dashboard/assets/js/vendor/jquery.sortelements.js"
+		type="text/javascript"></script>
+	<script src="../dashboard/assets/js/jquery.bdt.js"
+		type="text/javascript"></script>
+	<script>
+		$(document).ready(function() {
+			$('#bootstrap-table').bdt();
+		});
+	</script>
 </body>
 </html>

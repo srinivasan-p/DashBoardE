@@ -52,7 +52,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					<input type="submit">
+					<input class="btn btn-danger btn-block" type="submit">
 				</form>
 			</div>
 		</div>
