@@ -29,6 +29,7 @@ $("#login").click(function(){
 	
 	$("#index").hide("slide",{direction:"left",},1000);
 	$("#obregistration").hide("slide",{direction:"left",},1000);
+	$('#reg').animate({left:'0%'},1000);
 	$("#oblogin").show("slide",{direction:"right",},1000);
 	
 
@@ -176,9 +177,13 @@ writing-mode: tb-rl;
 			<!-- class="btn btn-danger show1" -->	
  	<div class="col-md-12">
 					<div class="row" id="index">
-					<div class="col-md-6 offset-0" id="reg"  style="left:0%"><a id="RegistrationForm" href="#" class="RegistrationForm show1"><span>Register</span></a></div>
+					<div class="col-md-3 offset-0" id="reg"  style="left:0%;">
+					<a id="RegistrationForm" href="#" class="RegistrationForm show1"><span>Register</span></a>
+					</div>
+					<div class="col-md-3 offset-0" style="text-align: center;padding-top:30px;color: OrangeRed;opacity:0.6"><h1>A</h1><h1>S</h1><h1>K</h1></div>
+					<div class="col-md-3 offset-0" style="text-align: left;padding-top:30px;color: "><h1>Always</h1><h1>Seek</h1><h1>Knowledge</h1></div>
 					
-						<div class="col-md-6 offset-0" style="text-align: right">
+						<div class="col-md-3 offset-0" style="text-align: right">
 						<a id="login" href="#" class="button"><span>Login </span></a></div>
 					</div>
 	</div>	 
@@ -232,13 +237,14 @@ writing-mode: tb-rl;
 	
    <video id="video-background" preload muted autoplay loop style="position: fixed;
     top: 0;
+    opacity:1;
     right: 0;
     bottom: 0;
     left: 0;
     overflow: hidden;
     z-index: -100;
     width:100%;">
-    <source src="scarabeeimagesrushslumixgh4in4kfireworksparismp4.mp4" type="video/mp4">
+    <source src="philfriedelectricbulbmp4.mp4" type="video/mp4">
   </video>
   
   <div class="container">
