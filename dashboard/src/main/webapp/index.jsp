@@ -39,17 +39,17 @@ $("#login").click(function(){
 
 $("#RegistrationForm").click(function(){
 	
-	if(this.className=="btn btn-danger btn-block show1")
+	if(this.className=="RegistrationForm show1")
 		{
 		//$("#index").hide("slide",{direction:"right",},1000);
-
+	$('#reg').animate({left:'38%'},1000);
 		$("#RegistrationForm").toggleClass("show1").toggleClass("hide1");
 	$("#obregistration").show("slide",{direction:"left",},1000);
 		}
-	else if(this.className=="btn btn-danger btn-block hide1")
+	else if(this.className=="RegistrationForm hide1")
 		{		
 		//$("#index").show("slide",{direction:"right",},1000);
-
+$('#reg').animate({left:'0%'},1000);
 		$("#RegistrationForm").toggleClass("show1").toggleClass("hide1");
 		$("#obregistration").hide("slide",{direction:"left",},1000);
 		}
@@ -78,54 +78,156 @@ margin-bottom: 0;
 margin-top: 0;
 }
 
+
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.RegistrationForm
+{
+ display: inline-block;
+  border-radius: 4px;
+  background-color: #9f0303;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+ 
+  font-size: 28px;
+  padding: 20px;
+  width: 20px;
+  height:400px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+
+}
+
+.RegistrationForm span {
+margin-left:-20px;
+padding-top:20px;
+padding-left:-20px;
+writing-mode: tb-rl;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.RegistrationForm span:after {
+writing-mode: tb-rl;
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.RegistrationForm:hover span {
+  padding-top: 100px;
+}
+
+.RegistrationForm:hover span:after {
+  opacity: 1;
+  right: 0;
+}
 </style>
 </head>
 <body>
-
+<div class="jumbotron" style="height: 80%;position: relative;z-index:101;">	
 <div class="container-fluid">
 <div class="row">
-				
-
+			<!-- class="btn btn-danger show1" -->	
+ 	<div class="col-md-12">
+					<div class="row" id="index">
+					<div class="col-md-6 offset-0" id="reg"  style="left:0%"><a id="RegistrationForm" href="#" class="RegistrationForm show1"><span>Register</span></a></div>
+					
+						<div class="col-md-6 offset-0" style="text-align: right">
+						<a id="login" href="#" class="button"><span>Login </span></a></div>
+					</div>
+	</div>	 
 
 	
-			<div class="col-md-4">				
-					<div class="row" id="obregistration" style="display: none">
+			<div class="col-md-6">				
+					<div class="row" id="obregistration" style="display: none; position:fixed;top: 0;
+    
+     bottom: 0;
+    left:0;
+    overflow: hidden;
+    width:40%;
+    z-index: 100;">
 						<div class="col-md-12 offset-0" style="text-align: left">
 						<object  data="RegistrationForm.html" width="100%"height="100%"></object>
 						</div >
 						
 					</div>
-	</div>			
+			</div>			
 	<div class="col-md-12">				
-					<div class="row" id="oblogin" style="display: none">
-						<div class="col-md-1 offset-0" id="toindexfromlogin"><span class="btn btn-success btn-block" style="height: 100%"><span class=" glyphicon glyphicon-chevron-left"></span></span></div>
+					<div class="row" id="oblogin" style="display: none;position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 100;
+    width:100%;">
+						<div class="col-md-1 offset-0" id="toindexfromlogin"><span class="btn btn-warning btn-block" style="height: 100%"><span class=" glyphicon glyphicon-chevron-left"></span></span></div>
 						<div class="col-md-11 offset-0" style="text-align: right">
 						<object  data="LoginForm.html" width="100%"height="100%"></object>
 						</div>
 					</div>
 	</div>		
 		
- <!-- 	<div class="col-md-12">
-					<div class="row" id="index">
-						<div class="col-md-6 offset-0">
-						<a id="RegistrationForm" href="#" class="btn btn-danger btn-block show1">Registration</a></div>
-						<div class="col-md-6 offset-0">
-						<a id="login" href="#" class="btn btn-warning btn-block">Login</a></div>
-					</div>
-	</div>	 -->	
 	
-	<div class="jumbotron" id="index" style="background: #9B9998">	
+	
+<!-- 	<div class="jumbotron" id="index" style="background: #9B9998;z-index: 500;">	
     <div class="" style="margin-right: 50%">
 	<a id="RegistrationForm" href="#" class="btn btn-danger btn-block show1">Registration</a>
 	<a id="login" href="#" class="btn btn-warning btn-block" style="margin-left: 100%;margin-top: -5.50%">Login</a>
 	</div>
-	</div>
-<div class="jumbotron" style="height: 80%;position: relative;z-index:-101;">	
+	</div> -->
+
 	
-	<!--   <div class="" style="margin-right: 50%">
+	<!-- <div class="" style="margin-right: 50%;float: left;position: absolute;background-color: red">
 	<a id="RegistrationForm" href="#" class="btn btn-danger btn-block show1">Registration</a>
 	<a id="login" href="#" class="btn btn-warning btn-block" style="margin-left: 100%;margin-top: -5.50%">Login</a>
-	</div> -->
+	</div>  -->
 	
 	
    <video id="video-background" preload muted autoplay loop style="position: fixed;
@@ -136,15 +238,13 @@ margin-top: 0;
     overflow: hidden;
     z-index: -100;
     width:100%;">
-    <source src="http://dfcb.github.io/BigVideo.js/vids/dock.mp4" type="video/mp4">
+    <source src="scarabeeimagesrushslumixgh4in4kfireworksparismp4.mp4" type="video/mp4">
   </video>
   
   <div class="container">
  
-  
   </div>
 	
-		
   		
 </div>
 	
