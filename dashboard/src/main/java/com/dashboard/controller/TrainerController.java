@@ -3,25 +3,22 @@ package com.dashboard.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dashboard.beans.TrainerBean;
+import com.dashboard.beans.AnnouncementBean;
+import com.dashboard.beans.CredentialBean;
 import com.dashboard.service.Trainer;
 import com.dashboard.util.DBUtill;
 
@@ -304,6 +301,45 @@ public class TrainerController {
 			return "Event Cannot Be Cancelled...!!!";
 		}
 	}
+	
+	
+	//Announcement
+	
+			@RequestMapping(value="/broadcast",method=RequestMethod.GET)
+			public String addMessage(Model model){
+			
+				AnnouncementBean announcement=new AnnouncementBean();
+				model.addAttribute("anmentbean", announcement);
+				return "viewanmt";
+			}
+			
+			@RequestMapping(value="/addmsg",method=RequestMethod.POST)
+			public String addMessage1(@ModelAttribute AnnouncementBean announcementBean,HttpSession session){
+			
+				System.out.println("in post");
+				
+				//get from session
+				String trainerId=(String) session.getAttribute("pId");
+				CredentialBean trainer1=trainer.getTrainer(trainerId);
+				//announcementBean.setAnnouncemntId(100);
+				announcementBean.setTrainerId(trainer1);//from session
+				announcementBean.setAnnouncemntDt(new Date());
+				announcementBean.setSubject(announcementBean.getSubject());
+				System.out.println(trainer.getProfileBean(trainerId).getName());
+				announcementBean.setUpdatedBy(trainer.getProfileBean(trainerId).getName());//from session
+				announcementBean.setCreationTime(new Date());
+				
+				String status=trainer.addMsg(announcementBean);
+				System.out.println(status);
+				if(status.equalsIgnoreCase("success")){
+					return "brdsuccess";
+				}
+				else{
+					return "brdfail";
+				}	
+				
+			}
+			
 	
 
 }

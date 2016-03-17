@@ -203,8 +203,8 @@ writing-mode: tb-rl;
 						
 					</div>
 			</div>			
-	<div class="col-md-12">				
-					<div class="row" id="oblogin" style="display: none;position: fixed;
+	<div class="col-md-12" >				
+					<div class="row offset-0" id="oblogin" style="display: none;position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
@@ -212,8 +212,8 @@ writing-mode: tb-rl;
     overflow: hidden;
     z-index: 100;
     width:100%;">
-						<div class="col-md-1 offset-0" id="toindexfromlogin"><span class="btn btn-warning btn-block" style="height: 100%"><span class=" glyphicon glyphicon-chevron-left"></span></span></div>
-						<div class="col-md-11 offset-0" style="text-align: right">
+						<div class="col-md-1 offset-0" id="toindexfromlogin" style=""><span class="btn btn-block" style="height: 100%;background: gray;opacity:0.6;"><span class=" glyphicon glyphicon-chevron-left" style="padding-top: 275px"><h5>Logout</h5></span></span></div>
+						<div class="col-md-11 offset-0" style="text-align: right;">
 						<object  data="LoginForm.html" width="100%"height="100%"></object>
 						</div>
 					</div>

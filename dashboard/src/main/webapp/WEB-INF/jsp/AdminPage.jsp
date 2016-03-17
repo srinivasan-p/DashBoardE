@@ -1,3 +1,7 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="com.dashboard.util.DBUtill"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <!-- Latest compiled and minified CSS -->
@@ -21,7 +25,13 @@
 <title>Admin</title>
 </head>
 <body>
+<% Connection conn1 = DBUtill.getDBConnection();
+PreparedStatement pre1 = conn1.prepareStatement("select * from newdb.db_profile where pId='"+session.getAttribute("pId")+"'");
+ResultSet rs1=pre1.executeQuery();
+rs1.next();
 
+
+%>
 <!-- <a href="ViewStudents.html">View Students</a><br>
 <a href="ViewTrainers.html">View Trainers</a><br>
 <a href="ViewScheduledInterview.html">View Scheduled Interview</a><br>
@@ -29,7 +39,7 @@
 <a href="Logout.html">Click Here to logout</a> -->
 
 
-<div id="margin" style="background: #d9534f;text-align: center;padding-top: 0.5%;padding-bottom: 0.5%"><span class="h3">Welcome</span></div>
+<div id="margin" style="background: #d9534f;text-align: center;padding-top: 0.5%;padding-bottom: 0.5%"><span class="h3 text-capitalize">Welcome&nbsp&nbsp<%=rs1.getString("name") %></span></div>
   <div id="wrapper">
 
         <!-- Sidebar -->
@@ -37,7 +47,7 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="#">
-                        Admin
+                        Admin Id:&nbsp<%=session.getAttribute("pId") %>
                     </a>
                 </li>
                 <li>
@@ -54,6 +64,10 @@
                 </li>
                 <li>
 <a href="Logout.html">Click Here to logout</a>
+                </li>
+                <li class="text-center">
+                <br/>
+<a><img class="img-circle" src="pic.html?a=<%=session.getAttribute("pId") %>" /></a>              
                 </li>
             </ul>
         </div>

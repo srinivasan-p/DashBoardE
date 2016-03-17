@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dashboard.beans.AnnouncementBean;
+import com.dashboard.beans.CredentialBean;
+import com.dashboard.beans.ProfileBean;
 import com.dashboard.beans.TrainerBean;
 import com.dashboard.dao.TrainerDAO;
 
@@ -25,5 +28,20 @@ public class TrainerImp implements Trainer {
 		String rs=trainerDAO.deleteevent(courseid);
 		return rs;
 		
+	}
+	
+	public CredentialBean getTrainer(String trainerId) {
+		// TODO Auto-generated method stub
+		return trainerDAO.getTrainer(trainerId);
+	}
+
+	public ProfileBean getProfileBean(String id) {
+		// TODO Auto-generated method stub
+		return trainerDAO.getProfileBean(id);
+	}
+	
+
+	public String addMsg(AnnouncementBean announcementBean) {
+		return trainerDAO.addMsg(announcementBean);
 	}
 }

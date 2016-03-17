@@ -133,7 +133,7 @@ function evalid(email)
 
 <body>
 
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 8%">
 
 <div class="row">
 

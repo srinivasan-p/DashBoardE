@@ -2,6 +2,7 @@ package com.dashboard.controller;
 
 import java.io.IOException;
 
+import javax.mail.Multipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -17,6 +18,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dashboard.beans.CredentialBean;
 import com.dashboard.beans.ProfileBean;
@@ -112,13 +115,34 @@ public class MainController {
 	@RequestMapping(value = "/RegistrationForm", method = RequestMethod.POST)
 	public String addValues(@ModelAttribute("RegistrationFormmodel") @Valid ProfileBean pb, BindingResult bindingResult,
 			HttpSession httpSession) throws IOException {
+		//System.out.println(pb.getF().getOriginalFilename());
 		if (bindingResult.hasErrors()) {
 
 			FieldError error = bindingResult.getFieldError();
 			System.out.println(error.getField());
+			
 			System.out.println("HAs Errors");
 			return "RegistrationForm";
 		}
+		
+		
+		/*
+		System.out.println(pb.getF().getName());
+		try {
+			byte[] b=pb.getF().getBytes();
+			
+			pb.setPhoto(b);
+		
+			
+	
+		pb.setPhoto(b);
+		
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Failure";
+		
+		}*/
 		String stat = user.register(pb);
 		httpSession.setAttribute("reg_id", pb.getpId());
 		if (stat.equalsIgnoreCase("Success")) {
@@ -126,6 +150,9 @@ public class MainController {
 		} else {
 			return "Failure";
 		}
+		
+		
+		
 	}
 
 }

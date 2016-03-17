@@ -1,26 +1,24 @@
 package com.dashboard.dao;
 
 
-import org.hibernate.Session;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
-
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dashboard.beans.ConflictBean;
+import com.dashboard.beans.AnnouncementBean;
 import com.dashboard.beans.CredentialBean;
+import com.dashboard.beans.ProfileBean;
 import com.dashboard.beans.ScheduleBean;
 import com.dashboard.beans.TrainerBean;
 import com.dashboard.util.DBUtill;
@@ -115,6 +113,77 @@ public class TrainerDAOImpl implements TrainerDAO{
 		}
 		
 	}
+	
+	
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
+	public String addMsg(AnnouncementBean announcementBean) {
+		Session session = sessionFactory.getCurrentSession();
+		//Query query=session.createSQLQuery("insert into db_Announcement values(?,?,?)");
+		//query.setInteger(0,11);
+		/*query.setString(1,announcementBean.getTrainerId().getpId());
+		query.setString(2,announcementBean.getMessage());
+		query.setDate(3,new java.sql.Date(announcementBean.getAnnouncemntDt().getTime()));*/
+		
+		
+		//int count = query.executeUpdate();
+		int annId=(Integer) session.save(announcementBean);
+		System.out.println("rows affected: "+annId);
+		if(annId!=0){
+			System.out.println("success");
+			return "success";
+		}
+		else{
+			System.out.println("fail");
+			return "fail";
+		}
+		
+		
+	}
+
+	
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
+	public CredentialBean getTrainer(String trainerId) {
+		if(trainerId!=null&&!trainerId.equals("")){
+		CredentialBean credentialBean=new CredentialBean();
+		Session session = sessionFactory.getCurrentSession();
+		credentialBean=(CredentialBean) session.get(CredentialBean.class,trainerId);
+		if(credentialBean==null){
+			return null;
+		}
+		else{
+			System.out.println(credentialBean.getpId());
+			return credentialBean;
+		}
+		}
+		return null;
+	}
+	
+	
+
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
+	public ProfileBean getProfileBean(String id){
+		if(id!=null&&!id.equals("")){
+		
+		ArrayList<ProfileBean> pb=new ArrayList<ProfileBean>();
+		Session session = sessionFactory.getCurrentSession();
+		//profileBean=(ProfileBean) session.get(ProfileBean.class,id);
+		
+		SQLQuery query=session.createSQLQuery("select * from db_profile where pId=?");
+		query.setString(0,id);
+		query.addEntity(ProfileBean.class);
+		pb=(ArrayList<ProfileBean>) query.list();
+		//System.out.println(profileBean);
+		for(ProfileBean p:pb){
+			System.out.println(p);
+			return p;
+		
+		}
+		
+		}
+		return null;
+	}
+
+
 
 
 	

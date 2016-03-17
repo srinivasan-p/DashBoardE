@@ -13,13 +13,16 @@
 	
 	<tx:annotation-driven transaction-manager="hibernateTransactionManager"></tx:annotation-driven>
 
+ 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property value="/WEB-INF/jsp/" name="prefix" />
 		<property value=".jsp" name="suffix" />
 	</bean>
 
-
+	
+	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	</bean>
 
 	<bean id="adminService" class="com.dashboard.service.AdministratorImp"></bean>
 	<bean id="studentService" class="com.dashboard.service.StudentImp"></bean>
@@ -60,6 +63,12 @@
 				<value>com.dashboard.beans.InterviewerBean</value>
 				<value>com.dashboard.beans.IntervieweeBean</value>
 				<value>com.dashboard.beans.ConflictBean</value>
+				<value>com.dashboard.beans.AnnouncementBean</value>
+				<value>com.dashboard.beans.NotificationBean</value>
+				<value>com.dashboard.beans.AskBean</value>
+<value>com.dashboard.beans.CommentBean</value>
+<value>com.dashboard.beans.AutoSeqPost</value>
+<value>com.dashboard.beans.AutoSeqComment</value>
 			</list>
 		</property>
 

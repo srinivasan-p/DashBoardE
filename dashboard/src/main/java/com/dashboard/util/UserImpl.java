@@ -57,6 +57,7 @@ public class UserImpl implements User {
 			session.save(profileBean);
 			return "Success";
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "Fail";
 		}
 	}

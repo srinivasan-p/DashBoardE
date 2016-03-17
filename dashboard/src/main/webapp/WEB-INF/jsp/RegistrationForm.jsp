@@ -43,8 +43,8 @@ table {
 
 </head>
 <body>
-	<form:form action="RegistrationForm.html" method="POST"
-		modelAttribute="RegistrationFormmodel">
+	<form:form action="RegistrationForm.html" 
+		modelAttribute="RegistrationFormmodel" method="post">
 		<table align="center" class="table table-striped table-bordered">
 			<tr>
 				<td>Name:</td>
@@ -105,6 +105,19 @@ table {
 				<td><form:input path="phoneNo"></form:input></td>
 				<td><form:errors path="phoneNo"></form:errors></td>
 			</tr>
+			
+			
+			
+			<%-- <tr>
+				<td>Photo:</td>
+				<td><form:input type="file" path="f" name="file" /></td>
+				<td><form:errors path="f"></form:errors></td>
+			</tr>   --%>
+			
+		<!-- 	
+			<td><input type="file"  name="file1" /></td>
+			 -->
+			
 
 			<tr>
 				<td></td>
@@ -112,6 +125,7 @@ table {
 			</tr>
 
 		</table>
+		
 	</form:form>
 
 </body>
