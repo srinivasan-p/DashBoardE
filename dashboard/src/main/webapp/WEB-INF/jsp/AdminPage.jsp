@@ -62,6 +62,9 @@ rs1.next();
                 <li>
 <a href="#" onclick="func('authorizeaccess.html')">Authorize Access</a>
                 </li>
+                 <li>
+<a href="#" onclick="func('addskill.html')">Add Skills</a>
+                </li>
                 <li>
 <a href="Logout.html">Click Here to logout</a>
                 </li>

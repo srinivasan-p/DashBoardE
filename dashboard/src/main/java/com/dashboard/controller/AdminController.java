@@ -15,12 +15,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dashboard.beans.InterviewBean;
 import com.dashboard.beans.IntervieweeBean;
 import com.dashboard.beans.InterviewerBean;
 import com.dashboard.beans.ProfileBean;
+import com.dashboard.beans.SkillBean;
 import com.dashboard.beans.StudentSkillBean;
 import com.dashboard.service.Administrator;
 import com.dashboard.util.User;
@@ -126,6 +128,74 @@ public class AdminController {
 		return "<h5>Modification Failed</h5>";
 	}
 	}
+	
+	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+	@RequestMapping(value = "/addskill", method = RequestMethod.GET)
+	public String addSkill(Model model,HttpServletRequest request) 
+	{
+		//SkillBean skillBean=new SkillBean();
+		ArrayList<SkillBean> skills=adminService.viewSkills();
+		if(skills!=null){
+		model.addAttribute("skillbeans",skills);
+		request.setAttribute("count", skills.size());
+		
+		}
+		else{
+			model.addAttribute("skillbeans",skills);
+			request.setAttribute("count",0);
+		}
+		return "addskills";
+	
+	}
+	
+	
+	@RequestMapping(value = "/addskill1", method = RequestMethod.POST)
+	public @ResponseBody String addSkillPost(@RequestParam("skillName") String skillName,HttpServletRequest httpServletRequest, HttpSession httpSession) 
+	{
+		String result="";
+		int i=0;
+		String adminId=(String) httpSession.getAttribute("pId");
+		SkillBean skillBean=new SkillBean();
+		skillBean.setSkillName(skillName);
+		skillBean.setUpdatedOn(new Date());
+		skillBean.setUpdatedBy(adminService.getProfileBean(adminId).getName());
+		//skillBean.setUpdatedBy("T123");
+		adminService.addSkill(skillBean);
+		ArrayList<SkillBean> skills=adminService.viewSkills();
+		result=result+"<table class='table table-striped table-hover' id='bootstrap-table'>";
+		result=result+"<tr>";
+		result=result+"<th>";
+		result=result+"skill id";
+		result=result+"</th>";
+		result=result+"<th>skillName</th>";
+		
+		result=result+"<th>delete</th>";
+		result=result+"</tr>";
+		for(SkillBean sb:skills){
+			
+			result=result+"<tr id='"+sb.getSkillId()+"'>";
+			result=result+"<td>"+sb.getSkillId()+"</td>";
+			result=result+"<td>"+sb.getSkillName()+"</td>";
+			
+			result=result+"<td><button type='button' id='btn"+i+"' value='"+sb.getSkillId()+"' onclick='delete1(this);'><span class='glyphicon glyphicon-trash'></span></button></td>";
+			result=result+"</tr>";
+			
+			i++;
+			
+		}
+		result=result+"</table>";
+		return result;
+	}
+	
+	@RequestMapping(value = "/deleteskill", method = RequestMethod.POST)
+	public @ResponseBody String deleteskill1(@RequestParam("skillId") int skillId,HttpServletRequest httpServletRequest) 
+	{
+		
+		
+		adminService.deleteSkill(skillId);
+		return "success";
+	}
+	
 	
 
 }

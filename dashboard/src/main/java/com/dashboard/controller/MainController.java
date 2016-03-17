@@ -146,7 +146,7 @@ public class MainController {
 		String stat = user.register(pb);
 		httpSession.setAttribute("reg_id", pb.getpId());
 		if (stat.equalsIgnoreCase("Success")) {
-			return "Success";
+			return "RegistrationSuccess";
 		} else {
 			return "Failure";
 		}

@@ -22,12 +22,19 @@
 <html>
 <head>
 <style type="text/css">
-body {
-	background-color: lavender;
+body
+{
+padding-left: 20px;
+background: grey;
+opacity:0.6;
 }
-
-table {
-	border-color: gray;
+h4
+{
+font: 600;
+}
+tr
+{
+opacity:2;
 }
 </style>
 
@@ -43,29 +50,30 @@ table {
 
 </head>
 <body>
+<h1>Fill In Your Details</h1>
 	<form:form action="RegistrationForm.html" 
 		modelAttribute="RegistrationFormmodel" method="post">
-		<table align="center" class="table table-striped table-bordered">
+		<table align="center" class="table">
 			<tr>
-				<td>Name:</td>
+				<td><h4>Name:</h4></td>
 				<td><form:input path="name"></form:input></td>
 				<td><form:errors path="name"></form:errors></td>
 			</tr>
 
 			<tr>
-				<td>Employee-ID:</td>
+				<td><h4>Employee-ID:</h4></td>
 				<td><form:input path="pId.pId" /></td>
 				<td><form:errors path="pId.pId" /></td>
 			</tr>
 
 			<tr>
-				<td>Password:</td>
+				<td><h4>Password:</h4></td>
 				<td><form:input type="password" path="pId.password"></form:input></td>
 				<td><form:errors path="pId.password"></form:errors></td>
 			</tr>
 
 			<tr>
-				<td>Email-ID:</td>
+				<td><h4>Email-ID:</h4></td>
 				<td><form:input path="emailId" /></td>
 				<td><form:errors path="emailId" /></td>
 			</tr>
@@ -76,7 +84,7 @@ table {
 
 			</tr> -->
 			<tr>
-				<td>Profile Type:</td>
+				<td><h4>Profile Type:</h4></td>
 				<td><form:select path="pId.type">
 					<form:option value="s">Student</form:option>
 					<form:option value="t">Trainer</form:option>
@@ -86,22 +94,22 @@ table {
 				<td><form:errors path="pId.type"></form:errors></td>
 			</tr>
 			<tr>
-				<td>Vertical:</td>
+				<td><h4>Vertical:</h4></td>
 				<td><form:input path="vertical"></form:input></td>
 				<td><form:errors path="vertical"></form:errors></td>
 			</tr>
 			<tr>
-				<td>Location:</td>
+				<td><h4>Location:</h4></td>
 				<td><form:input path="location"></form:input></td>
 				<td><form:errors path="location"></form:errors></td>
 			</tr>
 			<tr>
-				<td>ManagerId:</td>
+				<td><h4>ManagerId:</h4></td>
 				<td><form:input path="managerId"></form:input></td>
 				<td><form:errors path="managerId"></form:errors></td>
 			</tr>
 			<tr>
-				<td>PhoneNo:</td>
+				<td><h4>PhoneNo:</h4></td>
 				<td><form:input path="phoneNo"></form:input></td>
 				<td><form:errors path="phoneNo"></form:errors></td>
 			</tr>
@@ -121,7 +129,7 @@ table {
 
 			<tr>
 				<td></td>
-				<td><input type="submit" name="button" value="submit" /></td>
+				<td><input type="submit" class="btn btn-danger btn-block" name="button" value="Enroll" /></td>
 			</tr>
 
 		</table>

@@ -8,6 +8,7 @@ import com.dashboard.beans.InterviewBean;
 import com.dashboard.beans.IntervieweeBean;
 import com.dashboard.beans.InterviewerBean;
 import com.dashboard.beans.ProfileBean;
+import com.dashboard.beans.SkillBean;
 import com.dashboard.beans.StudentSkillBean;
 
 public interface AdminDAO 
@@ -25,4 +26,11 @@ public interface AdminDAO
 	Map<InterviewBean, Map<Map<ProfileBean, InterviewerBean>, Map<ProfileBean, IntervieweeBean>>> ViewAllScheduledInterview();
 	String DeleteInterview(String[] interviewIDstoDelete);
 	String aa(String id);
+	
+	
+	//vvvvvvvvvvvvvvvvvvvvvvvvv
+	public String addSkill(SkillBean skillBean);
+	ProfileBean getProfileBean(String id);
+	public int deleteSkill(int skillId);
+	ArrayList<SkillBean> viewSkills();
 }

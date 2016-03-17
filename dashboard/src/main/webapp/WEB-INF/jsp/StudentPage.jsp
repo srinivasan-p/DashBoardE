@@ -120,7 +120,27 @@ rs1.next();
         }
         </script>
         
-        <object id="ob" data="" align="right" height="93%" width="95%">  </object>
+        <object id="ob" data="" align="right" height="93%" width="95%"> 
+        
+            <div>
+	<%
+	Connection conn = DBUtill.getDBConnection();
+	String pId=(String)session.getAttribute("pId");
+	PreparedStatement pre= conn.prepareStatement("select * from newdb.db_Conflict where pId = ?");
+	pre.setString(1, pId);
+	ResultSet rs=pre.executeQuery();
+	int i=0;
+	while(rs.next())
+	{
+		i +=1;
+	%>
+	<div id="<%=i%>">
+	<h4>Oopsss...Your <%=rs.getString("event")%> event on <%=rs.getDate("stdate")%> has been cancelled due to unforeseen circumstances.Please Plan Your day accordingly <span><button id="<%=rs.getString("Sno")%>" type="button" class="close" onclick="fun(this.id,<%=i%>)" >&times;</button></span></h4>
+	</div>
+	<%} %>
+	</div>
+	
+	 </object>
         <!-- /#page-content-wrapper -->
 
     </div>
@@ -147,20 +167,6 @@ rs1.next();
   
   
     </script>
-	<%
-	Connection conn = DBUtill.getDBConnection();
-	String pId=(String)session.getAttribute("pId");
-	PreparedStatement pre= conn.prepareStatement("select * from newdb.db_Conflict where pId = ?");
-	pre.setString(1, pId);
-	ResultSet rs=pre.executeQuery();
-	int i=0;
-	while(rs.next())
-	{
-		i +=1;
-	%>
-	<div id="<%=i%>">
-	<h4>Oopsss...Your <%=rs.getString("event")%> event on <%=rs.getDate("stdate")%> has been cancelled due to unforeseen circumstances.Please Plan Your day accordingly <span><button id="<%=rs.getString("Sno")%>" type="button" class="close" onclick="fun(this.id,<%=i%>)" >&times;</button></span></h4>
-	</div>
-	<%} %>
+
 </body>
 </html>

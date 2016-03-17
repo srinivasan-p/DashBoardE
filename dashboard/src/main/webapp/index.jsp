@@ -56,12 +56,19 @@ $('#reg').animate({left:'0%'},1000);
 		}
 });
 
-$("#toindexfromlogin").click(function()
+ $("#toindexfromlogin").click(function()
 		{
-	$("#index").show("slide",{direction:"left",},1000);
+	
+	 $("#objec").attr("data","Logout.html");
+	$("#index").delay(2000).show("slide",{direction:"left",},1500);
 
-	$("#oblogin").hide("slide",{direction:"right",},1000);
-});
+	$("#oblogin").delay(2000).hide("slide",{direction:"right",},1000);
+	$("#objec").attr("data","LoginForm.html");
+	
+		
+}); 
+
+
 
   });
 </script>
@@ -214,7 +221,7 @@ writing-mode: tb-rl;
     width:100%;">
 						<div class="col-md-1 offset-0" id="toindexfromlogin" style=""><span class="btn btn-block" style="height: 100%;background: gray;opacity:0.6;"><span class=" glyphicon glyphicon-chevron-left" style="padding-top: 275px"><h5>Logout</h5></span></span></div>
 						<div class="col-md-11 offset-0" style="text-align: right;">
-						<object  data="LoginForm.html" width="100%"height="100%"></object>
+						<object id="objec"  data="LoginForm.html" width="100%"height="100%"></object>
 						</div>
 					</div>
 	</div>		

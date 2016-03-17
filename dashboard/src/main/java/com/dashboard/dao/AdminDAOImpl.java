@@ -8,16 +8,20 @@ import java.util.Map;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dashboard.beans.CredentialBean;
 import com.dashboard.beans.InterviewBean;
 import com.dashboard.beans.IntervieweeBean;
 import com.dashboard.beans.InterviewerBean;
 import com.dashboard.beans.ProfileBean;
+import com.dashboard.beans.SkillBean;
 import com.dashboard.beans.StudentSkillBean;
 import com.dashboard.service.Trainer;
 
@@ -218,6 +222,68 @@ public class AdminDAOImpl implements AdminDAO {
 			e.printStackTrace();
 			return "fail";
 		}
+	}
+	
+	
+	//vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
+	public ProfileBean getProfileBean(String id){
+		if(id!=null&&!id.equals("")){
+		
+		ArrayList<ProfileBean> pb=new ArrayList<ProfileBean>();
+		Session session = sessionFactory.getCurrentSession();
+		//profileBean=(ProfileBean) session.get(ProfileBean.class,id);
+		
+		SQLQuery query=session.createSQLQuery("select * from db_profile where pId=?");
+		query.setString(0,id);
+		query.addEntity(ProfileBean.class);
+		pb=(ArrayList<ProfileBean>) query.list();
+		//System.out.println(profileBean);
+		for(ProfileBean p:pb){
+			System.out.println(p);
+			return p;
+		
+		}
+		
+		}
+		return null;
+	}
+
+	public String addSkill(SkillBean skillBean) {
+		Session s=sessionFactory.getCurrentSession();
+		int skillId=(Integer) s.save(skillBean);
+		if(skillId==0){
+			return "failure";
+		}
+		else{
+		return "Success";
+		}
+	}
+
+	public int deleteSkill(int skillId){
+		Session s=sessionFactory.getCurrentSession();
+		SQLQuery query=s.createSQLQuery("delete from db_skill where skillid=?");
+		query.setInteger(0, skillId);
+		int count=query.executeUpdate();
+		return count;
+	}
+	
+	
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
+	public ArrayList<SkillBean> viewSkills() {
+		
+		ArrayList<SkillBean> skillBeans=new ArrayList<SkillBean>();
+		Session session = sessionFactory.getCurrentSession();
+		Query query=session.createQuery("from SkillBean");
+		skillBeans=(ArrayList<SkillBean>) query.list();
+		if(skillBeans.size()>0){
+		return skillBeans;
+		}
+		else{
+			System.out.println("list size is 0");
+			return null;
+		}
+		
 	}
 
 	
