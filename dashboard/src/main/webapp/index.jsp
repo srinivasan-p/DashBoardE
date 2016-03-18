@@ -43,14 +43,14 @@ $("#RegistrationForm").click(function(){
 	if(this.className=="RegistrationForm show1")
 		{
 		//$("#index").hide("slide",{direction:"right",},1000);
-	$('#reg').animate({left:'38%'},1000);
+	$('#reg').animate({left:'38%'},1500);
 		$("#RegistrationForm").toggleClass("show1").toggleClass("hide1");
 	$("#obregistration").show("slide",{direction:"left",},1000);
 		}
 	else if(this.className=="RegistrationForm hide1")
 		{		
 		//$("#index").show("slide",{direction:"right",},1000);
-$('#reg').animate({left:'0%'},1000);
+$('#reg').animate({left:'0%'},1500);
 		$("#RegistrationForm").toggleClass("show1").toggleClass("hide1");
 		$("#obregistration").hide("slide",{direction:"left",},1000);
 		}
@@ -60,9 +60,9 @@ $('#reg').animate({left:'0%'},1000);
 		{
 	
 	 $("#objec").attr("data","Logout.html");
-	$("#index").delay(2000).show("slide",{direction:"left",},1500);
+	$("#index").delay(3000).show("slide",{direction:"left",},1500);
 
-	$("#oblogin").delay(2000).hide("slide",{direction:"right",},1000);
+	$("#oblogin").delay(3000).hide("slide",{direction:"right",},1000);
 	
 	
 		

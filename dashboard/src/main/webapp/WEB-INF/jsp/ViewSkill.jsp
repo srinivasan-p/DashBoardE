@@ -28,14 +28,14 @@
 </head>
 <body>
 
-	<h3 align="left">Available Doctors</h3>
+	<h3 align="left">My Skills</h3>
 	<table class="table table-striped">
-		<tr>
+		
+		<c:forEach items="${skillList}" var="element" varStatus="loop">
+			<tr>
 			<td><strong>#</strong></td>
 			<td><strong>Skill Name</strong></td>
-		</tr>
-		<c:forEach items="${skillList}" var="element" varStatus="loop">
-
+			</tr>
 			<tr>
 				<td><c:out value="${loop.index+1}" /></td>
 				<td><c:out value="${element}" /></td>
