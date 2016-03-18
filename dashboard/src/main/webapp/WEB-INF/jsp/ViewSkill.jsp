@@ -40,6 +40,7 @@
 						</tr>
 						<c:forEach items="${skillList}" var="element" varStatus="loop">
 
+
 							<tr>
 								<td><c:out value="${loop.index+1}" /></td>
 								<td><c:out value="${element}" /></td>

@@ -59,7 +59,7 @@
 												//$("#index").hide("slide",{direction:"right",},1000);
 												$('#reg').animate({
 													left : '38%'
-												}, 1000);
+												}, 1500);
 												$("#RegistrationForm")
 														.toggleClass("show1")
 														.toggleClass("hide1");
@@ -71,7 +71,7 @@
 												//$("#index").show("slide",{direction:"right",},1000);
 												$('#reg').animate({
 													left : '0%'
-												}, 1000);
+												}, 1500);
 												$("#RegistrationForm")
 														.toggleClass("show1")
 														.toggleClass("hide1");
@@ -85,11 +85,11 @@
 						$("#toindexfromlogin").click(function() {
 
 							$("#objec").attr("data", "Logout.html");
-							$("#index").delay(2000).show("slide", {
+							$("#index").delay(3000).show("slide", {
 								direction : "left",
 							}, 1500);
 
-							$("#oblogin").delay(2000).hide("slide", {
+							$("#oblogin").delay(3000).hide("slide", {
 								direction : "right",
 							}, 1000);
 

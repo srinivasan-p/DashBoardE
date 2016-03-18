@@ -1,6 +1,5 @@
 package com.dashboard.controller;
 
-import com.dashboard.util.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,12 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dashboard.beans.CredentialBean;
 import com.dashboard.beans.ScheduleBean;
 import com.dashboard.beans.TrainerBean;
 import com.dashboard.service.Student;
 import com.dashboard.service.Trainer;
 //import com.google.gson.Gson;
+import com.dashboard.util.DBUtill;
 
 
 
@@ -248,9 +247,59 @@ public class controller1
 		PreparedStatement pre = Conn
 				.prepareStatement("SELECT * FROM newdb.db_Trainer");
 		ResultSet res = pre.executeQuery();
-		while (res.next()) {
+		while (res.next()) 
+		{
+			System.out.println("-----------------------------inside res");
+			PreparedStatement pre1 = Conn
+					.prepareStatement("SELECT courseId FROM newdb.db_schedule where pId =?");
+			pre1.setString(1, pId);
+			ResultSet res1 = pre1.executeQuery();
+			int ch=1;
+			while(res1.next())
+			{
+				System.out.println("-----------------------------inside res1");
+
+				System.out.println(res1.getString(1));
+				PreparedStatement pre2 = Conn.prepareStatement("SELECT * FROM newdb.db_Trainer where courseId = ?");
+				pre2.setString(1, res1.getString(1));
+				ResultSet res2 = pre2.executeQuery();
+				
+				while (res2.next()) 
+				{
+					System.out.println("-----------------------------inside res2");
+					
+					if(res2.getString("courseId").equals(res.getString("courseId")))
+					{
+						ch=ch+1;
+					}
+				/*	if(res2.getString("courseId").equals(res.getString("courseId")))
+					{
+
+				result = result  + "{id:'tag',title:'"+res2.getString("title")+"',start:'"+res2.getDate("startDate")+"',end:'"+res2.getDate("endDate")+"T12:00:00',backgroundColor:'#FFA07A',borderColor:'#FFA07A'},";
+					}
+					else
+					{
+						result = result  + "{title:'"+res.getString("title")+"',start:'"+res.getDate("startDate")+"',end:'"+res.getDate("endDate")+"T12:00:00'},";
+
+					}*/
+					
+				}
 			
-			result = result  + "{title:'"+res.getString("title")+"',start:'"+res.getDate("startDate")+"',end:'"+res.getDate("endDate")+"T12:00:00'},";
+				
+			}
+			if(ch>=2)
+			{
+				ch=1;
+			}
+			else if(ch==1)
+			{
+				
+				result = result  + "{title:'"+res.getString("title")+"',start:'"+res.getDate("startDate")+"',end:'"+res.getDate("endDate")+"T12:00:00'},";
+
+			}
+			
+
+			
 		}
 		 result = result  + "],";		 
 	    result = result  + "},";
@@ -269,7 +318,7 @@ public class controller1
 				ResultSet res2 = pre2.executeQuery();
 				while (res2.next()) {
 				
-				result = result  + "{id:'tag',title:'"+res2.getString("title")+"',start:'"+res2.getDate("startDate")+"',end:'"+res2.getDate("endDate")+"T12:00:00',backgroundColor:'#B51C04'},";
+				result = result  + "{id:'tag',title:'"+res2.getString("title")+"',start:'"+res2.getDate("startDate")+"',end:'"+res2.getDate("endDate")+"T12:00:00',backgroundColor:'#00FF00',borderColor:'#00FF00'},";
 			}
 				
 			}
@@ -381,7 +430,7 @@ public class controller1
 			System.out.println(res.getString("trainerId"));
 			if(res.getString("trainerId").equalsIgnoreCase(pId))
 			{
-			result = result  + "{title:'"+res.getString("title")+"',start:'"+res.getDate("startDate")+"',end:'"+res.getDate("endDate")+"T12:30:00Z',backgroundColor:'#B51C04'},";
+			result = result  + "{title:'"+res.getString("title")+"',start:'"+res.getDate("startDate")+"',end:'"+res.getDate("endDate")+"T12:30:00Z',backgroundColor:'#FFA07A',borderColor:'#FFA07A'},";
 			}
 			else
 			{
