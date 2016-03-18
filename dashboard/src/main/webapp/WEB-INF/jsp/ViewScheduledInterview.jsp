@@ -18,52 +18,74 @@
 	rel="stylesheet">
 <link href="../dashboard/assets/css/style.css" type="text/css"
 	rel="stylesheet">
-	
+<style type="text/css">
+.spansize {
+	font-size: 1.5em;
+}
+</style>
 </head>
 <body>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="box clearfix">
-				<h3>Bootstrap Data Table</h3>
-				<p>Easily turn your tables into datatables.</p>
-				<form action="ScheduleInterviewDeletion.html" method="post">
-					<table class="table table-hover table-striped" id="bootstrap-table">
-						<thead>
-							<tr>
-								<th>Interview ID</th>
-								<th>Date and Time</th>
-								<th>Interviewers</th>
-								<th>Interviewees</th>
-								<th>CheckBox</th>
-							</tr>
-						</thead>
-						<tbody>
-							<!-- Map<InterviewBean, Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>> interviewMap; -->
-							<c:forEach items="${result}" var="entry">
-								<tr>
-									<td>${entry.key.interviewId}</td>
-									<td>${entry.key.iDate}</td>
-									<c:forEach items="${entry.value}" var="e2">
-										<td><ul class="list-group"><c:forEach items="${e2.key}" var="e3">
-												<li class="list-group-item"><span class="badge">${e3.key.pId.pId}</span> ${e3.key.name}</li>
-												
-								
-								</c:forEach></ul></td>
-										<td><ul class="list-group"><c:forEach items="${e2.value}" var="e3">
-												
-												<li class="list-group-item"><span class="badge">${e3.key.pId.pId}</span> ${e3.key.name}</li>
-								
-								</c:forEach></ul></td>
-									</c:forEach>
 
-									<td><input type="checkbox" name="interviewIDstoDelete"
-										value="${entry.key.interviewId}"></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					<input class="btn btn-danger btn-block" type="submit" value="Delete">
-				</form>
+
+				<div class="panel-group">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<span class="spansize">Scheduled Interviews</span>
+						</div>
+						<div class="panel-body">
+							<form action="ScheduleInterviewDeletion.html" method="post">
+								<table class="table table-hover table-striped"
+									id="bootstrap-table">
+									<thead>
+										<tr>
+											<th>Interview ID</th>
+											<th>Date and Time</th>
+											<th>Interviewers</th>
+											<th>Interviewees</th>
+											<th>CheckBox</th>
+										</tr>
+									</thead>
+									<tbody>
+										<!-- Map<InterviewBean, Map<Map<ProfileBean,InterviewerBean>, Map<ProfileBean,IntervieweeBean>>> interviewMap; -->
+										<c:forEach items="${result}" var="entry">
+											<tr>
+												<td>${entry.key.interviewId}</td>
+												<td>${entry.key.iDate}</td>
+												<c:forEach items="${entry.value}" var="e2">
+													<td><ul class="list-group">
+															<c:forEach items="${e2.key}" var="e3">
+																<li class="list-group-item"><span class="badge">${e3.key.pId.pId}</span>
+																	${e3.key.name}</li>
+
+
+															</c:forEach>
+														</ul></td>
+													<td><ul class="list-group">
+															<c:forEach items="${e2.value}" var="e3">
+
+																<li class="list-group-item"><span class="badge">${e3.key.pId.pId}</span>
+																	${e3.key.name}</li>
+
+															</c:forEach>
+														</ul></td>
+												</c:forEach>
+
+												<td><input type="checkbox" name="interviewIDstoDelete"
+													value="${entry.key.interviewId}"></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<input class="btn btn-danger btn-block" type="submit"
+									value="Delete">
+							</form>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>

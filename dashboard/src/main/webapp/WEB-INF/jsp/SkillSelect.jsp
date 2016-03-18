@@ -8,13 +8,19 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>jQuery MultiSelect Widget Demo</title>
+<title>Select Skill</title>
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" class="btn btn-info" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" class="btn btn-info"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous">
 
 <!-- Optional theme -->
-<link rel="stylesheet" class="btn btn-info" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+<link rel="stylesheet" class="btn btn-info"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+	crossorigin="anonymous">
 
 <!-- Latest compiled and minified JavaScript -->
 
@@ -990,47 +996,76 @@
 		return true;
 	}
 </script>
+<style type="text/css">
+.spansize {
+	font-size: 1.5em;
+}
 
+.table-borderless tbody tr td, .table-borderless tbody tr th,
+	.table-borderless thead tr th {
+	border: none;
+}
+</style>
 </head>
 <body>
+	<br>
+	<br>
+	<br>
+	<div class="container-fluid">
+		<div class="panel-group">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<span class="spansize">Select Skills</span>
+				</div>
+				<div class="panel-body">
+					<div class="alert alert-info">
+						<strong>Note!</strong> Skills once selected cannot be changed in Future. Please select skills you are already Trained In.
+					</div>
+					<table class="table table-borderless">
+						<tr>
+							<td><select name="example-list" multiple="multiple"
+								style="width: 400px">
+									<%
+										String pId = (String) session.getAttribute("pId");
+										Connection Conn = DBUtill.getDBConnection();
+										PreparedStatement pre = Conn.prepareStatement(
+												"SELECT skillid, skillName FROM newdb.db_skill where skillid in (SELECT skillid FROM newdb.db_studskill where pId=?)");
+										pre.setString(1, pId);
+										ResultSet res = pre.executeQuery();
+										while (res.next()) {
+									%>
+									<option value="<%=res.getString(1)%>" selected="selected"
+										disabled="disabled"><%=res.getString(2)%></option>
+									<%
+										}
+									%>
 
 
-	<form action="SkillSelect.html" method="POST">
-		<p>
-			<select name="example-list" multiple="multiple" style="width: 400px">
-				<%
-					String pId = (String) session.getAttribute("pId");
-					Connection Conn = DBUtill.getDBConnection();
-					PreparedStatement pre = Conn.prepareStatement(
-							"SELECT skillid, skillName FROM newdb.db_skill where skillid in (SELECT skillid FROM newdb.db_studskill where pId=?)");
-					pre.setString(1, pId);
-					ResultSet res = pre.executeQuery();
-					while (res.next()) {
-				%>
-				<option value="<%=res.getString(1)%>" selected="selected"
-					disabled="disabled"><%=res.getString(2)%></option>
-				<%
-					}
-				%>
+									<%
+										pre = Conn.prepareStatement(
+												"SELECT skillid, skillName FROM newdb.db_skill where skillid not in (SELECT skillid FROM newdb.db_studskill where pId=?)");
+										pre.setString(1, pId);
+										res = pre.executeQuery();
+										while (res.next()) {
+									%>
+									<option value="<%=res.getString(1)%>"><%=res.getString(2)%></option>
+									<%
+										}
+									%>
 
+							</select> <input type="hidden" id="skillarray" name="skillarray"></td>
+							<td><input type="submit" onclick="return val()"
+								class="btn btn-danger"></td>
+						</tr>
 
-				<%
-					pre = Conn.prepareStatement(
-							"SELECT skillid, skillName FROM newdb.db_skill where skillid not in (SELECT skillid FROM newdb.db_studskill where pId=?)");
-					pre.setString(1, pId);
-					res = pre.executeQuery();
-					while (res.next()) {
-				%>
-				<option value="<%=res.getString(1)%>"><%=res.getString(2)%></option>
-				<%
-					}
-				%>
+					</table>
 
-			</select> <input type="hidden" id="skillarray" name="skillarray"> <input
-				type="submit" onclick="return val()" class="btn btn-danger">
-		</p>
+					<form action="SkillSelect.html" method="POST"></form>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	</form>
 
 
 

@@ -9,19 +9,20 @@
 
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.dashboard.controller" />
-	
-	
+
+
 	<tx:annotation-driven transaction-manager="hibernateTransactionManager"></tx:annotation-driven>
 
- 
+
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property value="/WEB-INF/jsp/" name="prefix" />
 		<property value=".jsp" name="suffix" />
 	</bean>
 
-	
-	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	</bean>
 
 	<bean id="adminService" class="com.dashboard.service.AdministratorImp"></bean>
@@ -33,8 +34,8 @@
 	<bean id="trainerDAO" class="com.dashboard.dao.TrainerDAOImpl"></bean>
 	<bean id="adminDAO" class="com.dashboard.dao.AdminDAOImpl"></bean>
 
-<bean id="trainer" class="com.dashboard.service.TrainerImp"></bean>
-	
+	<bean id="trainer" class="com.dashboard.service.TrainerImp"></bean>
+
 	<bean id="student" class="com.dashboard.service.StudentImp"></bean>
 
 
@@ -42,9 +43,9 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3307/newdb" />
-		<property name="username" value="root"/>
-		<property name="password" value=""/>
-		</bean>
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
 
 
 	<bean
@@ -66,9 +67,9 @@
 				<value>com.dashboard.beans.AnnouncementBean</value>
 				<value>com.dashboard.beans.NotificationBean</value>
 				<value>com.dashboard.beans.AskBean</value>
-<value>com.dashboard.beans.CommentBean</value>
-<value>com.dashboard.beans.AutoSeqPost</value>
-<value>com.dashboard.beans.AutoSeqComment</value>
+				<value>com.dashboard.beans.CommentBean</value>
+				<value>com.dashboard.beans.AutoSeqPost</value>
+				<value>com.dashboard.beans.AutoSeqComment</value>
 			</list>
 		</property>
 

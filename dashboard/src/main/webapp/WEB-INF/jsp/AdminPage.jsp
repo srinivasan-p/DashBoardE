@@ -61,7 +61,7 @@ rs1.next();
                     </a>
                 </li>
                 <li>
-<a href="#" onclick="func('ViewStudents.html')">View Students</a>
+<a href="#" onclick="func('ViewStudents.html')">View Students & Schedule Interview</a>
                 </li>
                 <li>
 <a href="#" onclick="func('ViewTrainers.html')">View Trainers</a>

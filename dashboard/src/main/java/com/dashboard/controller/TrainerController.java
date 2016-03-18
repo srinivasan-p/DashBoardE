@@ -316,7 +316,6 @@ public class TrainerController {
 			@RequestMapping(value="/addmsg",method=RequestMethod.POST)
 			public String addMessage1(@ModelAttribute AnnouncementBean announcementBean,HttpSession session){
 			
-				System.out.println("in post");
 				
 				//get from session
 				String trainerId=(String) session.getAttribute("pId");

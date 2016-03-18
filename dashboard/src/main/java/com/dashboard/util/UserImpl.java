@@ -1,9 +1,7 @@
 package com.dashboard.util;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dashboard.beans.CredentialBean;
 import com.dashboard.beans.ProfileBean;
-import com.dashboard.beans.StudentSkillBean;
 
 @Service("user")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

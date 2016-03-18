@@ -10,8 +10,15 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>jQuery MultiSelect Widget Demo</title>
-
+<title>Schedule Interview</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" type="text/css"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" />
@@ -19,6 +26,30 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
+<style type="text/css">
+.spansize {
+	font-size: 1.5em;
+}
+.table-borderless tbody tr td, .table-borderless tbody tr th, .table-borderless thead tr th {
+    border: none;
+}
+</style>
+<script>
+	webshims.setOptions('forms-ext', {
+		types : 'date'
+	});
+	webshims.polyfill('forms forms-ext');
+	$.webshims.formcfg = {
+		en : {
+			dFormat : '-',
+			dateSigns : '-',
+			patterns : {
+				d : "yy-mm-dd"
+			}
+		}
+	};
+</script>
 
 
 <link rel="stylesheet" type="text/css"
@@ -29,26 +60,7 @@
 	href="../dashboard/assets/style.css" />
 
 <script type="text/javascript">
-	/* jshint forin:true, noarg:true, noempty:true, eqeqeq:true, boss:true, undef:true, curly:true, browser:true, jquery:true */
-	/*
-	 * jQuery MultiSelect UI Widget 1.14pre
-	 * Copyright (c) 2012 Eric Hynds
-	 *
-	 * http://www.erichynds.com/jquery/jquery-ui-multiselect-widget/
-	 *
-	 * Depends:
-	 *   - jQuery 1.4.2+
-	 *   - jQuery UI 1.8 widget factory
-	 *
-	 * Optional:
-	 *   - jQuery UI effects
-	 *   - jQuery UI position utility
-	 *
-	 * Dual licensed under the MIT and GPL licenses:
-	 *   http://www.opensource.org/licenses/mit-license.php
-	 *   http://www.gnu.org/licenses/gpl.html
-	 *
-	 */
+	
 	(function($, undefined) {
 
 		var multiselectID = 0;
@@ -67,7 +79,7 @@
 								classes : '',
 								checkAllText : 'Check all',
 								uncheckAllText : 'Uncheck all',
-								noneSelectedText : 'Select options',
+								noneSelectedText : 'Select Interviewers',
 								selectedText : '# selected',
 								selectedList : 0,
 								show : null,
@@ -1009,54 +1021,103 @@
 
 </head>
 <body>
+<body>
 
+	<div class="container-fluid">
+		<br> <br> <br>
+		<div class="panel-group">
 
-	<form action="DoScheduleWithInterviewer.html" method="POST">
-
-		<h1>Schedule interview For Employee ID</h1>
-		<%
-			String[] stinlist = (String[]) session.getAttribute("stinlist");
-			session.setAttribute("stinlist", stinlist);
-		%>
-		<ol>
-			<%
-				for (String pId : stinlist) {
-			%>
-			<li><%=pId%></li>
-			<%
-				}
-			%>
-		</ol>
-
-
-		<h3>Interview On</h3>
-		<input type="date" name="intDate"
-			min="<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>"
-			required> <input type="time" name="intTime" value="10:00:00"
-			required />
-		<p class="message success" style="width: 400px">Select the Interviewer</p>
-		<h3>Interview With</h3>
-		<select name="example-list" multiple="multiple" style="width: 400px">
-			<%
-				Connection Conn = DBUtill.getDBConnection();
-				PreparedStatement pre = Conn.prepareStatement(
-						"SELECT pid, name FROM newdb.db_profile where pid in (SELECT pid FROM newdb.db_credential where type='a')");
-
-				ResultSet res = pre.executeQuery();
-				while (res.next()) {
-			%>
-			<option value="<%=res.getString(1)%>"><%=res.getString(2)%></option>
-			<%
-				}
-			%>
+			<form action="DoScheduleWithInterviewer.html" method="POST">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<span class="spansize">Schedule interview</span><br>
+					</div>
+					<div class="panel-body">
 
 
 
 
-		</select> <input type="hidden" id="intPanel" name="intPanel"><br> <input
-			type="submit"  onclick="return val()">
+						<table class="table table-borderless">
+							<tbody>
+								<tr>
+									<td><span class="spansize">Schedule interview For
+											Employee ID</span></td>
+									<td>
+										<%
+											String[] stinlist = (String[]) session.getAttribute("stinlist");
+											session.setAttribute("stinlist", stinlist);
+										%>
+
+										<ul class="list-group" style="width: 200px">
+											<%
+												for (String pId : stinlist) {
+											%>
+											<li class="list-group-item"><%=pId%></li>
+											<%
+												}
+											%>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td><span class="spansize">Interview On: </span></td>
+									<td><input type="date" name="intDate"
+										min="<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date())%>"
+										required> <input type="time" name="intTime"
+										value="10:00:00" required /></td>
+								</tr>
+								<!-- 								<tr> -->
+								<!-- 									<td colspan="2"><p class="message success" style="width: 400px">Select -->
+								<!-- 											the Interviewer</p></td> -->
+
+								<!-- 								</tr> -->
+								<tr>
+									<td><span class="spansize">Interview with: </span></td>
+									<td><select name="example-list" multiple="multiple"
+										style="width: 400px">
+											<%
+												Connection Conn = DBUtill.getDBConnection();
+												PreparedStatement pre = Conn.prepareStatement(
+														"SELECT pid, name FROM newdb.db_profile where pid in (SELECT pid FROM newdb.db_credential where type='a')");
+
+												ResultSet res = pre.executeQuery();
+												while (res.next()) {
+											%>
+											<option value="<%=res.getString(1)%>"><%=res.getString(2)%></option>
+											<%
+												}
+											%>
 
 
-	</form>
+
+
+									</select> <input type="hidden" id="intPanel" name="intPanel"></td>
+								</tr>
+								<tr>
+									<td colspan="2" align="center"><input type="submit" value="Schedule"
+										class="btn btn-success btn-block" onclick="return val()"></td>
+
+								</tr>
+							</tbody>
+						</table>
+
+
+
+
+
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>
+
+
+
+
+
+
+
 </body>
 </html>
