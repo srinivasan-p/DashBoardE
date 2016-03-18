@@ -26,7 +26,7 @@
 	  
 	  
 $("#login").click(function(){
-	
+	$("#objec").attr("data","LoginForm.html");
 	$("#index").hide("slide",{direction:"left",},1000);
 	$("#obregistration").hide("slide",{direction:"left",},1000);
 	$('#reg').animate({left:'0%'},1000);
@@ -63,7 +63,7 @@ $('#reg').animate({left:'0%'},1000);
 	$("#index").delay(2000).show("slide",{direction:"left",},1500);
 
 	$("#oblogin").delay(2000).hide("slide",{direction:"right",},1000);
-	$("#objec").attr("data","LoginForm.html");
+	
 	
 		
 }); 

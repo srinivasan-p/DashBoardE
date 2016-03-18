@@ -17,8 +17,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Logout</title>
+<style type="text/css">
+.jumbotron {
+    margin-bottom: 0px;
+    
+    background-image: url(img/backg-auto.jpg);
+   
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    text-shadow: grey 0.1em 0.1em 0.1em;
+}
+</style>
 </head>
-<body>
+<body class="jumbotron">
+<div >
+
 <%
 
 AuthenticationImpl authentication1=new AuthenticationImpl();
@@ -26,6 +40,9 @@ AuthenticationImpl authentication1=new AuthenticationImpl();
 CredentialBean CredentialBean = (CredentialBean) session.getAttribute("cb");
 authentication1.changeLoginStatus(CredentialBean, 0);
 %>
-<h1 style="color: OrangeRed">Logout Successful. See u soon. </h1>
+<h2 style="color: OrangeRed;opacity:0.7">Logout Successful. See u soon. </h2><img alt="Loading..." src="img/ajax-loader.gif">
+<h1 style="color:grey;text-align: right;opacity:0.6">Nothing happens <br>unless first we <h1 style="color:OrangeRed;text-align: right">DREAM...!</h1></h1>
+</div>
+
 </body>
 </html>

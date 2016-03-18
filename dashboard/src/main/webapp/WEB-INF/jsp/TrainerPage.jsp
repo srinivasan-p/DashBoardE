@@ -22,7 +22,17 @@
 
     <!-- Custom CSS -->
     <link href="Dcss/simple-sidebar.css" rel="stylesheet">
-<title>Insert title here</title>
+<title>Trainer</title>
+<style type="text/css">
+.jumbotron
+{
+margin-bottom: 0px;
+
+background-image: url(img/3.jpg);
+color:#CDCDCD;
+
+}
+</style>
 </head>
 <body>
 <% Connection conn1 = DBUtill.getDBConnection();
@@ -32,7 +42,7 @@ rs1.next();
 
 
 %>
-<div id="margin" style="background: #d9534f;text-align: center;padding-top: 0.5%;padding-bottom: 0.5%"><span class="h3 text-capitalize">Welcome&nbsp&nbsp<%=rs1.getString("name") %></span></div>
+<div id="margin" class="jumbotron" style="text-align: center;padding-top: 0.5%;padding-bottom: 0.5%"><span class="h3 text-capitalize">Welcome&nbsp&nbsp<%=rs1.getString("name") %></span></div>
   <div id="wrapper">
 
         <!-- Sidebar -->
@@ -62,7 +72,7 @@ rs1.next();
 <a href="#" onclick="func('broadcast.html')">Broadcast</a>
                 </li>
                 <li>
-<a href="Logout.html">Click Here to logout</a>
+<a href="Logout.html" style="display:none">Click Here to logout</a>
                 </li>
                 <li class="text-center">
                 <br/>
@@ -73,7 +83,7 @@ rs1.next();
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
-        <a href="#menu-toggle" class="btn btn-info" id="menu-toggle"><span id="left" class='glyphicon glyphicon-chevron-left'></span></a>
+        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><span id="left" class='glyphicon glyphicon-chevron-left'></span></a>
         <script type="text/javascript">
         function func(pg)
         {
